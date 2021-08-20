@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 const NavBarSprinkle = () => {
     let location = useLocation().pathname;
-    let email = useSelector(state => state.userReducer.userInfo.email);
+    let name = useSelector(state => state.userReducer.userInfo.name);
 
     useEffect(() => {
         var ele = document.getElementById("sprinkleNavbar");
@@ -83,7 +83,7 @@ const NavBarSprinkle = () => {
 
                     <ul className="navbar-nav  d-grid  ms-auto  mb-2 mb-lg-0">
                         {
-                            email === ""
+                            name === ""
                                 ?
 
                                 <Link to="/login" className="btn  primary-color rounded   ps-5 pe-5  text-center text-white">
@@ -96,7 +96,7 @@ const NavBarSprinkle = () => {
                                     <button className="ps-5 pe-5 btn primary-text-color fw-bold nav-link dropdown-toggle" id="prfileDropDown"
                                         data-bs-toggle="dropdown" aria-label="Menu to profile and logout" aria-expanded="false"
                                     >
-                                        Hi, Hari &nbsp;
+                                        Hi, {name} &nbsp;
                                     </button>
                                     <ul className="dropdown-menu " aria-labelledby="profileDropDown">
                                         <li>

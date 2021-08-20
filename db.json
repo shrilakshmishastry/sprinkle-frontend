@@ -1,0 +1,17 @@
+{
+    "user-info":[
+        {
+            "id": 1,
+            "name" : "Shrilakshmi",
+            "email" : "shrilakshmi@gmail.com",
+            "phoneNumber" : 8792227928,
+            "address":[ {
+                "addFirstLine": "#50 Gurudeva road",
+                "addSecondLine":"Near Tempo stand",
+                "city" : "Shimoga",
+                "state" :"Karnataka",
+                "postalCode": 577202
+            }] }
+    ]
+
+}
