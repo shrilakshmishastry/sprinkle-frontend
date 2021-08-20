@@ -1,11 +1,11 @@
 import React from 'react';
-import NavBar from "../presentational/Navbar"
+import NavBarSprinkle from '../presentational/Navbar';
 import Routers from "./routers"
 
 const Main = () => {
   return (
     <div>
-    <NavBar/>
+    <NavBarSprinkle/>
     <Routers/>
     </div>
   );

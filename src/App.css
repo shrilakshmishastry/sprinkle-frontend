@@ -3,4 +3,25 @@
   text-align: center;
 }
 
+.active.nav-link:hover,.active.nav-link:focus{
+  color: #4354fd !important;
+}
+ .inactive.nav-link:hover , .inactive.nav-link:focus{
+   color: #4354fd !important;
+ }
+ .container-fluid {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 
+}
+
+.btn:hover,.btn:focus,a:focus,a:hover{
+  background-color: white !important;
+  color: #4354fd !important;
+}
+
+a{
+  text-decoration: none !important;
+}
