@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './../../App.css';
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -20,7 +20,6 @@ const NavBarSprinkle = () => {
             btn.classList.add("collpased");
             ele.classList.remove("show");
         }
-        console.log(btn.getAttribute("aria-expanded"));
 
     }, [location]);
 
@@ -44,7 +43,7 @@ const NavBarSprinkle = () => {
 
     return (
 
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-white">
             <div className="container-fluid">
                 <Link className="navbar-brand ms-lg-5 primary-text-color" to="/">
                     Sprinkle

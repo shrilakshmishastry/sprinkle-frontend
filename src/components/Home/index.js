@@ -1,9 +1,15 @@
 import React from 'react';
-const Home = () =>{
+import { Col, Container, Row } from 'react-bootstrap';
+
+import LandLayout from './Ui/landLayout';
+import PopularProducts from './Ui/popularProducts';
+
+const Home = () => {
     return (
-        <div>
-            <p>Home here</p>
-        </div>
+        <Container  >
+           <LandLayout/>
+           <PopularProducts/>
+        </Container>
     );
 };
 export default Home;
