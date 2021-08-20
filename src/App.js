@@ -1,15 +1,19 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import './App.css';
+import { initialTopProductLoad } from './config/initialDataLoad/initialTopProductLoad';
+import { initilaDataLoad } from './config/initialDataLoad/initialUserDataLoad';
 import Main from './config/main';
-import { getProfileInitialData } from './redux/actions/profileAction';
+
 
 
 function App() {
 
   const dispatch  = useDispatch();
   React.useEffect(()=>{
-    getProfileInitialData(dispatch);
+
+    initilaDataLoad(dispatch);
+    initialTopProductLoad(dispatch);
   },[dispatch]);
 
   return (

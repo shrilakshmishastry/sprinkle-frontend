@@ -7,21 +7,9 @@ export function getProfile(type,userInfo){
     }
 }
 
-export const  getProfileInitialData = (dispatch) => {
+export const  getProfileInitialData = (dispatch,data) => {
 
     const {initial} = createActionType(GET_PROFILE_ACTION);
-  dispatch(getProfile(initial,{
-        "id": 1,
-        "name" : "shri",
-        "email" : "shri@gmail.com",
-        "phoneNumber" : null,
-        "address":[ {
-            "addFirstLine": "",
-            "addSecondLine":"",
-            "city" : "",
-            "state" :"",
-            "postalCode": null,
-        }],
-    },));
+  dispatch(getProfile(initial,data,));
 
 }
