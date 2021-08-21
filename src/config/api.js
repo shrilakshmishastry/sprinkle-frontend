@@ -3,6 +3,7 @@ const api = {
     "root": " http://localhost:3600",
     "profile": "/user-info",
     "top-products": "/top-products",
+    "get-item": "/products-list"
 };
 
 // function to fetch  user data initally
@@ -32,9 +33,21 @@ async function getTopProducts() {
     }
 }
 
+async function getItem(id, qty, pack_of) {
+    let queryStr = api["get-item"] + "?id=" + id + "&qty=" + qty + "&pack_of=" + pack_of;
+    try {
+        const result = await axios.get(api.root.concat(queryStr));
+        console.log(result);
+    } catch (e) {
+        throw console.error(e);
+    }
+}
+
+
 
 export {
     api,
     getProfileData,
-    getTopProducts
+    getTopProducts,
+    getItem
 };

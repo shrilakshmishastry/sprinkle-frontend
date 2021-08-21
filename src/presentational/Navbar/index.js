@@ -43,7 +43,7 @@ const NavBarSprinkle = () => {
 
     return (
 
-        <nav className="navbar navbar-expand-lg navbar-light bg-white">
+        <nav className="navbar navbar-expand-lg pt-3 navbar-light bg-white">
             <div className="container-fluid">
                 <Link className="navbar-brand ms-lg-5 primary-text-color" to="/">
                     Sprinkle
@@ -93,7 +93,7 @@ const NavBarSprinkle = () => {
                                 :
 
                                 <li className="nav-item dropdown">
-                                    <button className="ps-5 pe-5 btn primary-text-color fw-bold nav-link dropdown-toggle" id="prfileDropDown"
+                                    <button className="ps-5 pe-5 btn primary-text-color fw-normal nav-link dropdown-toggle" id="prfileDropDown"
                                         data-bs-toggle="dropdown" aria-label="Menu to profile and logout" aria-expanded="false"
                                     >
                                         Hi, {name} &nbsp;
