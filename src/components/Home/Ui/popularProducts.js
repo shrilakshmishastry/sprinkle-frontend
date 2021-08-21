@@ -1,9 +1,15 @@
-import { Row, Col, Card, Dropdown } from "react-bootstrap"
+import { Row, Col, Card } from "react-bootstrap"
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import waterBottel from '../../../images/waterbottel.png';
 
 const PopularProducts = () => {
     let popularProducts = useSelector(state => state.homeReducer.productsInHomePage);
+        const history = useHistory();
+
+        function detailViewRedirector(){
+            history.push("/item-details");
+        }
 
     return (
         <div className="mt-3 pt-lg-5 pb-5 light-variant">
@@ -32,7 +38,7 @@ const PopularProducts = () => {
                         return (
                             <Col  key={item.id.toString()} lg={3} md={4} xs={6}
                                 className="mt-5 pe-lg-3 ps-lg-3 ">
-                                <Card className="pt-3 secondary-color border-0 shadow-sm rounded">
+                                <Card onClick={detailViewRedirector} className="pt-3 secondary-color border-0 shadow-sm rounded">
                                     <Card.Img src={waterBottel} className="img-fluid" alt={item.qty} />
                                     <Card.Footer className=" bg-white ">
                                         <span className="d-flex flex-row justify-content-between">

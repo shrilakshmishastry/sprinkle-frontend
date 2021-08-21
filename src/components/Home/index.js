@@ -1,6 +1,6 @@
 import React from 'react';
 import {Container} from 'react-bootstrap';
-
+import InstantDelivery from './Ui/instantDelivery';
 import LandLayout from './Ui/landLayout';
 import OurBottelYourName from './Ui/ourBottelYourName';
 import PopularProducts from './Ui/popularProducts';
@@ -13,6 +13,8 @@ const Home = () => {
            <PopularProducts/>
            <OurBottelYourName/>
            <WorkingHours/>
+           <InstantDelivery/>
+
         </Container>
     );
 };

@@ -48,8 +48,8 @@ const WorkingHours = () => {
                     Ea aut neque odit ad nam similique quidem veritatis quia numquam nobis.
                 </p>
             </Col>
-            <Col md={4} lg={3} className="rounded ps-3 pe-3 pt-3 secondary-color">
-                <p className="fw-bold mt-3 h5">
+            <Col md={6} lg={3} className="mt-md-5 mt-lg-0 rounded ps-3 pe-3 pt-3 secondary-color">
+                <p className="fw-bold mt-3 h5 text-center text-lg-start">
                     Deliver Timings
                 </p>
                 <p className="text-center text-lg-start small text-secondary">
@@ -58,7 +58,7 @@ const WorkingHours = () => {
                {
                    daysName.map((name,index)=>{
                        return (
-                        <p key={name} className="mt-4 d-flex flex-row justify-content-between text-center text-lg-start small">
+                        <p key={name} className={days}>
                         <span>{name}</span>
                         <span className="warning-text-color">{timings[index]}
                         </span>
@@ -66,7 +66,7 @@ const WorkingHours = () => {
                        );
                    })
                }
-              
+
             </Col>
         </Row>
     );

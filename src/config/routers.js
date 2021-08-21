@@ -8,10 +8,12 @@ import Login from '../components/Login';
 import SignUp from "../components/SignUp";
 import PageNotFound from "../components/PageNotFound";
 import UserProfile from '../components/UserProfile';
+import DetailedView from '../components/DetailedItemView';
 
 const Routers = ()=>{
     return(
         <Switch>
+            <Route path="/item-details" component={DetailedView}  exact />
             <Route path="/user-profile" component={UserProfile}  exact />
             <Route path="/signup" component={SignUp}  exact />
             <Route path="/login" component={Login}  exact />

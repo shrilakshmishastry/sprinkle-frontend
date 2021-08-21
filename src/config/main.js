@@ -1,5 +1,7 @@
 import React from 'react';
 import NavBarSprinkle from '../presentational/Navbar';
+import Footer from '../presentational/Footer';
+
 import Routers from "./routers"
 
 const Main = () => {
@@ -7,6 +9,7 @@ const Main = () => {
     <div>
     <NavBarSprinkle/>
     <Routers/>
+   <Footer/>
     </div>
   );
 };
