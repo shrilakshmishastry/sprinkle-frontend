@@ -37,7 +37,7 @@ const NavBarSprinkle = () => {
     const activeLink = "active fw-bolder dark-text-color mt-2 mt-lg-0  me-4 nav-link";
     const inactiveLink = "inactive dark-text-color fw-normal me-4  mt-2 mt-lg-0 nav-link";
 
-    // const userInfo = useSelector(state => state.userReducer.userInfo.email);
+   
     const activeLinkDropDown = "dropdown-item  fw-bolder dark-text-color mt-2 mt-lg-0  me-4";
     const inactiveLinkDropDown = "dropdown-item fw-normal me-4  mt-2 mt-lg-0";
 
