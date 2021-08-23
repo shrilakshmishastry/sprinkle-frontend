@@ -1,8 +1,8 @@
 import { useLocation } from "react-router";
 import React from 'react';
-import { Row, Col, Container, Card, Alert } from 'react-bootstrap';
+import { Row, Col, Container, Alert } from 'react-bootstrap';
 import waterBottel from '../../images/waterbottel.png';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { addToCart } from "../../redux/actions/addCartAction";
 import { cartActionTypeCreator, CART_ACTION } from "../../redux/action-type";
 import { Redirect, useHistory } from "react-router-dom";
@@ -12,24 +12,21 @@ const DetailedView = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const stateInfo = useLocation();
-    const [qty, handleQtyChange] = React.useState(1);
+    const state = stateInfo === undefined ? "" : stateInfo.state.refer;
     const [show, setShow] = React.useState(false);
     const [content, addContent] = React.useState("");
     const [colorAlert, changeColor] = React.useState("success");
-    const cardInnerColor = "ps-3 pe-3 pt-3 secondary-color    d-flex flex-row justify-content-between";
-    const disabledBtn = "ps-5 pe-5 disabled bg-secondary btn  text-white";
-    const activeBtn = "ps-5 pe-5 btn btn-primary";
 
-    let name = useSelector(state => state.userReducer.userInfo.name);
+    // const disabledBtn = "ps-5 pe-5 disabled bg-secondary btn  text-white";
+    // const activeBtn = "ps-5 pe-5 btn btn-primary";
 
-
-    function handleNegativeBtn() {
-        console.log("negative");
-        if (qty === 1) {
-            handleQtyChange(1);
-        }
-        handleQtyChange(qty - 1);
-    }
+    // function handleNegativeBtn() {
+    //     console.log("negative");
+    //     if (qty === 1) {
+    //         handleQtyChange(1);
+    //     }
+    //     handleQtyChange(qty - 1);
+    // }
 
     function handleAddCart() {
         changeColor("success");
@@ -39,19 +36,51 @@ const DetailedView = () => {
     }
 
     function handleBuyNow() {
-        if (name === "") {
-            changeColor("danger");
-            addContent("Login required to place an order.");
-            setShow(true);
-        } else {
-            history.push("/cart");
-        }
+        history.push("/place-order",state);
     }
 
-    function handlePositiveBtn() {
-        handleQtyChange(qty + 1);
+    // function handlePositiveBtn() {
+    //     handleQtyChange(qty + 1);
 
+    // }
+
+
+    function description(display) {
+        const style = display+" " + "rounded ms-lg-5 ps-lg-3 pe-lg-3 mt-3 mt-lg-5 pt-5 pb-5";
+        return (
+            <Col md={6} lg={4} className={style}>
+
+                <h5 className="mb-lg-0" >
+                    Pack of {state.qty} bottles,
+                    consists of {state.pack_of} bottles
+                </h5>
+                <p className="mt-3 h6 text-primary">
+                    ₹{state.price} &nbsp; per pack
+                </p>
+                <p className="small">
+                    Per bottel &nbsp; ₹ {state.per_bottel_price}
+                </p>
+
+
+                {
+                    stateInfo.state.refer.tag === "out of stock" ?
+                        <p className="text-danger  small">
+                            Currently unavialable
+                        </p>
+                        :
+                        <p className="text-secondary  small">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-truck me-3" viewBox="0 0 16 16">
+                                <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                            </svg>
+                            Expect delivery within a day.
+                        </p>
+                }
+
+            </Col>
+        );
     }
+
+
 
     if (stateInfo.state === undefined) {
         return <Redirect to="/" />
@@ -74,86 +103,32 @@ const DetailedView = () => {
                     : <div></div>
             }
 
-            <Row className=" justify-content-center">
-                <Col md={6}  lg={4} className="mt-lg-4">
+            <Row className="border pb-5 justify-content-center ">
+                {
+                    description("d-block d-sm-none")
+                }
+
+                <Col md={6} lg={4} className="mt-lg-4">
                     <img alt="water bottel" src={waterBottel} className="img-fluid" />
-                    <Row className="border pt-3 text-center">
-                        <Col>
-                        <button className={qty === 1 ? disabledBtn : activeBtn}
-                            onClick={handleNegativeBtn}>
-                            -
-                        </button>
-
+                    <Row className=" mt-3">
+                        <Col xs={6} className="d-grid" md={6} >
+                            <button className="btn warning text-white" onClick={handleAddCart}>
+                                Add To cart
+                            </button>
 
                         </Col>
-                        <Col  className="">
-                        <p className="mt-2 ">{qty}</p>
-                        </Col>
-                        <Col>
-                        <button className={stateInfo.stock === qty ? disabledBtn : activeBtn}
-                            onClick={handlePositiveBtn}>
-                            +
-                        </button>
+                        <Col xs={6} md={6} className="d-grid" >
+                            <button className="btn primary-color text-white" onClick={handleBuyNow}>
+                                Buy Now
+                            </button>
                         </Col>
                     </Row>
                 </Col>
-                <Col md={6} className="rounded ms-lg-5 ps-lg-3 pe-lg-3 pt-5 pb-5 mt-4 mt-md-0 mt-lg-4  secondary-color">
-                    <div className="d-flex flex-lg-row flex-column justify-content-between">
-                        <p className="mb-lg-0" >
-                            Pack of {stateInfo.state.refer.qty} bottles
-                        </p>
-
-                        <p>
-                            Consist of {stateInfo.state.refer.pack_of} bottles
-                        </p>
-                    </div>
-
-                    <Card className=" shadow-sm mt-3">
-                        <Card.Body  >
-                            <div className={cardInnerColor}>
-                                <p>
-                                    Price
-                                </p>
-                                <p>
-                                    ₹ {stateInfo.state.refer.price} x{qty}
-                                </p>
-                            </div>
-                            <div className={cardInnerColor}  >
-                                <p>
-                                    Total
-                                </p>
-                                <p>
-                                    ₹ {stateInfo.state.refer.price * qty}
-                                </p>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                    {
-                        stateInfo.state.refer.tag === "out of stock" ?
-                            <p className="text-secondary ps-3 small">
-                                Currently unavialable
-                            </p>
-                            :
-                            <p className="text-secondary ps-3 small">
-                                Expect delivery within a day.
-                            </p>
-                    }
-
-                </Col>
+                {
+                    description("d-none d-sm-block")
+                }
             </Row>
-            <Row className="mt-5 pt-lg-5 d-flex flex-row justify-content-center">
-                <Col xs={6} className="d-grid" md={4} >
-                    <button className="btn warning text-white" onClick={handleAddCart}>
-                        Add To cart
-                    </button>
 
-                </Col>
-                <Col xs={6} md={4} className="d-grid">
-                    <button className="btn primary-color text-white" onClick={handleBuyNow}>
-                        Buy Now
-                    </button>
-                </Col>
-            </Row>
         </Container>
     );
 }

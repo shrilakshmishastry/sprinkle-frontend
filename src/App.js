@@ -12,7 +12,7 @@ function App() {
   const dispatch  = useDispatch();
   React.useEffect(()=>{
 
-    initilaDataLoad(dispatch);
+    // initilaDataLoad(dispatch);
     initialTopProductLoad(dispatch);
   },[dispatch]);
 

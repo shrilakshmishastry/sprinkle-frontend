@@ -9,10 +9,12 @@ import SignUp from "../components/SignUp";
 import PageNotFound from "../components/PageNotFound";
 import UserProfile from '../components/UserProfile';
 import DetailedView from '../components/DetailedItemView';
+import BuyNow from '../components/BuyNow';
 
 const Routers = ()=>{
     return(
         <Switch>
+            <Route path="/place-order" component={BuyNow}  exact />
             <Route path="/item-details" component={DetailedView}  exact />
             <Route path="/user-profile" component={UserProfile}  exact />
             <Route path="/signup" component={SignUp}  exact />

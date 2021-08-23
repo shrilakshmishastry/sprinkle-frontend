@@ -3,13 +3,27 @@ import { Link } from 'react-router-dom';
 import './../../App.css';
 import Dropdown from 'react-bootstrap/Dropdown'
 import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { removeProfileData } from '../../redux/actions/profileAction';
 
 
 const NavBarSprinkle = () => {
     let location = useLocation().pathname;
-    let name = useSelector(state => state.userReducer.userInfo.name);
+    let name = useSelector(state => state.userReducer.userInfo);
+    const dispatch = useDispatch();
+
+    const links = [
+        "/",
+        "/products",
+        "/about-us",
+        "/cart"
+    ];
+    const names = [
+        "Home",
+        "Shop",
+        "About",
+        "Cart"
+    ];
 
     useEffect(() => {
         var ele = document.getElementById("sprinkleNavbar");
@@ -23,6 +37,11 @@ const NavBarSprinkle = () => {
 
     }, [location]);
 
+    function handleLogout() {
+        removeProfileData(dispatch,name);
+    }
+
+
     function handleClick() {
         var ele = document.getElementById("sprinkleNavbar");
         var btn = document.getElementById("sprinkleNavToggler");
@@ -34,10 +53,20 @@ const NavBarSprinkle = () => {
         }
     }
 
+    function linkGenerator(path,name) {
+        return (
+            <li key={path} className="nav-item" onClick={handleClick}>
+                <Link to={path} className={location === path ? activeLink : inactiveLink}>
+                    {name}
+                </Link>
+            </li>
+        );
+    }
+
     const activeLink = "active fw-bolder dark-text-color mt-2 mt-lg-0  me-4 nav-link";
     const inactiveLink = "inactive dark-text-color fw-normal me-4  mt-2 mt-lg-0 nav-link";
 
-   
+
     const activeLinkDropDown = "dropdown-item  fw-bolder dark-text-color mt-2 mt-lg-0  me-4";
     const inactiveLinkDropDown = "dropdown-item fw-normal me-4  mt-2 mt-lg-0";
 
@@ -58,32 +87,20 @@ const NavBarSprinkle = () => {
                 </button>
                 <div id="sprinkleNavbar" className=" collapse navbar-collapse">
                     <ul className="navbar-nav ms-auto d-flex align-items-center mb-2 mb-lg-0">
-                        <li className="nav-item" onClick={handleClick}>
-                            <Link to="/" className={location === '/' ? activeLink : inactiveLink}>
-                                Home
-                            </Link>
-                        </li>
-                        <li className="nav-item" onClick={handleClick}>
-                            <Link to="/products" className={location === '/products' ? activeLink : inactiveLink}>
-                                Shop
-                            </Link>
-                        </li>
-                        <li className="nav-item" onClick={handleClick}>
-                            <Link to="/about-us" className={location === '/about-us' ? activeLink : inactiveLink}>
-                                About
-                            </Link>
-                        </li>
-                        <li className="nav-item" onClick={handleClick}>
-                            <Link to="/cart" className={location === '/cart' ? activeLink : inactiveLink}>
-                                Cart
-                            </Link>
-                        </li>
+                    {
+                        links.map((e,index)=>{
+                            return (
+                            linkGenerator(e,names[index])
+                            )
+                        })
+                    }
+
                     </ul>
                     <Dropdown.Divider />
 
                     <ul className="navbar-nav  d-grid  ms-auto  mb-2 mb-lg-0">
                         {
-                            name === ""
+                            name.name === ""
                                 ?
 
                                 <Link to="/login" className="btn  primary-color rounded   ps-5 pe-5  text-center text-white">
@@ -96,7 +113,7 @@ const NavBarSprinkle = () => {
                                     <button className="ps-5 pe-5 btn primary-text-color fw-normal nav-link dropdown-toggle" id="prfileDropDown"
                                         data-bs-toggle="dropdown" aria-label="Menu to profile and logout" aria-expanded="false"
                                     >
-                                        Hi, {name} &nbsp;
+                                        Hi, {name.name} &nbsp;
                                     </button>
                                     <ul className="dropdown-menu " aria-labelledby="profileDropDown">
                                         <li>
@@ -105,9 +122,10 @@ const NavBarSprinkle = () => {
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link to="/user-profile" className={location === '/cart' ? activeLinkDropDown : inactiveLinkDropDown}>
+                                            <button onClick={handleLogout} className="btn ">
                                                 Logout
-                                            </Link>
+                                            </button>
+
                                         </li>
                                     </ul>
                                 </li>

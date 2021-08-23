@@ -37,3 +37,8 @@ a{
 svg:hover{
   color: #f68904!important;
 }
+
+input:required,input:focus{
+  outline: none !important;
+  box-shadow: none !important;
+}
