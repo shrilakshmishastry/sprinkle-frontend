@@ -1,11 +1,12 @@
 import { useLocation } from "react-router";
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Container, Alert } from 'react-bootstrap';
 import waterBottel from '../../images/waterbottel.png';
 import { useDispatch} from "react-redux";
 import { addToCart } from "../../redux/actions/addCartAction";
 import { cartActionTypeCreator, CART_ACTION } from "../../redux/action-type";
 import { Redirect, useHistory } from "react-router-dom";
+import CarryVehicle from "../../Data/BuyNow/SVGs/carryVehicle";
 
 
 const DetailedView = () => {
@@ -17,16 +18,7 @@ const DetailedView = () => {
     const [content, addContent] = React.useState("");
     const [colorAlert, changeColor] = React.useState("success");
 
-    // const disabledBtn = "ps-5 pe-5 disabled bg-secondary btn  text-white";
-    // const activeBtn = "ps-5 pe-5 btn btn-primary";
 
-    // function handleNegativeBtn() {
-    //     console.log("negative");
-    //     if (qty === 1) {
-    //         handleQtyChange(1);
-    //     }
-    //     handleQtyChange(qty - 1);
-    // }
 
     function handleAddCart() {
         changeColor("success");
@@ -36,13 +28,10 @@ const DetailedView = () => {
     }
 
     function handleBuyNow() {
-        history.push("/place-order",state);
+        history.push("/place-order",[state]);
     }
 
-    // function handlePositiveBtn() {
-    //     handleQtyChange(qty + 1);
 
-    // }
 
 
     function description(display) {
@@ -55,10 +44,10 @@ const DetailedView = () => {
                     consists of {state.pack_of} bottles
                 </h5>
                 <p className="mt-3 h6 text-primary">
-                    ₹{state.price} &nbsp; per pack
+                    ₹{state.price}  per pack
                 </p>
                 <p className="small">
-                    Per bottel &nbsp; ₹ {state.per_bottel_price}
+                    Per bottel  ₹ {state.per_bottel_price}
                 </p>
 
 
@@ -69,9 +58,7 @@ const DetailedView = () => {
                         </p>
                         :
                         <p className="text-secondary  small">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-truck me-3" viewBox="0 0 16 16">
-                                <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                            </svg>
+                           <CarryVehicle/>
                             Expect delivery within a day.
                         </p>
                 }
@@ -82,7 +69,7 @@ const DetailedView = () => {
 
 
 
-    if (stateInfo.state === undefined) {
+    if (stateInfo.state === undefined ) {
         return <Redirect to="/" />
     }
     return (

@@ -1,102 +1,95 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Redirect, useLocation } from "react-router-dom";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
+import AddressSelect from './Ui/addressSelect';
+import ItemList from './Ui/itemList';
 import LoginHandle from './Ui/loginHandle';
+import ProductsDetail from './Ui/orderSummary';
+import PaymentOption from './Ui/paymentOption';
 
 
 const BuyNow = () => {
-    const info = useLocation();
-    console.log(info.state);
+    const info = useLocation().state;
+    const history =  useHistory();
+    const [addressSelcted,addAddress] =  useState("");
+    const [qty, handleQtyChange] = useState([]);
+    const [active,changeActiveAccordion] = useState(0);
+
     const userInfo = useSelector(state => state.userReducer.userInfo.email);
 
-    useEffect(()=>{},[userInfo]);
+    useEffect(()=>{
+        userInfo === ""
+        ? changeActiveAccordion(0)
+        : changeActiveAccordion(1);
+        let a = [];
+        for (let i=0;i<info.length;i++){
+            a.push(1);
+        }
+        handleQtyChange(a);
+    },[userInfo]);
 
 
-    if (info.state === undefined) {
+    function handleNegativeBtn(index) {
+
+        if (qty <= 1) {
+            handleQtyChange( qty.map((val,ind)=>
+            index === ind ? val-1 : val
+        ));
+        }
+
+    }
+
+    function handlePositiveBtn(index) {
+        handleQtyChange( qty.map((val,ind)=>
+            index === ind ? val+1 : val
+        ));
+
+    }
+
+    function handleRemoveBtn(index){
+        if(info.length === 1){
+            let refer = info[0][0];
+
+            history.goBack();
+        }else{
+            delete info[index];
+            history.replace("/place-order",[info])
+        }
+    }
+
+
+
+    if (info === undefined) {
         return <Redirect to="/" />
     }
 
-    
+
     return (
         <Container>
             <Row className="mt-5 mb-5">
-                <Col md={6} lg={8} className="bg-primary" >
+                <Col md={8} lg={8} className="" >
                     <div className="accordion" id="accordionSprinkle">
-                        <LoginHandle />
-                        <div className="accordion-item">
-                            <h2 className="accordion-header" id="headingTwo">
-                                <button
-                                    className={userInfo === " " ? " accordion-button collapsed" : "accordion-button"}
-                                    data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                    aria-expanded={userInfo === "" ? false : true}
-                                    aria-controls="collapseTwo"
-
-                                >
-                                    DELIVERY ADDRESS
-                                </button>
-                            </h2>
-                            <div id="collapseTwo"  className={userInfo === " " ?  "accordion-collapse collapse" : "ccordion-collapse  show"}
-                                aria-labelledby="headingTwo" data-bs-parent="#accordionSprinkle"
-                            >
-                                <div className="accordion-body">
-                                    <strong>
-                                        Address
-                                    </strong>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="accordion-item">
-                            <h2 className="accordion-header" id="headingThree">
-                                <button
-                                    className={userInfo === "" ? "accordion-button collapsed" : "accordion-button"}
-                                    data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                    aria-expanded="false" aria-controls="collapseThree"
-
-                                >
-                                    ORDER SUMMARY
-                                </button>
-                            </h2>
-                            <div id="collapseThree" className="accordion-collapse collapse"
-                                aria-labelledby="headingThree" data-bs-parent="#accordionSprinkle"
-                            >
-                                <div className="accordion-body">
-                                    <strong>
-                                        ORDER SUMMARY
-                                    </strong>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div className="accordion-item">
-                            <h2 className="accordion-header" id="headingThree">
-                                <button
-                                    className={userInfo === "" ? "accordion-button collapsed" : "accordion-button"}
-                                    data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                    aria-expanded="false" aria-controls="collapseThree"
-
-                                >
-                                    PAYMENT OPTION
-                                </button>
-                            </h2>
-                            <div id="collapseThree" className="accordion-collapse collapse"
-                                aria-labelledby="headingThree" data-bs-parent="#accordionSprinkle"
-                            >
-                                <div className="accordion-body">
-                                    <strong>
-                                        PAYMENT OPTION
-                                    </strong>
-                                </div>
-                            </div>
-                        </div>
-
-
+                        <LoginHandle active={active} />
+                        <AddressSelect active={active}
+                        changeActive={(param)=>{
+                            addAddress(param);
+                            changeActiveAccordion(2);
+                        }}
+                        />
+                        <ProductsDetail
+                        active={active}
+                         handleNegativeBtn={(index)=>handleNegativeBtn(index)}
+                         handlePositiveBtn={(index)=>handlePositiveBtn(index)}
+                         handleRemoveBtn={(index)=>handleRemoveBtn(index)}
+                         qty = {qty}
+                         addressSelected={addressSelcted}
+                         />
                     </div>
                 </Col>
-                <Col md={6} lg={4} className="bg-success">
-                    item list
+                <Col md={4} lg={4} className="mt-5 mt-md-0">
+                    <ItemList qty={qty}/>
+                    <PaymentOption />
                 </Col>
             </Row>
         </Container>

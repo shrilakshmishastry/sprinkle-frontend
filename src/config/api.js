@@ -4,7 +4,8 @@ const api = {
     "profile": "/user-info",
     "top-products": "/top-products",
     "get-item": "/products-list",
-    "login" : "/login"
+    "login" : "/login",
+    "add-address" : "/address"
 };
 
 // function to fetch  user data initally

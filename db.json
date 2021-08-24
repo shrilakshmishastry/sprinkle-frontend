@@ -11,7 +11,15 @@
                 "city" : "Shimoga",
                 "state" :"Karnataka",
                 "postalCode": 577202
-            }] },
+            },
+            {
+                "addFirstLine": "Gurudeva road",
+                "addSecondLine":"Near Tempo stand",
+                "city" : "Shimoga",
+                "state" :"Karnataka",
+                "postalCode": 577202
+            }
+            ] },
       "top-products" : [
         {
             "id" : 1,

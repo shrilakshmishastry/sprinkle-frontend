@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfileInitialData } from '../../../redux/actions/profileAction';
 // import { loginHandler } from '../../../config/api';
 
-const LoginHandle = () => {
+const LoginHandle = ({active}) => {
     const inputStyle = "mt-4 d-block border-0 border-bottom border-secondary";
     const emailPattren = "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";
     const passwordPattren = "[a-zA-Z0-9.-_]{4,}";
-    const userInfo = useSelector(state => state.userReducer.userInfo.email);
+
     const [email, addEmail] = React.useState("");
     const [password, addPassword] = React.useState("");
     const [load,changeLoad] = React.useState(false);
@@ -24,7 +24,6 @@ const LoginHandle = () => {
         // }
 
         getProfileInitialData(dispatch,{
-
             "id": 1,
             "name" : "Shrilakshmi",
             "email" : "shrilakshmi@gmail.com",
@@ -35,7 +34,15 @@ const LoginHandle = () => {
                 "city" : "Shimoga",
                 "state" :"Karnataka",
                 "postalCode": 577202
-            }] })
+            },
+            {
+                "addFirstLine": "Gurudeva road",
+                "addSecondLine":"Near Tempo stand",
+                "city" : "Shimoga",
+                "state" :"Karnataka",
+                "postalCode": 577202
+            }
+        ] })
        changeLoad(false);
     }
 
@@ -48,23 +55,23 @@ const LoginHandle = () => {
         <div className="accordion-item">
             <h2 className="accordion-header" id="panelStayOpen-headingOne">
                 {
-                    userInfo === "" ?
+                    active === 0 ?
                         <button className="accordion-button"
                             data-bs-toggle="collapse" data-bs-target="#panelStayOpen-collapseOne"
                             aria-expanded="true" aria-controls="panelStayOpen-collpaseOne"
                         >
-                            LOGIN
+                          1  LOGIN
                         </button>
                         : <div className="ps-4 pt-3 pb-3">
                             <p className="h6 primary-text-color  fw-normal">
-                                LOGIN
+                             1   LOGIN
                             </p>
                         </div>
                 }
 
             </h2>
             <div id="panelStayOpen-collapseOne"
-                className={userInfo === "" ? "accordion-collapse collapse show" : "d-none"}
+                className={active === 0  ? "accordion-collapse collapse show" : "d-none"}
                 aria-labelledby="panelStayOpen-headingOne"
                 data-bs-parent="#accordionSprinkle"
             >

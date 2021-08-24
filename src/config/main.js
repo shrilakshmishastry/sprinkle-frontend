@@ -4,12 +4,15 @@ import Footer from '../presentational/Footer';
 
 import Routers from "./routers"
 
+import ScrollToTop from './scrollToTop';
+
 const Main = () => {
   return (
     <div>
-    <NavBarSprinkle/>
-    <Routers/>
-   <Footer/>
+      <ScrollToTop />
+      <NavBarSprinkle />
+      <Routers />
+      <Footer />
     </div>
   );
 };
