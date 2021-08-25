@@ -38,7 +38,7 @@ const NavBarSprinkle = () => {
     }, [location]);
 
     function handleLogout() {
-        removeProfileData(dispatch,name);
+        removeProfileData(name)(dispatch);
     }
 
 
@@ -53,7 +53,7 @@ const NavBarSprinkle = () => {
         }
     }
 
-    function linkGenerator(path,name) {
+    function linkGenerator(path, name) {
         return (
             <li key={path} className="nav-item" onClick={handleClick}>
                 <Link to={path} className={location === path ? activeLink : inactiveLink}>
@@ -87,13 +87,13 @@ const NavBarSprinkle = () => {
                 </button>
                 <div id="sprinkleNavbar" className=" collapse navbar-collapse">
                     <ul className="navbar-nav ms-auto d-flex align-items-center mb-2 mb-lg-0">
-                    {
-                        links.map((e,index)=>{
-                            return (
-                            linkGenerator(e,names[index])
-                            )
-                        })
-                    }
+                        {
+                            links.map((e, index) => {
+                                return (
+                                    linkGenerator(e, names[index])
+                                )
+                            })
+                        }
 
                     </ul>
                     <Dropdown.Divider />

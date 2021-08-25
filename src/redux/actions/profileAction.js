@@ -1,24 +1,38 @@
 // import { removeProfile } from "../../config/api";
+import { getProfileData } from "../../Data/ApiCalls/Profile/getProfile";
+import { emptyUserData } from "../../Data/UserProfile/emptyUserData";
 import { cartActionTypeCreator, GET_PROFILE_ACTION } from "../action-type";
 
-export function getProfile(type,userInfo){
-    return {
-        type : type,
-        userInfo: userInfo
-    }
-}
 
-export const  getProfileInitialData = (dispatch,data) => {
+export const  getProfileInitialData = () => {
     const {add} = cartActionTypeCreator(GET_PROFILE_ACTION);
-  dispatch(getProfile(add,data,));
+    return async function(dispatch){
+        try{
+            const result = await getProfileData();
+
+            dispatch({
+                type:add,
+                userInfo: result.data
+            });
+        }catch(e){
+            //ask what I should do?
+        }
+    }
+
 }
 
-export const removeProfileData = (dispatch,data) =>{
+export const removeProfileData = (data) =>{
     const {remove} = cartActionTypeCreator(GET_PROFILE_ACTION);
-    try{
-        // removeProfile(data);
-        dispatch(getProfile(remove,{}))
-    }catch(e){
-        console.error(e);
+    return async function (dispatch) {
+        try{
+            // removeProfile(data);
+            dispatch({
+                type: remove,
+                userInfo: emptyUserData
+            })
+        }catch(e){
+            console.error(e);
+        }
     }
+
 }

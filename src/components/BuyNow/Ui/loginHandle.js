@@ -5,6 +5,7 @@ import { getProfileInitialData } from '../../../redux/actions/profileAction';
 // import { loginHandler } from '../../../config/api';
 
 const LoginHandle = ({active}) => {
+    const user = useSelector(state => state.userReducer.userInfo.email);
     const inputStyle = "mt-4 d-block border-0 border-bottom border-secondary";
     const emailPattren = "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";
     const passwordPattren = "[a-zA-Z0-9.-_]{4,}";
@@ -23,26 +24,7 @@ const LoginHandle = ({active}) => {
 
         // }
 
-        getProfileInitialData(dispatch,{
-            "id": 1,
-            "name" : "Shrilakshmi",
-            "email" : "shrilakshmi@gmail.com",
-            "phoneNumber" : 8792227928,
-            "address":[ {
-                "addFirstLine": "#50 Gurudeva road",
-                "addSecondLine":"Near Tempo stand",
-                "city" : "Shimoga",
-                "state" :"Karnataka",
-                "postalCode": 577202
-            },
-            {
-                "addFirstLine": "Gurudeva road",
-                "addSecondLine":"Near Tempo stand",
-                "city" : "Shimoga",
-                "state" :"Karnataka",
-                "postalCode": 577202
-            }
-        ] })
+        getProfileInitialData()(dispatch);
        changeLoad(false);
     }
 
@@ -55,7 +37,7 @@ const LoginHandle = ({active}) => {
         <div className="accordion-item">
             <h2 className="accordion-header" id="panelStayOpen-headingOne">
                 {
-                    active === 0 ?
+                    active === 0 || user =="" ?
                         <button className="accordion-button"
                             data-bs-toggle="collapse" data-bs-target="#panelStayOpen-collapseOne"
                             aria-expanded="true" aria-controls="panelStayOpen-collpaseOne"
@@ -71,7 +53,7 @@ const LoginHandle = ({active}) => {
 
             </h2>
             <div id="panelStayOpen-collapseOne"
-                className={active === 0  ? "accordion-collapse collapse show" : "d-none"}
+                className={active === 0 || user =="" ? "accordion-collapse collapse show" : "d-none"}
                 aria-labelledby="panelStayOpen-headingOne"
                 data-bs-parent="#accordionSprinkle"
             >

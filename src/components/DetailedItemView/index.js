@@ -1,12 +1,13 @@
 import { useLocation } from "react-router";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Container, Alert } from 'react-bootstrap';
 import waterBottel from '../../images/waterbottel.png';
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/actions/addCartAction";
-import { cartActionTypeCreator, CART_ACTION } from "../../redux/action-type";
 import { Redirect, useHistory } from "react-router-dom";
-import CarryVehicle from "../../Data/BuyNow/SVGs/carryVehicle";
+import CarryVehicle from "../../Data/SVGs/carryVehicle";
+import Loader from 'react-loader-spinner';
+import { useSelector } from "react-redux";
 
 
 const DetailedView = () => {
@@ -14,28 +15,53 @@ const DetailedView = () => {
     const history = useHistory();
     const stateInfo = useLocation();
     const state = stateInfo === undefined ? "" : stateInfo.state.refer;
+    const [clicked, setClicked] = React.useState();
     const [show, setShow] = React.useState(false);
-    const [content, addContent] = React.useState("");
-    const [colorAlert, changeColor] = React.useState("success");
+
+    let item = useSelector(state => state.checkoutReducer);
+    let items = item.productsAtCart;
+    const [itemPresent, changeItemPresent] = useState(false);
+
+    useEffect(() => {
+        let present;
+        for(let i=0;i<items.length;i++){
+            if(items[i].id===state.id){
+                present = true;
+                break;
+            }
+        }
+        console.log(present);
+        changeItemPresent(present);
+    }, [item]);
 
 
 
     function handleAddCart() {
-        changeColor("success");
-        dispatch(addToCart(stateInfo.state.refer, cartActionTypeCreator(CART_ACTION).add));
-        addContent("Item added to cart!");
+        setClicked(0);
         setShow(true);
+        addToCart(stateInfo.state.refer)(dispatch);
+        setShow(false);
+        history.push("/cart");
+
     }
 
     function handleBuyNow() {
-        history.push("/place-order",[state]);
+
+        setClicked(1);
+        history.push( {
+            pathname: "/place-order",
+            state:{
+                items: [state],
+                qty:[1],
+            }
+        });
     }
 
 
 
 
     function description(display) {
-        const style = display+" " + "rounded ms-lg-5 ps-lg-3 pe-lg-3 mt-3 mt-lg-5 pt-5 pb-5";
+        const style = display + " " + "rounded ms-lg-5 ps-lg-3 pe-lg-3 mt-3 mt-lg-5 pt-5 pb-5";
         return (
             <Col md={6} lg={4} className={style}>
 
@@ -58,7 +84,7 @@ const DetailedView = () => {
                         </p>
                         :
                         <p className="text-secondary  small">
-                           <CarryVehicle/>
+                            <CarryVehicle />
                             Expect delivery within a day.
                         </p>
                 }
@@ -69,26 +95,11 @@ const DetailedView = () => {
 
 
 
-    if (stateInfo.state === undefined ) {
+    if (stateInfo.state === undefined) {
         return <Redirect to="/" />
     }
     return (
         <Container className="mt-5 mb-5">
-            {
-                show ?
-                    <Alert variant={colorAlert} >
-                        <div className="ps-5 d-flex flex-row justify-content-between">
-                            <p className="pt-2">
-                                {content}
-                            </p>
-                            <button onClick={() => setShow(false)} className="btn fw-bold text-success">
-                                X
-                            </button>
-                        </div>
-
-                    </Alert>
-                    : <div></div>
-            }
 
             <Row className="border pb-5 justify-content-center ">
                 {
@@ -99,14 +110,53 @@ const DetailedView = () => {
                     <img alt="water bottel" src={waterBottel} className="img-fluid" />
                     <Row className=" mt-3">
                         <Col xs={6} className="d-grid" md={6} >
-                            <button className="btn warning text-white" onClick={handleAddCart}>
-                                Add To cart
-                            </button>
+                            {
+                                itemPresent ?
+                                    <button
+                                        className={
+                                            show ? "btn btn-secondary disabled"
+                                                : "btn warning text-white"
+                                        }
+                                        onClick={() => history.push("/cart")}>
+
+                                        Added To cart
+                                    </button>
+                                    : <button
+                                        className={
+                                            show ? "btn btn-secondary disabled"
+                                                : "btn warning text-white"
+                                        }
+                                        onClick={handleAddCart}>
+                                        {
+                                            show && clicked === 0 ? <Loader type="Oval" color="#ffffff"
+                                                height={25} width={80}
+                                                className=" text-center" />
+                                                :
+                                                <p className="mb-0">
+                                                    Add To cart
+                                                </p>
+                                        }
+                                    </button>
+                            }
+
 
                         </Col>
                         <Col xs={6} md={6} className="d-grid" >
-                            <button className="btn primary-color text-white" onClick={handleBuyNow}>
-                                Buy Now
+                            <button
+                                className={show ? "btn btn-secondary disabled"
+                                    : "btn primary-color text-white"
+                                }
+                                onClick={handleBuyNow}>
+                                {
+                                    show && clicked === 1 ? <Loader type="Oval" color="#ffffff"
+                                        height={25} width={80}
+                                        className=" text-center" />
+                                        :
+                                        <p className="mb-0">
+                                            Buy Now
+                                        </p>
+                                }
+
                             </button>
                         </Col>
                     </Row>

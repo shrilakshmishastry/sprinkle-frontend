@@ -1,18 +1,7 @@
+import { emptyUserData } from "../../Data/UserProfile/emptyUserData";
 import { cartActionTypeCreator, GET_PROFILE_ACTION } from "../action-type";
 const initialState ={
-      userInfo: {
-          "id": null,
-          "name" : "",
-          "email" : "",
-          "phoneNumber" : null,
-          "address":[ {
-              "addFirstLine": "",
-              "addSecondLine":"",
-              "city" : "",
-              "state" :"",
-              "postalCode": null,
-          }],
-      },
+      userInfo: emptyUserData,
 };
 
 export default function User(state = initialState,action){
@@ -23,19 +12,9 @@ export default function User(state = initialState,action){
             return {userInfo : newState};
         }
         case(remove):{
-            return {userInfo :  {
-                "id": null,
-                "name" : "",
-                "email" : "",
-                "phoneNumber" : null,
-                "address":[ {
-                    "addFirstLine": "",
-                    "addSecondLine":"",
-                    "city" : "",
-                    "state" :"",
-                    "postalCode": null,
-                }],
-            },}
+            return {
+                userInfo :  emptyUserData
+            }
         }
         default: {
             return state;

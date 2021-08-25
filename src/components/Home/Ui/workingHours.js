@@ -1,26 +1,11 @@
 import { Col, Row } from "react-bootstrap"
 import Travel from '../../../images/travel.jpg';
 import Purity from '../../../images/purity.jpg';
+import { dayName, timing } from "../../../Data/LandPage/daysAndWorkingHours";
 
 const WorkingHours = () => {
-
-    const daysName = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thrusday",
-        "Friday",
-        "Saturday"
-    ];
-
-    const timings = [
-        "09 AM - 6 PM",
-        "09 AM - 6 PM",
-        "09 AM - 6 PM",
-        "09 AM - 6 PM",
-        "09 AM - 6 PM",
-        "09 AM - 6 PM",
-    ];
+    let daysName = dayName;
+    let timings = timing;
 
     const description = "text-center text-secondary text-lg-start small";
 

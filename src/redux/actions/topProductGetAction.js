@@ -1,14 +1,22 @@
-import { createActionType, GET_TOP_PRODUCT_LIST_ACTION } from "../action-type"
-
-export function topProducts(type,productsInHomePage){
-    return{
-        type : type,
-        productsInHomePage : productsInHomePage
-    };
-}
-
-export const getTopProductList = (dispatch,productsInHomePage) =>{
+import { getTopProducts } from "../../Data/ApiCalls/Products/getTopProduct.js";
+import {createActionType, GET_TOP_PRODUCT_LIST_ACTION  } from "../action-type.js";
+const getProductListOfHome = ()=>{
     const {initial} = createActionType(GET_TOP_PRODUCT_LIST_ACTION);
-    dispatch(topProducts(initial,productsInHomePage));
-
-}
+    return async function(dispatch) {
+        try{
+            const result = await getTopProducts();
+            dispatch({
+                type: initial,
+                productsInHomePage: result.data
+            });
+        }catch(e){
+            dispatch({
+                type: initial,
+                productsInHomePage: []
+            });
+        }
+    }
+};
+export {
+    getProductListOfHome
+};

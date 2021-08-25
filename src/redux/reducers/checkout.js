@@ -5,17 +5,22 @@ const initialState ={
 };
 
 export default function CheckOut(state = initialState,action){
+    console.log(action);
     const {add,remove} = cartActionTypeCreator(CART_ACTION);
 
     switch(action.type){
         case(add):{
             let newState = state;
             newState.productsAtCart.push(action.productsAtCart);
-            return newState;
+            return  newState;
 
         }
         case(remove):{
-            break;
+            let newState = state;
+            newState.productsAtCart = action.item;
+            return  {
+                productsAtCart : action.item
+            };
         }
         default: {
             return state;

@@ -14,7 +14,7 @@ const ProductsDetail = ({
     addressSelected
 }
 ) => {
-    let info = useLocation().state;
+    let info = useLocation().state.items;
     let user = useSelector(state=>state.userReducer.userInfo);
     const [show, setShow] = useState(false);
 
@@ -69,7 +69,7 @@ const ProductsDetail = ({
 
                                             </Col>
                                             <Col md={4} xs={4} >
-                                                <p className="pt-2">{qty}</p>
+                                                <p className="pt-2">{qty[index]}</p>
                                             </Col>
                                             <Col md={4} xs={4} >
                                                 <button className={info.stock === qty[index]  || show? disabledBtn : activeBtn}

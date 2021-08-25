@@ -10,29 +10,25 @@ import PaymentOption from './Ui/paymentOption';
 
 
 const BuyNow = () => {
-    const info = useLocation().state;
+    const state = useLocation().state;
+    const info = useLocation().state.items;
+    const qt = useLocation().state.qty;
     const history =  useHistory();
     const [addressSelcted,addAddress] =  useState("");
     const [qty, handleQtyChange] = useState([]);
     const [active,changeActiveAccordion] = useState(0);
 
-    const userInfo = useSelector(state => state.userReducer.userInfo.email);
-
+    const user = useSelector(state => state.userReducer.userInfo);
+    const userInfo = user.email;
     useEffect(()=>{
-        userInfo === ""
-        ? changeActiveAccordion(0)
-        : changeActiveAccordion(1);
-        let a = [];
-        for (let i=0;i<info.length;i++){
-            a.push(1);
-        }
-        handleQtyChange(a);
+        userInfo != "" ? changeActiveAccordion(1) :changeActiveAccordion(0);
+        handleQtyChange(qt);
     },[userInfo]);
 
 
     function handleNegativeBtn(index) {
 
-        if (qty <= 1) {
+        if (qty[index] > 1) {
             handleQtyChange( qty.map((val,ind)=>
             index === ind ? val-1 : val
         ));
@@ -49,7 +45,6 @@ const BuyNow = () => {
 
     function handleRemoveBtn(index){
         if(info.length === 1){
-            let refer = info[0][0];
 
             history.goBack();
         }else{
@@ -60,9 +55,10 @@ const BuyNow = () => {
 
 
 
-    if (info === undefined) {
+    if (state === undefined) {
         return <Redirect to="/" />
     }
+
 
 
     return (
@@ -88,7 +84,7 @@ const BuyNow = () => {
                     </div>
                 </Col>
                 <Col md={4} lg={4} className="mt-5 mt-md-0">
-                    <ItemList qty={qty}/>
+                    <ItemList qty={qty} items={state.items}/>
                     <PaymentOption />
                 </Col>
             </Row>

@@ -1,4 +1,4 @@
-import Cash from "../../../Data/BuyNow/SVGs/cash"
+import Cash from "../../../Data/SVGs/cash"
 
 const PaymentOption = () => {
     return (

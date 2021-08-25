@@ -1,10 +1,9 @@
-import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 
-const ItemList = ({ qty }) => {
-    let items = useLocation().state;
+const ItemList = ({ qty ,items}) => {
+
     const [total, changeTotal] = useState(0);
     const userInfo = useSelector(state => state.userReducer.userInfo.email);
 
@@ -24,7 +23,7 @@ const ItemList = ({ qty }) => {
             </div>
         );
     }
-
+    console.log(items);
 
     return (
         <Card>
