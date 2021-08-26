@@ -1,20 +1,45 @@
 import { useState } from "react";
+import { Col, Row } from "react-bootstrap";
 import Loader from 'react-loader-spinner';
+import { useDispatch } from "react-redux";
+import { loginHandler } from "../../../Data/ApiCalls/Login/login";
+import { modalLogin, modalSignIn } from "../../../redux/actions/modalLogin";
+import { getProfileInitialData } from "../../../redux/actions/profileAction";
+
 
 const UserInfoInput = () => {
     const [password, addPassword] = useState("");
     const [email, addEmail] = useState("");
     const [load, changeLoad] = useState(false);
     const inputStyle = "mt-4 align-self-center  d-block border-0 border-bottom border-secondary";
+    const dispatch = useDispatch();
+    const [errorShow,handleErrorMsg] = useState(false);
 
-    function handleFormSubmit(event) {
+    async function handleFormSubmit(event) {
         event.preventDefault();
-        console.log("hello");
+        handleErrorMsg(false);
+        changeLoad(true);
+        try{
+            // in result data send userinfo
+            // const result = await loginHandler(email,password);
+             getProfileInitialData()(dispatch);
+            modalLogin(false)(dispatch);
+        }catch(e){
+        handleErrorMsg(true);
+
+        }
+        changeLoad();
+
+    }
+
+    function handleSignInBtn() {
+        modalLogin(false)(dispatch)
+        modalSignIn(true)(dispatch);
     }
 
     return (
-        <div className="d-flex flex-column mt-5">
-            <form onSubmit={handleFormSubmit} className=" mt-5">
+        <div className=" mt-md-5">
+            <form onSubmit={handleFormSubmit} className=" mt-md-5">
                 <input
                     className={inputStyle}
                     type="email"
@@ -35,22 +60,35 @@ const UserInfoInput = () => {
                     load ?
                         <Loader type="Oval" color="#4354fd" height={25} width={80} className="mt-4" />
                         :
-                       <div className=" d-grid ">
+                       <div className=" d-grid me-5 me-md-0">
                             <input
-                            className="btn  mt-4 ms-3 ps-5 pe-5 btn btn-sm  primary-color d-block text-white"
+                            className="btn  mt-4  btn-sm  primary-color d-block text-white"
                             type="submit" value="Submit" />
                        </div>
                 }
             </form>
-            <div  className="">
-                <small className="d-flex  flex-row">
-                    <p className="mt-3 ">
+            <Row className="">
+                <Col md={9} xs={7}>
+                <p className="mt-2 text-start text-md-end small">
                     Don't have an account?
                     </p>
-                    <button className="btn primary-text-color">
-                        SignIn now
+
+                </Col>
+                <Col xs={4} md={3} className=" ps-0" >
+                <button
+                onClick={handleSignInBtn}
+                className="btn  text-start ps-0  primary-text-color">
+                        <small>
+                        Signup
+                        </small>
                     </button>
-                </small>
+                </Col>
+            </Row>
+
+            <div className={errorShow ? "text-center" : "d-none"}>
+                <p className="text-danger small">
+                    Check password and email
+                </p>
             </div>
 
         </div>

@@ -1,36 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Cancel from '../../Data/SVGs/cancel';
-import AddressInput from './UI/addressInput';
 import UserInfoInput from './UI/userInfoInput';
 import PurityImg from '../../images/purity.jpg';
+import { useDispatch } from 'react-redux';
+import { modalLogin } from '../../redux/actions/modalLogin';
 
 const Login = () => {
-    // const [address, addAddress] = useState();
-    // const [activeWindow, setActiveWindow] = useState(0);
 
 
+    const dispatch = useDispatch();
 
+    function handleModal() {
+      modalLogin(false)(dispatch);
+    }
 
     return (
-        <Container>
-            <Row className=" justify-content-end">
-                <Col md={1}>
-                    <button className="btn fw-bold ">
+        <Container   fluid>
+             <Row >
+                <Col md={4} lg={6} className="bg-primary">
+                </Col>
+                <Col  md={6} lg={{ span: 4,offset:1 }}>
+
+                </Col>
+                <Col md={2} lg={1} className="text-end ">
+                <button onClick={handleModal} className="btn fw-bold ">
                         <Cancel />
                     </button>
                 </Col>
 
             </Row>
-            <Row className="border rounded">
-                <Col md={6} lg={6} className="primary-color pt-3 pb-3   text-white">
+            <Row className="">
+                <Col md={4} lg={6} className="bg-primary pt-5 pb-5   text-white">
                     <div className="d-flex flex-column justify-content-between">
                         <div >
                             <h4>
                                 LOGIN
                             </h4>
-                            <p className="">
-                                Get access to place an order and your
+                            <p className="small mt-3">
+                                Get access to all
                                 orders
                             </p>
                         </div>
@@ -39,17 +47,9 @@ const Login = () => {
 
                     </div>
                 </Col>
-                <Col md={6} lg={{ span: 5 }}
-                    className="">
-                    {/* {
-                        activeWindow === 0
-                            ? <UserInfoInput
-                                handleContinue={() => setActiveWindow(1)}
-                            />
-                            : <AddressInput
-                                handleGoBack={() => setActiveWindow(0)}
-                            />
-                    } */}
+                <Col md={8} lg={{ span: 4 }}
+                    className="ms-lg-3 mt-lg-5 pt-lg-5">
+
                     <UserInfoInput/>
                 </Col>
             </Row>

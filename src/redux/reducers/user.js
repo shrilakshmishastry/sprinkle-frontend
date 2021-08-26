@@ -1,5 +1,6 @@
 import { emptyUserData } from "../../Data/UserProfile/emptyUserData";
 import { cartActionTypeCreator, GET_PROFILE_ACTION } from "../action-type";
+
 const initialState ={
       userInfo: emptyUserData,
 };

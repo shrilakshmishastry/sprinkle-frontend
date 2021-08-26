@@ -1,4 +1,5 @@
 // import { removeProfile } from "../../config/api";
+import { loginHandler } from "../../Data/ApiCalls/Login/login";
 import { addAddress } from "../../Data/ApiCalls/Profile/addAddress";
 import { getProfileData } from "../../Data/ApiCalls/Profile/getProfile";
 import { emptyUserData } from "../../Data/UserProfile/emptyUserData";
@@ -22,8 +23,11 @@ export const  getProfileInitialData = () => {
 
 }
 
+
+
 export const removeProfileData = (data) =>{
     const {remove} = cartActionTypeCreator(GET_PROFILE_ACTION);
+    console.log(data);
     return async function (dispatch) {
         try{
             // removeProfile(data);

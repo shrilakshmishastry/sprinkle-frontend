@@ -11,9 +11,9 @@ const NewAddressAdd = ({ show, hideHandler }) => {
     const [addSecondLine, addAddSecondLine] = useState("");
     const [city, addCity] = useState("");
     const [state, addState] = useState("");
-    const [postalCode, addPostalCode] = useState("");
-    const postalPattern = "[1-9]{1}[0-9]{5}|[1-9]{1}[0-9]{3}\\s[0-9]{3}";
-    const addressPattern = "^[#.0-9a-zA-Z\s,-]+$";
+    const [postalCode, addPostalCode] = useState(undefined);
+    const postalPattern = "[0-9]{6}";
+    const addressPattern = "[#0-9a-zA-Z ,-]{1,}";
     const [load, changeLoad] = useState(false);
     const dispatch = useDispatch();
 
@@ -28,6 +28,11 @@ const NewAddressAdd = ({ show, hideHandler }) => {
             "postalCode":postalCode
         };
         addNewAddress(address)(dispatch);
+        addCity("");
+        addPostalCode();
+        addAddSecondLine("");
+        addAddFirstLine("");
+        addState("");
         hideHandler();
     }
 
@@ -111,7 +116,7 @@ const NewAddressAdd = ({ show, hideHandler }) => {
                             addPostalCode(value);
                         },
                         "number",
-                        postalPattern
+                        "[0-9]{6}"
                     )
 
                 }

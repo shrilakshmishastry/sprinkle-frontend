@@ -18,8 +18,13 @@ const ItemList = ({ qty ,items}) => {
 
     if (userInfo === "") {
         return (
-            <div>
-                hello
+            <div className="mt-5">
+                <h5 className="primary-text-color">
+                    Sprinkle
+                </h5>
+                <p>
+                    We give the world most purified water!!
+                </p>
             </div>
         );
     }

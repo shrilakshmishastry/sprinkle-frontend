@@ -41,4 +41,6 @@ svg:hover{
 input:required,input:focus{
   outline: none !important;
   box-shadow: none !important;
+  background-color: transparent;
 }
+
