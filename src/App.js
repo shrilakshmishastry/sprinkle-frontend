@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import './App.css';
-import { initialTopProductLoad } from './config/initialDataLoad/initialTopProductLoad';
-import { initilaDataLoad } from './config/initialDataLoad/initialUserDataLoad';
-import Main from './config/main';
+import Main from './main';
+import { getProfileInitialData } from './redux/actions/profileAction';
+import { getProductListOfHome } from './redux/actions/topProductGetAction';
+
 
 
 
@@ -12,8 +13,8 @@ function App() {
   const dispatch  = useDispatch();
   React.useEffect(()=>{
 
-    initilaDataLoad(dispatch);
-    initialTopProductLoad(dispatch);
+    // getProfileInitialData()(dispatch);
+    getProductListOfHome()(dispatch);
   },[dispatch]);
 
   return (

@@ -17,7 +17,7 @@
 
 }
 
-.btn:hover,.btn:focus,a:focus,a:hover{
+.btn:hover,.btn:focus{
   background-color: white !important;
   color: #4354fd !important;
 }
@@ -30,3 +30,15 @@ a{
 }
 
 
+.carousel-control-next-icon{
+  color: black !important;
+}
+
+svg:hover{
+  color: #f68904!important;
+}
+
+input:required,input:focus{
+  outline: none !important;
+  box-shadow: none !important;
+}

@@ -11,7 +11,15 @@
                 "city" : "Shimoga",
                 "state" :"Karnataka",
                 "postalCode": 577202
-            }] },
+            },
+            {
+                "addFirstLine": "Gurudeva road",
+                "addSecondLine":"Near Tempo stand",
+                "city" : "Shimoga",
+                "state" :"Karnataka",
+                "postalCode": 577202
+            }
+            ] },
       "top-products" : [
         {
             "id" : 1,
@@ -19,7 +27,7 @@
             "pack_of" : 10,
             "stock" : 40,
             "per_bottel_price": 10,
-            "price" : "100 Rs",
+            "price" : 100 ,
             "tag" : "New"
         },
         {
@@ -28,7 +36,7 @@
             "pack_of" : 15,
             "stock" : 40,
             "per_bottel_price": 20,
-            "price" : "300 Rs",
+            "price" : 300 ,
             "tag" : ""
         },
         {
@@ -37,7 +45,7 @@
             "pack_of" : 20,
             "stock" : 50,
             "per_bottel_price": 15,
-            "price" : "300 Rs",
+            "price" : 300,
             "tag" : ""
         },
         {
@@ -46,7 +54,7 @@
             "pack_of" : 10,
             "stock" : 50,
             "per_bottel_price": 40,
-            "price" : "400 Rs",
+            "price" : 400 ,
             "tag" : ""
         },
         {
@@ -55,7 +63,7 @@
             "pack_of" : 20,
             "stock" : 50,
             "per_bottel_price": 15,
-            "price" : "300 Rs",
+            "price" : 300 ,
             "tag" : ""
         },
         {
@@ -64,11 +72,200 @@
             "pack_of" : 20,
             "stock" : 50,
             "per_bottel_price": 15,
-            "price" : "300 Rs",
+            "price" : 300,
+            "tag" : ""
+        },
+        {
+            "id" : 7,
+            "qty" : "30 ltr",
+            "pack_of" : 10,
+            "stock" : 40,
+            "per_bottel_price": 10,
+            "price" : 100,
+            "tag" : "New"
+        },
+        {
+            "id" : 8,
+            "qty" : "2 ltr",
+            "pack_of" : 25,
+            "stock" : 40,
+            "per_bottel_price": 20,
+            "price" : 300,
             "tag" : ""
         }
 
-      ]
+      ],
+      "products-list" : [
+        {
+            "id" : 1,
+            "qty" : "1/2 ltr",
+            "pack_of" : 10,
+            "stock" : 40,
+            "per_bottel_price": 10,
+            "price" : "₹ 100 ",
+            "tag" : "New"
+        },
+        {
+            "id" : 2,
+            "qty" : "2 ltr",
+            "pack_of" : 15,
+            "stock" : 40,
+            "per_bottel_price": 20,
+            "price" : "₹ 300",
+            "tag" : ""
+        },
+        {
+            "id" : 3,
+            "qty" : "1 ltr",
+            "pack_of" : 20,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" : "₹ 300",
+            "tag" : ""
+        },
+        {
+            "id" : 4,
+            "qty" : "25 ltr",
+            "pack_of" : 10,
+            "stock" : 50,
+            "per_bottel_price": 40,
+            "price" : "₹ 400",
+            "tag" : ""
+        },
+        {
+            "id" : 5,
+            "qty" : "10 ltr",
+            "pack_of" : 20,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" : "₹ 300",
+            "tag" : ""
+        },
+        {
+            "id" : 6,
+            "qty" : "5 ltr",
+            "pack_of" : 20,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" : "₹ 300",
+            "tag" : ""
+        },
+        {
+            "id" : 7,
+            "qty" : "30 ltr",
+            "pack_of" : 10,
+            "stock" : 40,
+            "per_bottel_price": 10,
+            "price" : "₹ 100",
+            "tag" : "New"
+        },
+        {
+            "id" : 8,
+            "qty" : "2 ltr",
+            "pack_of" : 25,
+            "stock" : 40,
+            "per_bottel_price": 20,
+            "price" : "₹ 300",
+            "tag" : ""
+        },
+        {
+            "id" : 9,
+            "qty" : "1 ltr",
+            "pack_of" : 50,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" : "₹ 300",
+            "tag" : ""
+        },
+        {
+            "id" : 10,
+            "qty" : "25 ltr",
+            "pack_of" : 25,
+            "stock" : 50,
+            "per_bottel_price": 40,
+            "price" : "₹ 400",
+            "tag" : ""
+        },
+        {
+            "id" : 11,
+            "qty" : "10 ltr",
+            "pack_of" : 10,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" : "₹ 300",
+            "tag" : ""
+        },
+        {
+            "id" : 12,
+            "qty" : "1 ltr",
+            "pack_of" : 30,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" :  300,
+            "tag" : ""
+        }
 
+
+
+      ],
+
+      "order-summary":[
+        {
+            "order_id": 1,
+            "id" : 12,
+            "qty" : "1 ltr",
+            "pack_of" : 30,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" :  300,
+            "tag" : "Delivery",
+            "orderedDate" : "Wed Aug 25 2021 12:54:37 GMT+0530 (India Standard Time)",
+            "orderedQty" : 3,
+            "DeliveryDate" : "Wed Aug 26 2021 12:54:37 GMT+0530 (India Standard Time)"
+
+        },
+        {
+            "order_id": 2,
+            "id" : 12,
+            "qty" : "1 ltr",
+            "pack_of" : 30,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" :  300,
+            "tag" : "Canceled",
+            "orderedDate" : "Wed Aug 23 2021 12:54:37 GMT+0530 (India Standard Time)",
+            "orderedQty" : 3,
+            "DeliveryDate" : "Wed Aug 24 2021 12:54:37 GMT+0530 (India Standard Time)"
+
+        },
+        {
+            "order_id": 3,
+            "id" : 12,
+            "qty" : "1 ltr",
+            "pack_of" : 30,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" :  300,
+            "tag" : "Delivery",
+            "orderedDate" : "Wed Aug 25 2021 12:54:37 GMT+0530 (India Standard Time)",
+            "orderedQty" : 3,
+            "DeliveryDate" : "Wed Aug 26 2021 12:54:37 GMT+0530 (India Standard Time)"
+
+        },
+        {
+            "order_id": 4,
+            "id" : 12,
+            "qty" : "1 ltr",
+            "pack_of" : 30,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" :  300,
+            "tag" : "Delivered",
+            "orderedDate" : "Wed Aug 23 2021 12:54:37 GMT+0530 (India Standard Time)",
+            "orderedQty" : 3,
+            "DeliveryDate" : "Wed Aug 24 2021 12:54:37 GMT+0530 (India Standard Time)"
+
+        }
+      ]
 
 }
