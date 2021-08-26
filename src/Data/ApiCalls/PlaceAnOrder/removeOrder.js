@@ -1,8 +1,8 @@
 import axios from "axios";
 import { api } from "../../../config/api";
 
-async function placeAnOrder(data) {
-    const url = `${api.root}${api["place-an-order"]}`;
+async function removeOrder(data) {
+    const url = `${api.root}${api["remove-order"]}`;
     try{
         const result = await axios.post(url,{
             data:data
@@ -14,4 +14,4 @@ async function placeAnOrder(data) {
     }
 
 }
-export default placeAnOrder;
+export default removeOrder;

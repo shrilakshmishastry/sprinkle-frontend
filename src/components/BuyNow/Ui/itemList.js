@@ -23,7 +23,6 @@ const ItemList = ({ qty ,items}) => {
             </div>
         );
     }
-    console.log(items);
 
     return (
         <Card>

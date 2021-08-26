@@ -1,5 +1,5 @@
 import { Col, Row } from "react-bootstrap"
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import waterBottel from '../../../images/waterbottel.png';
 import Loader from 'react-loader-spinner';
 import { useState } from "react";
@@ -11,22 +11,37 @@ const ProductsDetail = ({
     handleRemoveBtn,
     qty,
     active,
-    addressSelected
+    addressSelected,
+
 }
 ) => {
     let info = useLocation().state.items;
     let user = useSelector(state=>state.userReducer.userInfo);
     const [show, setShow] = useState(false);
+    const history = useHistory();
+    console.log(info)
+    async function placeAnOrderHandler() {
+        for(let i=0;i<info.length;i++){
+            info[i]["ordered-quantity"] = qty[i];
+        }
 
-    function placeAnOrder() {
         let queryObj = {
             items: info,
             addressToDelivey : addressSelected,
             userInfo  : user
         };
-        setShow(true);
-        console.log(queryObj);
         console.log("place an order");
+        console.log(queryObj);
+        // try{
+        //    const result = await placeAnOrder(queryObj);
+        // }catch(e){
+        //     console.log(e);
+        // }
+
+        setShow(true);
+        history.replace("/order-success");
+
+
     }
 
 
@@ -119,7 +134,7 @@ const ProductsDetail = ({
                         :
                         <div className=" d-grid">
                             <button
-                                onClick={placeAnOrder}
+                                onClick={placeAnOrderHandler}
                                 className=" btn btn-sm primary-color text-white" >
                                 PLACE AN ORDER
                             </button>

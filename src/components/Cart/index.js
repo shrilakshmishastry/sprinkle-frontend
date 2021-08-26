@@ -5,7 +5,7 @@ import waterBottel from '../../images/waterbottel.png';
 import ItemList from '../BuyNow/Ui/itemList';
 import PaymentOption from '../BuyNow/Ui/paymentOption';
 import { useHistory } from 'react-router-dom';
-import { removeFromCart } from '../../redux/actions/addCartAction';
+import { removeFromCart, updateCart } from '../../redux/actions/addCartAction';
 
 const Cart = () => {
 
@@ -20,11 +20,7 @@ const Cart = () => {
     let items = item.productsAtCart;
     useEffect(() => {
 
-        let a = [];
-        for (let i = 0; i < items.length; i++) {
-            a.push(1);
-        }
-        handleQtyChange(a);
+        handleQtyChange(item.qty);
     }, [items]);
 
     function handleNegativeBtn(index) {
@@ -33,6 +29,7 @@ const Cart = () => {
             handleQtyChange(qty.map((val, ind) =>
                 index === ind ? val - 1 : val
             ));
+            updateCart(items[index],qty[index]-1)(dispatch);
         }
     }
 
@@ -40,18 +37,22 @@ const Cart = () => {
         handleQtyChange(qty.map((val, ind) =>
             index === ind ? val + 1 : val
         ));
-
+        updateCart(items[index],qty[index]+1)(dispatch);
     }
 
     function handleRemove(index) {
         // console.log(index);
         if(items.length === 1){
             items.splice(index,1)
-            removeFromCart(items)(dispatch);
+            qty.splice(index,1);
+
+
+            removeFromCart(items,qty)(dispatch);
             history.goBack();
         }else{
             items.splice(index,1)
-            removeFromCart(items)(dispatch);
+            qty.splice(index,1);
+            removeFromCart(items,qty)(dispatch);
         }
     }
 
@@ -137,7 +138,7 @@ const Cart = () => {
                                                         ? <div></div>
                                                         : <button
                                                             onClick={()=>handleRemove(index)}
-                                                            className=" btn d-block ps-0 text-primary text-danger" >
+                                                            className=" btn d-block ps-0 text-danger" >
                                                             REMOVE
                                                         </button>
                                                 }

@@ -1,4 +1,5 @@
 // import { removeProfile } from "../../config/api";
+import { addAddress } from "../../Data/ApiCalls/Profile/addAddress";
 import { getProfileData } from "../../Data/ApiCalls/Profile/getProfile";
 import { emptyUserData } from "../../Data/UserProfile/emptyUserData";
 import { cartActionTypeCreator, GET_PROFILE_ACTION } from "../action-type";
@@ -35,4 +36,23 @@ export const removeProfileData = (data) =>{
         }
     }
 
+}
+
+export const addNewAddress = (address) =>{
+    const {update} = cartActionTypeCreator(GET_PROFILE_ACTION);
+    return async function(dispatch){
+        try{
+            // const result = await addAddress();
+            dispatch(
+                {
+                    type: update,
+                    address: address,
+                }
+            );
+
+        }catch(e){
+            //what to do here?
+            console.error(e);
+        }
+    }
 }

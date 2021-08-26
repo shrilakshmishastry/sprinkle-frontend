@@ -5,8 +5,12 @@ const api = {
     "top-products": "/top-products",
     "get-item": "/products-list",
     "login" : "/login",
-    "add-address" : "/address"
-    ""
+    "signup" :"/signup",
+    "add-address" : "/address",
+    "place-an-order" : "/place-oredr",
+    "add-address" : "/add-address",
+    "order-details" : "/order-summary",
+    "remove-order" : "/remove-order"
 };
 
 export {

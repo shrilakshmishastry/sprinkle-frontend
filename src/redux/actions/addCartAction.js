@@ -11,13 +11,26 @@ export function addToCart(item) {
 }
 
 
-export function removeFromCart(item) {
+export function removeFromCart(item,qty) {
     const {remove} = cartActionTypeCreator(CART_ACTION);
     return function(dispatch) {
 
         dispatch({
             type: remove,
-            item :item
+            item :item,
+            qty: qty,
+        });
+    }
+}
+
+export function updateCart(item,qty) {
+    const {update} = cartActionTypeCreator(CART_ACTION);
+    return function(dispatch) {
+
+        dispatch({
+            type: update,
+            item :item,
+            qty: qty,
         });
     }
 }

@@ -37,7 +37,7 @@ const LoginHandle = ({active}) => {
         <div className="accordion-item">
             <h2 className="accordion-header" id="panelStayOpen-headingOne">
                 {
-                    active === 0 || user =="" ?
+                    active === 0 || user ==="" ?
                         <button className="accordion-button"
                             data-bs-toggle="collapse" data-bs-target="#panelStayOpen-collapseOne"
                             aria-expanded="true" aria-controls="panelStayOpen-collpaseOne"
@@ -53,7 +53,7 @@ const LoginHandle = ({active}) => {
 
             </h2>
             <div id="panelStayOpen-collapseOne"
-                className={active === 0 || user =="" ? "accordion-collapse collapse show" : "d-none"}
+                className={active === 0 || user ==="" ? "accordion-collapse collapse show" : "d-none"}
                 aria-labelledby="panelStayOpen-headingOne"
                 data-bs-parent="#accordionSprinkle"
             >

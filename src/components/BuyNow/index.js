@@ -45,11 +45,14 @@ const BuyNow = () => {
 
     function handleRemoveBtn(index){
         if(info.length === 1){
-
-            history.goBack();
+            history.replace("/");
         }else{
-            delete info[index];
-            history.replace("/place-order",[info])
+            info.splice(index,1);
+            let newQty = qty.splice(index,1);
+            history.push("/place-order", {
+                items:info,
+                qty : newQty
+            });
         }
     }
 
@@ -60,7 +63,7 @@ const BuyNow = () => {
     }
 
 
-
+    console.log(info);
     return (
         <Container>
             <Row className="mt-5 mb-5">
@@ -80,6 +83,7 @@ const BuyNow = () => {
                          handleRemoveBtn={(index)=>handleRemoveBtn(index)}
                          qty = {qty}
                          addressSelected={addressSelcted}
+                         info
                          />
                     </div>
                 </Col>

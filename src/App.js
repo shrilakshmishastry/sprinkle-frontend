@@ -13,7 +13,7 @@ function App() {
   const dispatch  = useDispatch();
   React.useEffect(()=>{
 
-    getProfileInitialData()(dispatch);
+    // getProfileInitialData()(dispatch);
     getProductListOfHome()(dispatch);
   },[dispatch]);
 

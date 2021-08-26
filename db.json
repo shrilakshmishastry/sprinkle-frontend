@@ -206,6 +206,66 @@
         }
 
 
+
+      ],
+
+      "order-summary":[
+        {
+            "order_id": 1,
+            "id" : 12,
+            "qty" : "1 ltr",
+            "pack_of" : 30,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" :  300,
+            "tag" : "Delivery",
+            "orderedDate" : "Wed Aug 25 2021 12:54:37 GMT+0530 (India Standard Time)",
+            "orderedQty" : 3,
+            "DeliveryDate" : "Wed Aug 26 2021 12:54:37 GMT+0530 (India Standard Time)"
+
+        },
+        {
+            "order_id": 2,
+            "id" : 12,
+            "qty" : "1 ltr",
+            "pack_of" : 30,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" :  300,
+            "tag" : "Canceled",
+            "orderedDate" : "Wed Aug 23 2021 12:54:37 GMT+0530 (India Standard Time)",
+            "orderedQty" : 3,
+            "DeliveryDate" : "Wed Aug 24 2021 12:54:37 GMT+0530 (India Standard Time)"
+
+        },
+        {
+            "order_id": 3,
+            "id" : 12,
+            "qty" : "1 ltr",
+            "pack_of" : 30,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" :  300,
+            "tag" : "Delivery",
+            "orderedDate" : "Wed Aug 25 2021 12:54:37 GMT+0530 (India Standard Time)",
+            "orderedQty" : 3,
+            "DeliveryDate" : "Wed Aug 26 2021 12:54:37 GMT+0530 (India Standard Time)"
+
+        },
+        {
+            "order_id": 4,
+            "id" : 12,
+            "qty" : "1 ltr",
+            "pack_of" : 30,
+            "stock" : 50,
+            "per_bottel_price": 15,
+            "price" :  300,
+            "tag" : "Delivered",
+            "orderedDate" : "Wed Aug 23 2021 12:54:37 GMT+0530 (India Standard Time)",
+            "orderedQty" : 3,
+            "DeliveryDate" : "Wed Aug 24 2021 12:54:37 GMT+0530 (India Standard Time)"
+
+        }
       ]
 
 }

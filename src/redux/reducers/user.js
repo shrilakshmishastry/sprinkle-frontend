@@ -5,7 +5,7 @@ const initialState ={
 };
 
 export default function User(state = initialState,action){
-    const {add,remove} = cartActionTypeCreator(GET_PROFILE_ACTION);
+    const {add,remove,update} = cartActionTypeCreator(GET_PROFILE_ACTION);
     switch(action.type){
         case( add ):{
             let newState = action.userInfo;
@@ -15,6 +15,11 @@ export default function User(state = initialState,action){
             return {
                 userInfo :  emptyUserData
             }
+        }
+        case(update):{
+            let newState = state;
+            newState.userInfo.address.push(action.address);
+            return newState;
         }
         default: {
             return state;

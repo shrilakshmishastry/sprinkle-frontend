@@ -5,6 +5,8 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeProfileData } from '../../redux/actions/profileAction';
+import { modalLogin } from '../../redux/actions/modalLogin';
+
 
 
 const NavBarSprinkle = () => {
@@ -39,6 +41,10 @@ const NavBarSprinkle = () => {
 
     function handleLogout() {
         removeProfileData(name)(dispatch);
+    }
+
+    function handleLogin(){
+        modalLogin(true)(dispatch);
     }
 
 
@@ -103,9 +109,11 @@ const NavBarSprinkle = () => {
                             name.name === ""
                                 ?
 
-                                <Link to="/login" className="btn  primary-color rounded   ps-5 pe-5  text-center text-white">
+                                <button
+                                 onClick={handleLogin}
+                                 className="btn primary-color text-white ps-5 pe-5 ">
                                     Login
-                                </Link>
+                                </button>
 
                                 :
 
@@ -117,8 +125,13 @@ const NavBarSprinkle = () => {
                                     </button>
                                     <ul className="dropdown-menu " aria-labelledby="profileDropDown">
                                         <li>
-                                            <Link to="/user-profile" className={location === '/cart' ? activeLinkDropDown : inactiveLinkDropDown}>
+                                            <Link to="/user-profile" className={location === '/user-profile' ? activeLinkDropDown : inactiveLinkDropDown}>
                                                 Profile
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/order-history" className={location === '/order-history' ? activeLinkDropDown : inactiveLinkDropDown}>
+                                                Order History
                                             </Link>
                                         </li>
                                         <li>

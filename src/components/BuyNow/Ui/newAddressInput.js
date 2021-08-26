@@ -1,27 +1,43 @@
 import { useState } from "react";
 import { buyNowContent } from "../../../Data/BuyNow/content";
 import Loader from 'react-loader-spinner';
+import { useDispatch } from "react-redux";
+import { addNewAddress } from "../../../redux/actions/profileAction";
 
 const NewAddressAdd = ({ show, hideHandler }) => {
-    console.log(show);
+
     const [addFirstLine, addAddFirstLine] = useState("");
     const inputStyle = "mt-4 align-self-center  d-block border-0 border-bottom border-secondary";
     const [addSecondLine, addAddSecondLine] = useState("");
     const [city, addCity] = useState("");
     const [state, addState] = useState("");
     const [postalCode, addPostalCode] = useState("");
-    // const postalPattern = "[1-9]{1}[0-9]{5}|[1-9]{1}[0-9]{3}\\s[0-9]{3}";
-    const addressPattern = "[a-zA-Z0-9.-_]{4,}";
+    const postalPattern = "[1-9]{1}[0-9]{5}|[1-9]{1}[0-9]{3}\\s[0-9]{3}";
+    const addressPattern = "^[#.0-9a-zA-Z\s,-]+$";
     const [load, changeLoad] = useState(false);
+    const dispatch = useDispatch();
 
-    console.log(show);
 
     function handleFormSubmit(e) {
         e.preventDefault();
-        console.log(e);
+        const address = {
+            "addFirstLine": addFirstLine,
+            "addSecondLine":addSecondLine,
+            "city" : city,
+            "state" :state,
+            "postalCode":postalCode
+        };
+        addNewAddress(address)(dispatch);
+        hideHandler();
     }
 
-    function inputGenerator(label, stateValue, handle) {
+    function inputGenerator(
+        label,
+         stateValue,
+         handle,
+         type,
+         pattern
+        ) {
         return (
             <div key={label} className="mt-3 d-flex justify-content-start">
                 <label className="visually-hidden" id="AddFirstLine">
@@ -30,9 +46,9 @@ const NewAddressAdd = ({ show, hideHandler }) => {
                 <input
                     value={stateValue}
                     onChange={(e) => handle(e.target.value)}
-                    type="text"
+                    type={type}
                     placeholder={label}
-                    pattern={addressPattern}
+                    pattern={pattern}
                     required
                     className={inputStyle}
                 />
@@ -42,7 +58,7 @@ const NewAddressAdd = ({ show, hideHandler }) => {
 
     return (
         <div className={show ?
-        "border ps-md-5 pb-5 pe-md-5"
+        "border ps-md-5 pb-5 mt-3 pe-md-5"
         : "d-none"}>
             <div className="d-flex justify-content-end">
                 <button className="btn fw-bold" onClick={hideHandler} >
@@ -57,7 +73,9 @@ const NewAddressAdd = ({ show, hideHandler }) => {
                         addFirstLine,
                         (value) => {
                             addAddFirstLine(value);
-                        }
+                        },
+                        "text",
+                        addressPattern
                     )
 
                 }
@@ -67,47 +85,45 @@ const NewAddressAdd = ({ show, hideHandler }) => {
                         addSecondLine,
                         (value) => {
                             addAddSecondLine(value);
-                        }
+                        },
+                        "text",
+                        addressPattern
                     )
 
                 }
-                <div className="d-flex flex-row justify-content-between" >
                 {
                     inputGenerator(
                         buyNowContent.newAddress[2],
                         city,
                         (value) => {
                             addCity(value);
-                        }
+                        },
+                        "text",
+                        addressPattern
                     )
 
                 }
-                 <div  className="mt-3 d-flex justify-content-start">
-                 <label className="visually-hidden" id="AddPostalCode">
-                    Postal Code
-                </label>
-                <input
-                aria-labelledby="AddPostalCode"
-                    value={postalCode}
-                    onChange={(e) => addPostalCode(e.target.value)}
-                    type="number"
-                    placeholder={"Enter postal code"}
-                    pattern={"[0-9]{6}"}
-                    required
-                    className={`${inputStyle} ms-4`}
-                />
-                 </div>
+                 {
+                    inputGenerator(
+                        buyNowContent.newAddress[3],
+                        postalCode,
+                        (value) => {
+                            addPostalCode(value);
+                        },
+                        "number",
+                        postalPattern
+                    )
 
-
-                </div>
-
+                }
                 {
                     inputGenerator(
                         buyNowContent.newAddress[4],
                         state,
                         (value) => {
                             addState(value);
-                        }
+                        },
+                        "text",
+                        addressPattern
                     )
 
                 }
