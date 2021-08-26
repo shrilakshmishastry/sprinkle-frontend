@@ -11,14 +11,13 @@ const UserInfoInput = ({handleContinue}) => {
 
     async function handleFormSubmit(event) {
         event.preventDefault();
-
-
+        handleContinue({name,password,email});
     }
 
 
 
     return (
-        <div className="d-flex flex-column ">
+        <div className="d-flex flex-column mt-lg-5 pt-lg-5">
             <form onSubmit={handleFormSubmit} className=" ">
             <input
                     className={inputStyle}
@@ -46,7 +45,6 @@ const UserInfoInput = ({handleContinue}) => {
                 />
                 <div className=" d-grid ">
                     <input
-                    onClick={()=>handleContinue({name,password,email})}
                         className="btn  mt-4 btn btn-sm  primary-color d-block text-white"
                         type="submit" value="Continue" />
 

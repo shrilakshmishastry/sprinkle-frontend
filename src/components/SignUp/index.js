@@ -6,12 +6,15 @@ import PurityImg from '../../images/purity.jpg';
 import UserInfoInput from "./Ui/userInfoInput.js";
 import AddressInput from "./Ui/addressInput.js";
 import { modalSignIn } from '../../redux/actions/modalLogin';
+import { signInHandler } from '../../Data/ApiCalls/Login/signin';
+import { getProfileInitialData } from '../../redux/actions/profileAction';
 
 const SignUp = () => {
     const [address, addAddress] = useState("");
     const [userInfo,addUserInfo] = useState("");
     const [activeWindow, setActiveWindow] = useState(0);
     const dispatch = useDispatch();
+    const [load, changeLoad] = useState(false);
 
     function handleContinue(value) {
         setActiveWindow(1);
@@ -20,6 +23,20 @@ const SignUp = () => {
 
     function handleModal() {
         modalSignIn(false)(dispatch);
+    }
+
+    async function handleAddressInput(address){
+
+        userInfo["address"]  = address;
+        changeLoad(true);
+        // try{
+        //     const result = await signInHandler(userInfo);
+            getProfileInitialData()(dispatch);
+            modalSignIn(false)(dispatch);
+        // }catch(e){
+
+        // }
+        changeLoad(false);
     }
 
     return (
@@ -54,7 +71,7 @@ const SignUp = () => {
                     </div>
                 </Col>
                 <Col md={8} lg={{ span: 4 }}
-                    className="ms-lg-3 mt-lg-5 pt-lg-5">
+                    className="ms-lg-3 ">
                     {
                         activeWindow === 0
                             ? <UserInfoInput
@@ -62,6 +79,8 @@ const SignUp = () => {
                                     (value) => handleContinue(value)}
                             />
                             : <AddressInput
+                            load={load}
+                            handleAddressInput={(data)=>handleAddressInput(data)}
                                 handleGoBack={() => setActiveWindow(0)}
                             />
                     }

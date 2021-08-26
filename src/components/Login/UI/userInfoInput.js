@@ -20,7 +20,7 @@ const UserInfoInput = () => {
         handleErrorMsg(false);
         changeLoad(true);
         try{
-            // in result data send userinfo
+            
             // const result = await loginHandler(email,password);
              getProfileInitialData()(dispatch);
             modalLogin(false)(dispatch);
