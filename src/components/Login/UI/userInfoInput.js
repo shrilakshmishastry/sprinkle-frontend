@@ -13,19 +13,19 @@ const UserInfoInput = () => {
     const [load, changeLoad] = useState(false);
     const inputStyle = "mt-4 align-self-center  d-block border-0 border-bottom border-secondary";
     const dispatch = useDispatch();
-    const [errorShow,handleErrorMsg] = useState(false);
+    const [errorShow, handleErrorMsg] = useState(false);
 
     async function handleFormSubmit(event) {
         event.preventDefault();
         handleErrorMsg(false);
         changeLoad(true);
-        try{
-            
+        try {
+
             // const result = await loginHandler(email,password);
-             getProfileInitialData()(dispatch);
+            getProfileInitialData()(dispatch);
             modalLogin(false)(dispatch);
-        }catch(e){
-        handleErrorMsg(true);
+        } catch (e) {
+            handleErrorMsg(true);
 
         }
         changeLoad();
@@ -40,7 +40,11 @@ const UserInfoInput = () => {
     return (
         <div className=" mt-md-5">
             <form onSubmit={handleFormSubmit} className=" mt-md-5">
+                <label className="visually-hidden" id="email">
+                    Email
+                </label>
                 <input
+                    aria-labelledby="email"
                     className={inputStyle}
                     type="email"
                     placeholder="Enter email"
@@ -48,7 +52,12 @@ const UserInfoInput = () => {
                     required
                     onChange={(value) => addEmail(value.target.value)}
                 />
+                <label className="visually-hidden" id="password">
+                    password
+                </label>
+
                 <input
+                    aria-labelledby="password"
                     className={inputStyle}
                     type="password"
                     placeholder="Enter password"
@@ -60,26 +69,26 @@ const UserInfoInput = () => {
                     load ?
                         <Loader type="Oval" color="#4354fd" height={25} width={80} className="mt-4" />
                         :
-                       <div className=" d-grid me-5 me-md-0">
+                        <div className=" d-grid me-5 me-md-0">
                             <input
-                            className="btn  mt-4  btn-sm  primary-color d-block text-white"
-                            type="submit" value="Submit" />
-                       </div>
+                                className="btn  mt-4  btn-sm  primary-color d-block text-white"
+                                type="submit" value="Submit" />
+                        </div>
                 }
             </form>
             <Row className="">
                 <Col md={9} xs={7}>
-                <p className="mt-2 text-start text-md-end small">
-                    Don't have an account?
+                    <p className="mt-2 text-start text-md-end small">
+                        Don't have an account?
                     </p>
 
                 </Col>
                 <Col xs={4} md={3} className=" ps-0" >
-                <button
-                onClick={handleSignInBtn}
-                className="btn  text-start ps-0  primary-text-color">
+                    <button
+                        onClick={handleSignInBtn}
+                        className="btn  text-start ps-0  primary-text-color">
                         <small>
-                        Signup
+                            Signup
                         </small>
                     </button>
                 </Col>

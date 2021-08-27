@@ -10,7 +10,8 @@ const api = {
     "place-an-order" : "/place-oredr",
     "add-address" : "/add-address",
     "order-details" : "/order-summary",
-    "remove-order" : "/remove-order"
+    "remove-order" : "/remove-order",
+    "update-profile":"/update-profile"
 };
 
 export {

@@ -121,7 +121,7 @@ const NavBarSprinkle = () => {
                                     <button className="ps-5 pe-5 btn primary-text-color fw-normal nav-link dropdown-toggle" id="prfileDropDown"
                                         data-bs-toggle="dropdown" aria-label="Menu to profile and logout" aria-expanded="false"
                                     >
-                                        Hi, {name.name} &nbsp;
+                                        Hi, {name.name} 
                                     </button>
                                     <ul className="dropdown-menu " aria-labelledby="profileDropDown">
                                         <li>

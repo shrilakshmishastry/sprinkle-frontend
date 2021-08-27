@@ -29,7 +29,7 @@ const NewAddressAdd = ({ show, hideHandler }) => {
         };
         addNewAddress(address)(dispatch);
         addCity("");
-        addPostalCode();
+        addPostalCode("");
         addAddSecondLine("");
         addAddFirstLine("");
         addState("");
