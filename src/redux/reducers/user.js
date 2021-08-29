@@ -9,28 +9,17 @@ export default function User(state = initialState,action){
     const {add,remove,update} = cartActionTypeCreator(GET_PROFILE_ACTION);
     switch(action.type){
         case( add ):{
-            let newState = action.userInfo;
-            return {userInfo : newState};
+            const userInfo = action.payload;
+            const newState = {...state,userInfo};
+            return newState;
         }
         case(remove):{
-            return {
-                userInfo :  emptyUserData
-            }
+            const newState = { ...state,userInfo:emptyUserData};
+            return newState;
         }
         case(update):{
-
-            let newState = state;
-            if(action.address){
-                newState.userInfo.address.push(action.address);
-            }
-            if(action.userInfo){
-
-                let userInfo = action.userInfo;
-                console.log(userInfo);
-                newState.userInfo.name = userInfo.name;
-                newState.userInfo.email = userInfo.email;
-                newState.userInfo.phoneNumber = userInfo.phoneNumber;
-            }
+            const userInfo = action.payload;
+            const newState ={ ...state,userInfo};
             return newState;
         }
         default: {

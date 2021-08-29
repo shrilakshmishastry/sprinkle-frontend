@@ -5,7 +5,7 @@ export function addToCart(item) {
     return  function(dispatch) {
         dispatch(   {
             type: add,
-            productsAtCart: item
+            payload:{ item , qty:1}
         });
 }
 }
@@ -17,8 +17,7 @@ export function removeFromCart(item,qty) {
 
         dispatch({
             type: remove,
-            item :item,
-            qty: qty,
+            payload : {item,qty},
         });
     }
 }
@@ -29,8 +28,7 @@ export function updateCart(item,qty) {
 
         dispatch({
             type: update,
-            item :item,
-            qty: qty,
+            payload :{item,qty},
         });
     }
 }

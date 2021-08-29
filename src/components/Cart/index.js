@@ -73,7 +73,7 @@ const Cart = () => {
 
     if (items.length === 0) {
         return (
-            <Container className="mb-5 text-center mt-3 pt-lg-5 pb-5 light-variant">
+            <Container className="mb-5 text-center mt-3 pt-lg-5 pb-5 ">
                 <Row className=" pt-5">
                     <h3 className="text-center primary-text-color" >
                         Cart

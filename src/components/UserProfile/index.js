@@ -1,58 +1,48 @@
 import React, { useState } from 'react';
+import { Formik } from 'formik';
 import { Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { updateProfileAction } from '../../redux/actions/profileAction';
+import { profileEditSchema } from '../../config/configvalidation/profileEditSchema';
+import { profileContent } from '../../Data/UserProfile/emptyUserData';
+import classNames from "classnames";
+
 const UserProfile = () => {
-    const [editMode, changeMode] = useState(true);
+    const [readOnlyMode, changeMode] = useState(true);
     const dispatch = useDispatch();
     let history = useHistory();
     let userInfo = useSelector(state => state.userReducer.userInfo);
-    const inputStyle = "align-self-center  d-block border-0 border-bottom border-secondary";
-    const inputStyleReadOnly = "pt-2  pb-2 border-0 secondary-color ps-3 text-secondary align-self-center  d-block";
-    const [name, changeName] = useState(userInfo.name);
-    const [email, changeEmail] = useState(userInfo.email);
-    const [phoneNumber, changePhoneNumber] = useState(userInfo.phoneNumber);
+
     // const [address,changeAddress] = useState(userInfo.address);
 
     if (userInfo.email === "") {
         history.replace("/");
     }
 
+    const editStyle = profileContent.inputStyle;
+    const readOnlyStyle = profileContent.inputStyleReadOnly;
 
-    function handleDone(){
+    const inputStyle = classNames({
+        [`${editStyle}`]: !readOnlyMode,
+        [`${readOnlyStyle}`]: readOnlyMode
+    });
 
+    function handleDone(values) {
+        console.log(values);
         let data = {
-            name: name,
-            email : email,
-            phoneNumber: phoneNumber
+            name: values.name,
+            email: values.email,
+            phoneNumber: values.phoneNumber,
+            address: userInfo.address
         }
+
         updateProfileAction(data)(dispatch);
         changeMode(true);
-        history.replace("/user-profile");
+
     }
 
-    function inputFieldgenerator(label, value, handler, mode, pattern, type) {
-        return (
-            <Col md={6}>
-                <label className="h6 mt-5" id={label}>
-                    {label}
-                </label>
-                <input
-                    pattern={pattern}
-                    aria-labelledby={label}
-                    className={editMode ? inputStyleReadOnly : inputStyle}
-                    type={type}
-                    placeholder={label}
-                    value={value}
-                    required
-                    readOnly={mode}
-                    onChange={(value) => handler(value.target.value)}
-                />
-            </Col>
-        );
-    }
-
+    console.log("hey shri");
     return (
         <Container className="mt-5 mb-5">
             <Row className="justify-content-center">
@@ -64,61 +54,99 @@ const UserProfile = () => {
                                     My Profile
                                 </h5>
                                 {
-                                    editMode
-                                        ? <button
+                                    readOnlyMode
+                                        ?
+
+                                        <button
                                             onClick={() => changeMode(false)}
                                             className="btn primary-text-color">
                                             Edit
                                         </button>
-                                        : <button
-                                            onClick={handleDone}
-                                            className="btn primary-text-color">
-                                            Done
-                                        </button>
-
+                                        : <div></div>
                                 }
 
                             </div>
                         </ListGroup.Item>
                         <ListGroup.Item className="">
-                          <Row className=" justify-content-start">
-                          {
-                                inputFieldgenerator(
-                                    "Name",
-                                    name,
-                                    (value) => {
-                                        changeName(value)
-                                    },
-                                    editMode,
-                                    "[a-zA-z .]{1,}",
-                                    "text"
-                                )
-                            }
-                            {
-                                inputFieldgenerator(
-                                    "Email",
-                                    email,
-                                    (value) => {
-                                        changeEmail(value)
-                                    },
-                                    editMode,
-                                    "[a-zA-z .]{1,}",
-                                    "email"
-                                )
-                            }
-                             {
-                                inputFieldgenerator(
-                                    "Phone number",
-                                    phoneNumber,
-                                    (value) => {
-                                        changePhoneNumber(value)
-                                    },
-                                    editMode,
-                                    "[0-9]{10}",
-                                    "tel"
-                                )
-                            }
-                          </Row>
+                            <Row className="">
+                                <Formik
+                                    initialValues={{
+                                        email: userInfo.email,
+                                        phoneNumber: userInfo.phoneNumber,
+                                        name: userInfo.name,
+                                    }}
+                                    validationSchema={profileEditSchema}
+                                    onSubmit={(values, { setSubmitting }) => {
+                                        setSubmitting(true);
+                                        handleDone(values);
+                                        setSubmitting(false);
+                                    }}
+                                >
+                                    {
+                                        ({
+                                            values,
+                                            handleSubmit,
+                                            errors,
+                                            touched,
+                                            handleChange,
+                                            isSubmitting
+                                        }) => (
+                                            <form onSubmit={handleSubmit}>
+                                                {
+                                                    profileContent.inputField.map((value) => {
+                                                        return (
+                                                            <div key={value.label}>
+                                                                <label className="visually-hidden" id="AddFirstLine">
+                                                                    {value.label}
+                                                                </label>
+                                                                <input
+                                                                    readOnly={readOnlyMode}
+                                                                    value={values[value.name]}
+                                                                    onChange={handleChange}
+                                                                    name={value.name}
+                                                                    type={value.type}
+                                                                    placeholder={value.label}
+                                                                    required
+                                                                    className={inputStyle}
+                                                                />
+                                                                <div>
+
+                                                                    {errors[value.name] && touched[value.name] ?
+
+                                                                        <div className="text-danger">
+
+                                                                            <span className="me-3 ">{errors[value.name].key}</span>
+                                                                        </div>
+                                                                        : null
+                                                                    }
+
+                                                                </div>
+                                                            </div>
+
+
+                                                        )
+                                                    })
+                                                }
+                                                {
+                                                    readOnlyMode
+                                                        ? <div></div>
+                                                        : <div className="d-grid">
+                                                            <button
+                                                                type="submit"
+                                                                disabled={isSubmitting}
+                                                                className="btn d-block mt-5 primary-color text-white">
+                                                                SUBMIT
+                                                            </button>
+                                                        </div>
+
+                                                }
+
+
+                                            </form>
+                                        )
+                                    }
+                                </Formik>
+                            </Row>
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './../../App.css';
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -16,6 +16,8 @@ const NavBarSprinkle = () => {
     const info = useSelector(state => state.userReducer.userInfo);
     const name = info.name;
     const dispatch = useDispatch();
+
+
 
 
     useEffect(() => {
@@ -37,6 +39,7 @@ const NavBarSprinkle = () => {
     function handleLogin() {
         modalLogin(true)(dispatch);
     }
+
 
 
     function handleClick() {

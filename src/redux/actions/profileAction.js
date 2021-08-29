@@ -8,7 +8,7 @@ import { cartActionTypeCreator, GET_PROFILE_ACTION } from "../action-type";
 
 
 export const  getProfileInitialData = () => {
-   
+
     const {add} = cartActionTypeCreator(GET_PROFILE_ACTION);
     return async function(dispatch){
         try{
@@ -16,7 +16,7 @@ export const  getProfileInitialData = () => {
 
             dispatch({
                 type:add,
-                userInfo: result.data
+                payload: result.data
             });
         }catch(e){
             //ask what I should do?
@@ -35,7 +35,7 @@ export const removeProfileData = (data) =>{
             // removeProfile(data);
             dispatch({
                 type: remove,
-                userInfo: emptyUserData
+                payload: emptyUserData
             })
         }catch(e){
             console.error(e);
@@ -54,7 +54,7 @@ export const addNewAddress = (address) =>{
             dispatch(
                 {
                     type: update,
-                    address: address,
+                    payload: address,
                 }
             );
 
@@ -68,13 +68,13 @@ export const addNewAddress = (address) =>{
 export const updateProfileAction = (userInfo) =>{
     const {update} = cartActionTypeCreator(GET_PROFILE_ACTION);
 
-    return async function(dispatch){
+    return function(dispatch){
         try{
             // const result = await updateProfile(userInfo);
             dispatch(
                 {
                     type: update,
-                    userInfo: userInfo,
+                    payload: userInfo,
                 }
             );
 

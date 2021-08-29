@@ -9,7 +9,7 @@ const AddressCard = ({
     id
 }) =>{
     return(
-        <Col className="text-center text-md-start"
+        <Col className="text-center "
          key={id} xs={6} md={3} lg={3}>
         <p className="primary-text-color mb-0">
         {icon}

@@ -18,10 +18,11 @@ return(
 
 
     onSubmit={
-        (values, { setSubmitting }) => {
+        (values, { resetForm,setSubmitting }) => {
             setSubmitting(true);
             handler(values);
             setSubmitting(false);
+            resetForm();
         }
     }
 >

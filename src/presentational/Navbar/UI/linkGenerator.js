@@ -3,9 +3,9 @@ import classNames from "classnames";
 import { btnStyle } from "../../../config/BtnConfig/btnStyle";
 
 const LinkGenerator = ({path,name,handleClick}) => {
-    let location = useLocation().pathname;
-    let active = btnStyle.activeStyle;
-    let inActive = btnStyle.inactiveStyle;
+    const location = useLocation().pathname;
+    const active = btnStyle.activeStyle;
+    const inActive = btnStyle.inactiveStyle;
 
     var btnClass = classNames({
         [`${active}`]: location === path,

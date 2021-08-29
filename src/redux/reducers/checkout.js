@@ -11,30 +11,29 @@ export default function CheckOut(state = initialState,action){
 
     switch(action.type){
         case(add):{
-            console.log(state);
-            let newState = state;
-            newState.productsAtCart.push(action.productsAtCart);
-            newState.qty.push(1);
+
+            const newState = {...state,
+                productsAtCart:[...state.productsAtCart,action.payload.item],
+                qty:[ ...state.qty,action.payload.qty ]
+            };
+
             return  newState;
 
         }
         case(remove):{
-            let newState = state;
-            newState.productsAtCart = action.item;
-            newState.qty = action.qty;
-            return  {
-                productsAtCart : action.item,
-                qty: action.qty
+            let newState = {...state,
+                productsAtCart:action.payload.item,
+                qty: action.payload.qty
             };
+            return  newState;
         }
         case(update) : {
-         
+
             let qty  = state.productsAtCart.map((val,index)=>
-                val.id === action.item.id ? action.qty : state.qty[index]
+                val.id === action.payload.item.id ? action.payload.qty : state.qty[index]
             )
 
-            const newState = state;
-            newState.qty = qty;
+            const newState = {...state,qty:qty};
         return newState;
         }
         default: {
