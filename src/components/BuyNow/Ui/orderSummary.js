@@ -4,6 +4,8 @@ import waterBottel from '../../../images/waterbottel.png';
 import Loader from 'react-loader-spinner';
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import classNames from "classnames";
+import { btnStyle } from "../../../config/BtnConfig/btnStyle";
 
 const ProductsDetail = ({
     handlePositiveBtn,
@@ -15,11 +17,27 @@ const ProductsDetail = ({
 
 }
 ) => {
+    console.log(qty);
     let info = useLocation().state.items;
     let user = useSelector(state=>state.userReducer.userInfo);
     const [show, setShow] = useState(false);
     const history = useHistory();
-    console.log(info)
+
+    const disabledBtn =  btnStyle.disabledBtn;
+    const activeBtn = btnStyle.activeBtn;
+
+// I didn't get how to apply here
+    // const btnPositiveStyle = classNames({
+    //     [`${activeBtn}`] : info.stock !== qty[index] || show,
+    //     [`${disabledBtn}`] : info.stock === qty[index]|| show
+    // });
+
+    // const btnNegativeStyle = classNames({
+    //     [`${activeBtn}`] : qty[index] > 1 || show,
+    //     [`${disabledBtn}`] : qty[index] <= 1 || show
+    // });
+
+    console.log(info);
     async function placeAnOrderHandler() {
         for(let i=0;i<info.length;i++){
             info[i]["ordered-quantity"] = qty[i];
@@ -46,11 +64,6 @@ const ProductsDetail = ({
 
 
 
-    const disabledBtn = " ps-lg-4 pe-lg-4 ps-4 pe-4 pe-md-3 ps-md-2 disabled bg-secondary btn  text-white";
-    const activeBtn = "ps-lg-4 pe-lg-4 ps-4 pe-4 pe-md-3 ps-md-2 btn btn-primary";
-
-
-
     return (
         <div className="accordion-item">
             <h2 className="accordion-header" id="headingThree">
@@ -71,6 +84,7 @@ const ProductsDetail = ({
                 <div className="accordion-body ">
                     {
                         info.map((val, index) => {
+                            console.log(val);
                             return (
                                 <Row key={val.id} >
                                     <Col md={5} lg={4} className="">

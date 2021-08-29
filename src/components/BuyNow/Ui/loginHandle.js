@@ -1,12 +1,12 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import { useDispatch, useSelector } from "react-redux";
+import { inputStyle } from '../../../config/BtnConfig/inputStyle';
 import { getProfileInitialData } from '../../../redux/actions/profileAction';
 // import { loginHandler } from '../../../config/api';
 
 const LoginHandle = ({active}) => {
     const user = useSelector(state => state.userReducer.userInfo.email);
-    const inputStyle = "mt-4 d-block border-0 border-bottom border-secondary";
     const emailPattren = "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";
     const passwordPattren = "[a-zA-Z0-9.-_]{4,}";
 
@@ -70,7 +70,7 @@ const LoginHandle = ({active}) => {
                             pattern={emailPattren}
                             placeholder="Enter Email"
                             value={email}
-                            className={inputStyle}
+                            className={inputStyle.inputStyleLogin}
                             onChange={(value) => {
                                 addEmail(value.target.value)
                             }}
@@ -86,7 +86,7 @@ const LoginHandle = ({active}) => {
                             pattern={passwordPattren}
                             placeholder="Enter Password"
                             value={password}
-                            className={inputStyle}
+                            className={inputStyle.inputStyleLogin}
                             onChange={(value) => {
                                 addPassword(value.target.value)
                             }}

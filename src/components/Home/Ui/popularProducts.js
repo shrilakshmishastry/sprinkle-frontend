@@ -1,7 +1,7 @@
 import { Row, Col, Card } from "react-bootstrap"
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import SadEmoji from "../../../Data/SVGs/sadEmoji";
+import SadEmoji from "../../../images/SVGs/sadEmoji";
 import waterBottel from '../../../images/waterbottel.png';
 import CardOfProducts from "../../../presentational/Card";
 

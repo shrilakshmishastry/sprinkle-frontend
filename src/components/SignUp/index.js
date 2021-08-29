@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from "react-bootstrap";
-import Cancel from '../../Data/SVGs/cancel';
+import Cancel from '../../images/SVGs/cancel';
 import { useDispatch } from "react-redux";
 import PurityImg from '../../images/purity.jpg';
 import UserInfoInput from "./Ui/userInfoInput.js";
@@ -17,8 +17,8 @@ const SignUp = () => {
     const [load, changeLoad] = useState(false);
 
     function handleContinue(value) {
-        setActiveWindow(1);
         addUserInfo(value);
+        setActiveWindow(1);
     }
 
     function handleModal() {
@@ -28,6 +28,7 @@ const SignUp = () => {
     async function handleAddressInput(address){
 
         userInfo["address"]  = address;
+        console.log(address);
         changeLoad(true);
         // try{
         //     const result = await signInHandler(userInfo);

@@ -2,7 +2,7 @@ import React, { useEffect,useState } from 'react';
 import { Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
-import AddressSelect from './Ui/addressSelect';
+import AddressSelect from './Ui/Address/addressSelect';
 import ItemList from './Ui/itemList';
 import LoginHandle from './Ui/loginHandle';
 import ProductsDetail from './Ui/orderSummary';
@@ -14,7 +14,7 @@ const BuyNow = () => {
     const info = useLocation().state.items;
     const qt = useLocation().state.qty;
     const history =  useHistory();
-    const [addressSelcted,addAddress] =  useState("");
+    const [selectedAddress,addSelectedAddress] =  useState("");
     const [qty, handleQtyChange] = useState([]);
     const [active,changeActiveAccordion] = useState(0);
 
@@ -59,11 +59,11 @@ const BuyNow = () => {
 
 
     if (state === undefined) {
-        return <Redirect to="/" />
+        history.replace("/");
     }
 
 
-    console.log(info);
+  
     return (
         <Container>
             <Row className="mt-5 mb-5">
@@ -72,7 +72,7 @@ const BuyNow = () => {
                         <LoginHandle active={active} />
                         <AddressSelect active={active}
                         changeActive={(param)=>{
-                            addAddress(param);
+                            addSelectedAddress(param);
                             changeActiveAccordion(2);
                         }}
                         />
@@ -82,7 +82,7 @@ const BuyNow = () => {
                          handlePositiveBtn={(index)=>handlePositiveBtn(index)}
                          handleRemoveBtn={(index)=>handleRemoveBtn(index)}
                          qty = {qty}
-                         addressSelected={addressSelcted}
+                         addressSelected={selectedAddress}
                          info
                          />
                     </div>

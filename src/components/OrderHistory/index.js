@@ -3,7 +3,7 @@ import { Col, Container, ListGroup, Modal, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import getOrderHistory from "../../Data/ApiCalls/OrderSummary/getOrderHistory";
 import removeOrder from "../../Data/ApiCalls/PlaceAnOrder/removeOrder";
-import CarryVehicle from "../../Data/SVGs/carryVehicle";
+import CarryVehicle from "../../images/SVGs/carryVehicle";
 import waterBottel from '../../images/waterbottel.png';
 import Loader from 'react-loader-spinner';
 import { Redirect, useHistory } from "react-router-dom";
@@ -35,7 +35,7 @@ const OrderHistory = () => {
         history.replace("/order-history");
     }
     if(user.email === ""){
-        return <Redirect to="/"></Redirect>
+        history.replace("/");
     }
 
     return (

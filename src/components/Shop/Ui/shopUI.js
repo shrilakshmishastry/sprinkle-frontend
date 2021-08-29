@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Col, Container, Row,Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import SadEmoji from "../../../Data/SVGs/sadEmoji";
+import SadEmoji from "../../../images/SVGs/sadEmoji";
 import CardOfProducts from "../../../presentational/Card";
 import { getProductsShop } from "../../../redux/actions/getProductsShopAction";
 

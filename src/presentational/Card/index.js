@@ -11,7 +11,7 @@ const CardOfProducts = ({ item,handler }) => {
                 <Card.Footer className=" bg-white ">
                     <span className="d-flex flex-row justify-content-between">
                         <p className="mb-0" >{item.qty}</p>
-                        <p className="mb-0 fw-bold warning-text-color " > {item.price}</p>
+                        <p className="mb-0 fw-bold warning-text-color " > ₹{item.price}</p>
                     </span>
 
                     <p className="small mb-0 text-center ">Pack of {item.pack_of} bottels</p>

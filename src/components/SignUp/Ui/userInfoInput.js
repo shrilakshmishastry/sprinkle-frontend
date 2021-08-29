@@ -1,98 +1,93 @@
 import { useState } from "react";
+import { Formik } from "formik";
+import { signUpSchema } from "../../../config/configvalidation/signUpSchema";
+import { SignUp } from "../../../Data/Signup/content";
+
 
 
 const UserInfoInput = ({ handleContinue }) => {
-    const [password, addPassword] = useState("");
-    const [name, addName] = useState("");
-    const [email, addEmail] = useState("");
-    const [phoneNumber, addPhoneNumber] = useState("");
-
-    const inputStyle = "mt-4 align-self-center  d-block border-0 border-bottom border-secondary";
 
 
-    async function handleFormSubmit(event) {
-        event.preventDefault();
-        handleContinue({ name, password, email });
+    async function handleFormSubmit(values) {
+        console.log(values);
+        handleContinue(values);
     }
 
-    function inputFieldGenerator(value, handler, pattern, label, type) {
-        return (
-            <div>
-                <label className="visually-hidden" id={label}>
-                    {label}
-                </label>
-                <input
-                    pattern={pattern}
-                    aria-labelledby={label}
-                    className={inputStyle}
-                    type={type}
-                    placeholder={label}
-                    value={value}
-                    required
-                    onChange={(value) => handler(value.target.value)}
-                />
-            </div>
-        );
-    }
 
 
     return (
         <div className="d-flex flex-column mt-lg-5 pt-lg-5">
-            <form onSubmit={handleFormSubmit} className=" ">
+            <Formik
+                initialValues={{
+                    email: '',
+                    password: '',
+                    phoneNumber: '',
+                    name: '',
+                }}
+                validationSchema={signUpSchema}
+                onSubmit={(values, { setSubmitting }) => {
+                    setSubmitting(true);
+                    handleFormSubmit(values);
+                    setSubmitting(false);
+                }}
+            >
                 {
-                    inputFieldGenerator(
-                        name,
-                        (value) => {
-                            addName(value)
-                        },
-                        "[a-zA-s0-9 .]{1,}",
-                        "Enter your name",
-                        "text"
+                    ({
+                        values,
+                        handleSubmit,
+                        errors,
+                        touched,
+                        handleChange,
+                        isSubmitting
+                    }) => (
+                        <form onSubmit={handleSubmit}>
+                            {
+                                SignUp.inputField.map((value) => {
+                                    return (
+                                        <div key={value.label}>
+                                            <label className="visually-hidden" id="AddFirstLine">
+                                                {value.label}
+                                            </label>
+                                            <input
+                                                value={values[value.name]}
+                                                onChange={handleChange}
+                                                name={value.name}
+                                                type={value.type}
+                                                placeholder={value.label}
+                                                required
+                                                className={SignUp.inputStyle}
+                                            />
+                                            <div>
+
+                                                {errors[value.name] && touched[value.name] ?
+
+                                                    <div className="text-danger">
+
+                                                        <span className="me-3 ">{errors[value.name].key}</span>
+                                                    </div>
+                                                    : null
+                                                }
+
+                                            </div>
+                                        </div>
+
+
+                                    )
+                                })
+                            }
+                            <div className="d-grid">
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="btn d-block mt-5 primary-color text-white">
+                                    SUBMIT
+                                </button>
+                            </div>
+
+                        </form>
                     )
                 }
-                {
-                    inputFieldGenerator(
-                        phoneNumber,
-                        (value) => {
-                            addPhoneNumber(value)
-                        },
-                        "[0-9]{10}",
-                        "Enter your phone number",
-                        "tel"
-                    )}
-                {
-                    inputFieldGenerator(
-                        email,
-                        (value) => {
-                            addEmail(value)
-                        },
-                        "[a-zA-s0-9 .@-]{1,}",
-                        "Enter your emai",
-                        "email"
-                    )
-                }
-                {
-                    inputFieldGenerator(
-                        password,
-                        (value) => {
-                            addPassword(value)
-                        },
-                        "[a-zA-s0-9.]{4,}",
-                        "Enter your password",
-                        "password"
-                    )
-                }
-
-
-                <div className=" d-grid ">
-                    <input
-                        className="btn  mt-4 btn btn-sm  primary-color d-block text-white"
-                        type="submit" value="Continue" />
-
-                </div>
-            </form>
-
-
+            </Formik>
         </div>
     );
 }

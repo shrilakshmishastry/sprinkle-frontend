@@ -1,34 +1,31 @@
 import { useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import Loader from 'react-loader-spinner';
 import { useDispatch } from "react-redux";
+import { Formik } from "formik";
 import { loginHandler } from "../../../Data/ApiCalls/Login/login";
 import { modalLogin, modalSignIn } from "../../../redux/actions/modalLogin";
 import { getProfileInitialData } from "../../../redux/actions/profileAction";
+import { inputStyle } from "../../../config/BtnConfig/inputStyle";
+import { loginSchema } from "../../../config/configvalidation/loginSchema";
+import { loginContent } from "../../../Data/Login/content";
 
 
 const UserInfoInput = () => {
-    const [password, addPassword] = useState("");
-    const [email, addEmail] = useState("");
-    const [load, changeLoad] = useState(false);
-    const inputStyle = "mt-4 align-self-center  d-block border-0 border-bottom border-secondary";
+
     const dispatch = useDispatch();
     const [errorShow, handleErrorMsg] = useState(false);
 
-    async function handleFormSubmit(event) {
-        event.preventDefault();
+    async function handleFormSubmit(values) {
         handleErrorMsg(false);
-        changeLoad(true);
         try {
 
-            // const result = await loginHandler(email,password);
+            // const result = await loginHandler(values.email,values.password);
             getProfileInitialData()(dispatch);
             modalLogin(false)(dispatch);
         } catch (e) {
             handleErrorMsg(true);
 
         }
-        changeLoad();
 
     }
 
@@ -39,43 +36,74 @@ const UserInfoInput = () => {
 
     return (
         <div className=" mt-md-5">
-            <form onSubmit={handleFormSubmit} className=" mt-md-5">
-                <label className="visually-hidden" id="email">
-                    Email
-                </label>
-                <input
-                    aria-labelledby="email"
-                    className={inputStyle}
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    required
-                    onChange={(value) => addEmail(value.target.value)}
-                />
-                <label className="visually-hidden" id="password">
-                    password
-                </label>
-
-                <input
-                    aria-labelledby="password"
-                    className={inputStyle}
-                    type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    required
-                    onChange={(value) => addPassword(value.target.value)}
-                />
+            <Formik
+                initialValues={{
+                    email: '',
+                    password: ''
+                }}
+                validationSchema={loginSchema}
+                onSubmit={(values, { setSubmitting }) => {
+                    setSubmitting(true);
+                    handleFormSubmit(values);
+                    setSubmitting(false);
+                }}
+            >
                 {
-                    load ?
-                        <Loader type="Oval" color="#4354fd" height={25} width={80} className="mt-4" />
-                        :
-                        <div className=" d-grid me-5 me-md-0">
-                            <input
-                                className="btn  mt-4  btn-sm  primary-color d-block text-white"
-                                type="submit" value="Submit" />
-                        </div>
+                    ({
+                        values,
+                        handleSubmit,
+                        errors,
+                        touched,
+                        handleChange,
+                        isSubmitting
+                    }) => (
+                        <form onSubmit={handleSubmit}>
+                            {
+                                loginContent.inputFields.map((value) => {
+                                    return (
+                                        <div key={value.label}>
+                                            <label className="visually-hidden" id="AddFirstLine">
+                                                {value.label}
+                                            </label>
+                                            <input
+                                                value={values[value.name]}
+                                                onChange={handleChange}
+                                                name={value.name}
+                                                type={value.type}
+                                                placeholder={value.label}
+                                                required
+                                                className={inputStyle.inputStyle}
+                                            />
+                                            <div>
+
+                                                {errors[value.name] && touched[value.name] ?
+
+                                                    <div className="text-danger">
+                                                        <span className="me-3">{errors[value.name].key}</span>
+                                                    </div>
+                                                    : null
+                                                }
+
+                                            </div>
+                                        </div>
+
+
+                                    )
+                                })
+                            }
+                             <div className="d-grid">
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="btn d-block mt-5 primary-color text-white">
+                                    SUBMIT
+                                </button>
+                            </div>
+
+                        </form>
+                    )
                 }
-            </form>
+            </Formik>
             <Row className="">
                 <Col md={9} xs={7}>
                     <p className="mt-2 text-start text-md-end small">

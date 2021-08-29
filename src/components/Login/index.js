@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import Cancel from '../../Data/SVGs/cancel';
+import Cancel from '../../images/SVGs/cancel';
 import UserInfoInput from './UI/userInfoInput';
 import PurityImg from '../../images/purity.jpg';
 import { useDispatch } from 'react-redux';
@@ -12,19 +12,19 @@ const Login = () => {
     const dispatch = useDispatch();
 
     function handleModal() {
-      modalLogin(false)(dispatch);
+        modalLogin(false)(dispatch);
     }
 
     return (
-        <Container   fluid>
-             <Row >
+        <Container fluid>
+            <Row >
                 <Col md={4} lg={6} className="bg-primary">
                 </Col>
-                <Col  md={6} lg={{ span: 4,offset:1 }}>
+                <Col md={6} lg={{ span: 4, offset: 1 }}>
 
                 </Col>
                 <Col md={2} lg={1} className="text-end ">
-                <button onClick={handleModal} className="btn fw-bold ">
+                    <button onClick={handleModal} className="btn fw-bold ">
                         <Cancel />
                     </button>
                 </Col>
@@ -50,7 +50,7 @@ const Login = () => {
                 <Col md={8} lg={{ span: 4 }}
                     className="ms-lg-3 mt-lg-5 pt-lg-5">
 
-                    <UserInfoInput/>
+                    <UserInfoInput />
                 </Col>
             </Row>
         </Container>

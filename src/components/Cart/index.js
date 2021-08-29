@@ -6,6 +6,8 @@ import ItemList from '../BuyNow/Ui/itemList';
 import PaymentOption from '../BuyNow/Ui/paymentOption';
 import { useHistory } from 'react-router-dom';
 import { removeFromCart, updateCart } from '../../redux/actions/addCartAction';
+import SadEmoji from '../../images/SVGs/sadEmoji';
+import RightArrow from '../../images/SVGs/rightArrow';
 
 const Cart = () => {
 
@@ -29,7 +31,7 @@ const Cart = () => {
             handleQtyChange(qty.map((val, ind) =>
                 index === ind ? val - 1 : val
             ));
-            updateCart(items[index],qty[index]-1)(dispatch);
+            updateCart(items[index], qty[index] - 1)(dispatch);
         }
     }
 
@@ -37,39 +39,55 @@ const Cart = () => {
         handleQtyChange(qty.map((val, ind) =>
             index === ind ? val + 1 : val
         ));
-        updateCart(items[index],qty[index]+1)(dispatch);
+        updateCart(items[index], qty[index] + 1)(dispatch);
     }
 
     function handleRemove(index) {
         // console.log(index);
-        if(items.length === 1){
-            items.splice(index,1)
-            qty.splice(index,1);
+        if (items.length === 1) {
+            items.splice(index, 1)
+            qty.splice(index, 1);
 
 
-            removeFromCart(items,qty)(dispatch);
+            removeFromCart(items, qty)(dispatch);
             history.goBack();
-        }else{
-            items.splice(index,1)
-            qty.splice(index,1);
-            removeFromCart(items,qty)(dispatch);
+        } else {
+            items.splice(index, 1)
+            qty.splice(index, 1);
+            removeFromCart(items, qty)(dispatch);
         }
     }
 
-    function handleOrderNowRedirection(){
+    function handleOrderNowRedirection() {
         setShow(true);
         history.push("/place-order", {
-            items:items,
-            qty : qty
+            items: items,
+            qty: qty
         });
     }
 
 
+    function handleRedirect() {
+        history.push("/products");
+    }
+
     if (items.length === 0) {
         return (
-            <div>
-                no items at cart
-            </div>
+            <Container className="mb-5 text-center mt-3 pt-lg-5 pb-5 light-variant">
+                <Row className=" pt-5">
+                    <h3 className="text-center primary-text-color" >
+                        Cart
+                    </h3>
+                </Row>
+                <p className=" mt-3 text-secondary">
+                    <SadEmoji />
+                    No Items in the cart
+                </p>
+                <button onClick={handleRedirect} className="btn btn-primary rounded ps-5 mt-3 mt-lg-4 pe-5">
+                    Shop Now
+                   <RightArrow/>
+                </button>
+            </Container >
         );
     }
 
@@ -86,8 +104,8 @@ const Cart = () => {
                                 </span>
                             </h5>
                             <button
-                            onClick={handleOrderNowRedirection}
-                            className="btn primary-color text-white">
+                                onClick={handleOrderNowRedirection}
+                                className="btn primary-color text-white">
                                 ORDER NOW
                             </button>
                         </ListGroup.Item>
@@ -137,7 +155,7 @@ const Cart = () => {
                                                     show
                                                         ? <div></div>
                                                         : <button
-                                                            onClick={()=>handleRemove(index)}
+                                                            onClick={() => handleRemove(index)}
                                                             className=" btn d-block ps-0 text-danger" >
                                                             REMOVE
                                                         </button>

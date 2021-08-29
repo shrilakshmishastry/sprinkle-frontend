@@ -1,5 +1,5 @@
 import { Col, Row } from "react-bootstrap";
-import Call from "../../../Data/SVGs/call";
+import Call from "../../../images/SVGs/call";
 
 const InstantDelivery = () => {
     return (

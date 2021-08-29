@@ -16,7 +16,7 @@ const UserProfile = () => {
     // const [address,changeAddress] = useState(userInfo.address);
 
     if (userInfo.email === "") {
-        return <Redirect to="/" />
+        history.replace("/");
     }
 
 

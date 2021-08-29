@@ -8,6 +8,7 @@ import { cartActionTypeCreator, GET_PROFILE_ACTION } from "../action-type";
 
 
 export const  getProfileInitialData = () => {
+   
     const {add} = cartActionTypeCreator(GET_PROFILE_ACTION);
     return async function(dispatch){
         try{
@@ -66,7 +67,7 @@ export const addNewAddress = (address) =>{
 
 export const updateProfileAction = (userInfo) =>{
     const {update} = cartActionTypeCreator(GET_PROFILE_ACTION);
-   
+
     return async function(dispatch){
         try{
             // const result = await updateProfile(userInfo);

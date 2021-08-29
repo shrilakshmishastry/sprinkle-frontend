@@ -1,20 +1,21 @@
 import { useLocation } from "react-router";
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Container, Alert } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import waterBottel from '../../images/waterbottel.png';
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/actions/addCartAction";
 import { Redirect, useHistory } from "react-router-dom";
-import CarryVehicle from "../../Data/SVGs/carryVehicle";
+import CarryVehicle from "../../images/SVGs/carryVehicle";
 import Loader from 'react-loader-spinner';
 import { useSelector } from "react-redux";
+import Description from "./Ui/description";
 
 
 const DetailedView = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const stateInfo = useLocation();
-    const state = stateInfo === undefined ? "" : stateInfo.state.refer;
+    const state = stateInfo.state === undefined ? "" : stateInfo.state.refer;
     const [clicked, setClicked] = React.useState();
     const [show, setShow] = React.useState(false);
 
@@ -24,8 +25,8 @@ const DetailedView = () => {
 
     useEffect(() => {
         let present;
-        for(let i=0;i<items.length;i++){
-            if(items[i].id===state.id){
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].id === state.id) {
                 present = true;
                 break;
             }
@@ -48,63 +49,27 @@ const DetailedView = () => {
     function handleBuyNow() {
 
         setClicked(1);
-        history.push( {
+        history.push({
             pathname: "/place-order",
-            state:{
+            state: {
                 items: [state],
-                qty:[1],
+                qty: [1],
             }
         });
     }
 
 
 
-
-    function description(display) {
-        const style = display + " " + "rounded ms-lg-5 ps-lg-3 pe-lg-3 mt-3 mt-lg-5 pt-5 pb-5";
-        return (
-            <Col md={6} lg={4} className={style}>
-
-                <h5 className="mb-lg-0" >
-                    Pack of {state.qty} bottles,
-                    consists of {state.pack_of} bottles
-                </h5>
-                <p className="mt-3 h6 text-primary">
-                    ₹{state.price}  per pack
-                </p>
-                <p className="small">
-                    Per bottel  ₹ {state.per_bottel_price}
-                </p>
-
-
-                {
-                    stateInfo.state.refer.tag === "out of stock" ?
-                        <p className="text-danger  small">
-                            Currently unavialable
-                        </p>
-                        :
-                        <p className="text-secondary  small">
-                            <CarryVehicle />
-                            Expect delivery within a day.
-                        </p>
-                }
-
-            </Col>
-        );
-    }
-
-
-
     if (stateInfo.state === undefined) {
-        return <Redirect to="/" />
+        history.replace("/");
     }
+
     return (
         <Container className="mt-5 mb-5">
 
             <Row className="border pb-5 justify-content-center ">
-                {
-                    description("d-block d-sm-none")
-                }
+
+                <Description state={state} display={"d-block d-sm-none"} />
 
                 <Col md={6} lg={4} className="mt-lg-4">
                     <img alt="water bottel" src={waterBottel} className="img-fluid" />
@@ -128,9 +93,14 @@ const DetailedView = () => {
                                         }
                                         onClick={handleAddCart}>
                                         {
-                                            show && clicked === 0 ? <Loader type="Oval" color="#ffffff"
-                                                height={25} width={80}
-                                                className=" text-center" />
+                                            show && clicked === 0 ?
+                                                <div>
+                                                    <Loader type="Oval" color="#ffffff"
+                                                        height={25} width={80}
+                                                        className=" text-center" />
+                                                    Going to cart
+                                                </div>
+
                                                 :
                                                 <p className="mb-0">
                                                     Add To cart
@@ -161,9 +131,7 @@ const DetailedView = () => {
                         </Col>
                     </Row>
                 </Col>
-                {
-                    description("d-none d-sm-block")
-                }
+                <Description state={state} display={"d-none d-sm-block"} />
             </Row>
 
         </Container>

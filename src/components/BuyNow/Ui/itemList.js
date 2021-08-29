@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 
-const ItemList = ({ qty ,items}) => {
+const ItemList = ({ qty, items }) => {
 
     const [total, changeTotal] = useState(0);
     const userInfo = useSelector(state => state.userReducer.userInfo.email);
