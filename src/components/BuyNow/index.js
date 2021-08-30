@@ -11,7 +11,7 @@ import PaymentOption from './Ui/paymentOption';
 
 const BuyNow = () => {
     const state = useLocation().state;
-    const info = useLocation().state.items;
+    const info =  useLocation().state.items;
     const qt = useLocation().state.qty;
     const history =  useHistory();
     const [selectedAddress,addSelectedAddress] =  useState("");
@@ -63,7 +63,7 @@ const BuyNow = () => {
     }
 
 
-  
+
     return (
         <Container>
             <Row className="mt-5 mb-5">
@@ -88,8 +88,10 @@ const BuyNow = () => {
                     </div>
                 </Col>
                 <Col md={4} lg={4} className="mt-5 mt-md-0">
-                    <ItemList qty={qty} items={state.items}/>
-                    <PaymentOption />
+                    <ItemList qty={qty} items={state.items}
+                    addressSelected={selectedAddress}
+                    />
+                    <PaymentOption  />
                 </Col>
             </Row>
         </Container>

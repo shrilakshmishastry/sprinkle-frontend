@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
 import waterBottel from '../../images/waterbottel.png';
-import ItemList from '../BuyNow/Ui/itemList';
 import PaymentOption from '../BuyNow/Ui/paymentOption';
 import { useHistory } from 'react-router-dom';
 import { removeFromCart, updateCart } from '../../redux/actions/addCartAction';
 import SadEmoji from '../../images/SVGs/sadEmoji';
 import RightArrow from '../../images/SVGs/rightArrow';
+import ListViewCart from './listViewCart';
 
 const Cart = () => {
 
@@ -17,6 +17,8 @@ const Cart = () => {
     const [show, setShow] = useState(false);
     const history = useHistory();
     const dispatch = useDispatch();
+
+
 
     let item = useSelector(state => state.checkoutReducer);
     let items = item.productsAtCart;
@@ -85,7 +87,7 @@ const Cart = () => {
                 </p>
                 <button onClick={handleRedirect} className="btn btn-primary rounded ps-5 mt-3 mt-lg-4 pe-5">
                     Shop Now
-                   <RightArrow/>
+                    <RightArrow />
                 </button>
             </Container >
         );
@@ -129,7 +131,7 @@ const Cart = () => {
                                                         <p className="pt-2">{qty[index]}</p>
                                                     </Col>
                                                     <Col md={4} xs={4} >
-                                                        <button className={val.stock === qty[index] || show ? disabledBtn : activeBtn}
+                                                        <button className={val.stock || show ? disabledBtn : activeBtn}
                                                             onClick={() => handlePositiveBtn(index)}>
                                                             +
                                                         </button>
@@ -170,7 +172,7 @@ const Cart = () => {
                     </ListGroup>
                 </Col>
                 <Col md={4} lg={4} className="mt-5 mt-md-0">
-                    <ItemList qty={qty} items={items} />
+                    <ListViewCart qty={qty} items={items} />
                     <PaymentOption />
                 </Col>
             </Row>

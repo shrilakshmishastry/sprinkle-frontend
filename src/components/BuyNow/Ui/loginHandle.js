@@ -42,11 +42,11 @@ const LoginHandle = ({active}) => {
                             data-bs-toggle="collapse" data-bs-target="#panelStayOpen-collapseOne"
                             aria-expanded="true" aria-controls="panelStayOpen-collpaseOne"
                         >
-                          1  LOGIN
+                           LOGIN
                         </button>
                         : <div className="ps-4 pt-3 pb-3">
                             <p className="h6 primary-text-color  fw-normal">
-                             1   LOGIN
+                              LOGIN
                             </p>
                         </div>
                 }

@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import SadEmoji from "../../../images/SVGs/sadEmoji";
 import CardOfProducts from "../../../presentational/Card";
 import { getProductsShop } from "../../../redux/actions/getProductsShopAction";
+import { modalDetailView } from "../../../redux/actions/modalLogin";
 
 const ShopUi = () =>{
     const dispatch = useDispatch();
@@ -16,9 +17,10 @@ const ShopUi = () =>{
     },[]);
 
     function detailViewRedirector(refer) {
-        history.push("/item-details", {
-            refer
-        });
+        modalDetailView(true,refer)(dispatch);
+        // history.push("/item-details", {
+        //     refer
+        // });
     }
     if (!products.length > 0) {
         return (

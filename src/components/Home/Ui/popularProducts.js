@@ -1,18 +1,17 @@
 import { Row, Col, Card } from "react-bootstrap"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import SadEmoji from "../../../images/SVGs/sadEmoji";
-import waterBottel from '../../../images/waterbottel.png';
 import CardOfProducts from "../../../presentational/Card";
+import { modalDetailView } from "../../../redux/actions/modalLogin";
 
 const PopularProducts = () => {
     let popularProducts = useSelector(state => state.homeReducer.productsInHomePage);
     const history = useHistory();
+    const dispatch = useDispatch();
 
     function detailViewRedirector(refer) {
-        history.push("/item-details", {
-            refer
-        });
+        modalDetailView(true,refer)(dispatch);
     }
 
     if (!popularProducts.length > 0) {

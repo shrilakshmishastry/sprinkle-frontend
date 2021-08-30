@@ -44,3 +44,7 @@ input:required,input:focus{
   background-color: transparent;
 }
 
+.shop:hover, .shop:focus{
+  cursor: pointer !important;
+  background-color: #4354fd  !important;
+}

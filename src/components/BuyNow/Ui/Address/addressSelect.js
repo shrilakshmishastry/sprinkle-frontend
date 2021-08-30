@@ -68,9 +68,9 @@ const AddressSelect = ({ active, changeActive }) => {
                                         )
                                     })
                                 }
-                                <input
+                                {/* <input
                                     className="btn mt-4 ps-5 pe-5 btn btn-sm  primary-color d-block text-white"
-                                    type="submit" value="DELIVERY HERE" />
+                                    type="submit" value="DELIVERY HERE" /> */}
 
                             </form>
 

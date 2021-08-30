@@ -37,7 +37,7 @@ const ProductsDetail = ({
     //     [`${disabledBtn}`] : qty[index] <= 1 || show
     // });
 
-    console.log(info);
+
     async function placeAnOrderHandler() {
         for(let i=0;i<info.length;i++){
             info[i]["ordered-quantity"] = qty[i];
@@ -101,7 +101,7 @@ const ProductsDetail = ({
                                                 <p className="pt-2">{qty[index]}</p>
                                             </Col>
                                             <Col md={4} xs={4} >
-                                                <button className={info.stock === qty[index]  || show? disabledBtn : activeBtn}
+                                                <button className={info.stock   || show? disabledBtn : activeBtn}
                                                     onClick={() => handlePositiveBtn(index)}>
                                                     +
                                                 </button>

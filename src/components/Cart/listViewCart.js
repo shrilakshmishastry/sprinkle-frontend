@@ -3,13 +3,9 @@ import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 
-const ItemList = ({ qty, items ,addressSelected }) => {
-
+const ListViewCart = ({ qty, items, addressSelected }) => {
     const [total, changeTotal] = useState(0);
     const userInfo = useSelector(state => state.userReducer.userInfo.email);
-    let info = useLocation().state.items;
-    const user = useSelector(state => state.userReducer.userInfo);
-    const history = useHistory();
 
     useEffect(() => {
         let val = 0;
@@ -19,28 +15,6 @@ const ItemList = ({ qty, items ,addressSelected }) => {
 
         changeTotal(val);
     }, [qty]);
-
-    function handlePlaceAnOrderBtn() {
-        for(let i=0;i<info.length;i++){
-            info[i]["ordered-quantity"] = qty[i];
-        }
-
-        let queryObj = {
-            items: info,
-            addressToDelivey : addressSelected,
-            userInfo  : user
-        };
-        console.log("place an order");
-        console.log(queryObj);
-        // try{
-        //    const result = await placeAnOrder(queryObj);
-        // }catch(e){
-        //     console.log(e);
-        // }
-
-        history.replace("/order-success");
-
-    }
 
     if (userInfo === "") {
         return (
@@ -57,16 +31,10 @@ const ItemList = ({ qty, items ,addressSelected }) => {
 
     return (
         <Card>
-            <Card.Header className="d-flex flex-row justify-content-between">
-                <h6 className=" text-secondary pt-2">
+            <Card.Header>
+                <h6 className=" text-secondary ">
                     PRICE DETAILS
                 </h6>
-                <button onClick={handlePlaceAnOrderBtn}
-                 className="btn p-0 primary-text-color ">
-                    <small>
-                    PLACE ORDER
-                    </small>
-                </button>
             </Card.Header>
             <Card.Body>
                 {
@@ -99,5 +67,6 @@ const ItemList = ({ qty, items ,addressSelected }) => {
             </Card.Footer>
         </Card>
     );
+
 }
-export default ItemList;
+export default ListViewCart;

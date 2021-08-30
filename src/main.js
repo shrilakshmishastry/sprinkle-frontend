@@ -4,18 +4,22 @@ import Footer from './presentational/Footer';
 import './App.css';
 import ScrollToTop from './config/scrollToTop';
 import Routers from './Data/Routers/routers';
-import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Login from './components/Login';
-import { modalLogin, modalSignIn } from './redux/actions/modalLogin';
+import { modalDetailView, modalLogin, modalSignIn } from './redux/actions/modalLogin';
 import SignUp from './components/SignUp';
+import ModalHandler from './presentational/ModalHandler/modalHandler';
+import { contentMain } from './Data/Main/content';
+import DetailedView from './components/DetailedItemView';
 
 
 const Main = () => {
 
-  let show = useSelector(state=>state.modalLoginReducer.show);
-  let signUpShow = useSelector(state=>state.modalSignInReducer.show);
+  const show = useSelector(state=>state.modalLoginReducer.show);
+  const signUpShow = useSelector(state=>state.modalSignInReducer.show);
+  const detailViewShow = useSelector(state=>state.modalDetailViewReducer.show);
   const dispatch = useDispatch();
+
 
 
   function handleModal() {
@@ -26,20 +30,42 @@ const Main = () => {
     modalSignIn(false)(dispatch);
   }
 
+  function handleDetailViewModal(){
+    modalDetailView(false,{})(dispatch);
+  }
+
   return (
     <div>
-      <Modal size="lg"   show={show}
-       onHide={handleModal}>
-        <Modal.Body className="p-0">
-          <Login/>
-        </Modal.Body>
-      </Modal>
-      <Modal size="lg"   show={signUpShow}
-       onHide={handleSignUpModal}>
-        <Modal.Body className="p-0">
-          <SignUp/>
-        </Modal.Body>
-      </Modal>
+      {/* {
+        contentMain.modals.map((value)=>{
+          return(
+            <ModalHandler
+            key={value.name}
+            component={value.component}
+            onHide={`${value.handler}`}
+              show={`${value.show}`}
+
+            />
+          );
+        })
+      } */}
+      <ModalHandler
+        component={<Login/>}
+        onHide={handleModal}
+        show={show}
+      />
+       <ModalHandler
+        component={<SignUp/>}
+        onHide={handleSignUpModal}
+        show={signUpShow}
+      />
+       <ModalHandler
+        component={
+          <DetailedView />
+        }
+        onHide={handleDetailViewModal}
+        show={detailViewShow}
+      />
       <ScrollToTop />
       <NavBarSprinkle />
       <Routers/>
