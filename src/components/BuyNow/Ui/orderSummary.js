@@ -39,6 +39,11 @@ const ProductsDetail = ({
 
 
     async function placeAnOrderHandler() {
+        let val = 0;
+        for (let i = 0; i < items.length; i++) {
+            val = val + items[i].price * qty[i];
+        }
+
         for(let i=0;i<info.length;i++){
             info[i]["ordered-quantity"] = qty[i];
         }
@@ -46,7 +51,8 @@ const ProductsDetail = ({
         let queryObj = {
             items: info,
             addressToDelivey : addressSelected,
-            userInfo  : user
+            userInfo  : user,
+            total:val
         };
         console.log("place an order");
         console.log(queryObj);

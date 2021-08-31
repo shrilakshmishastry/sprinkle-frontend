@@ -28,7 +28,8 @@ const ItemList = ({ qty, items ,addressSelected }) => {
         let queryObj = {
             items: info,
             addressToDelivey : addressSelected,
-            userInfo  : user
+            userInfo  : user,
+            total: total
         };
         console.log("place an order");
         console.log(queryObj);
