@@ -11,10 +11,11 @@ import { getProfileInitialData } from '../../redux/actions/profileAction';
 
 const SignUp = () => {
     const [address, addAddress] = useState("");
-    const [userInfo,addUserInfo] = useState("");
+    const [userInfo, addUserInfo] = useState("");
     const [activeWindow, setActiveWindow] = useState(0);
     const dispatch = useDispatch();
     const [load, changeLoad] = useState(false);
+    const [errorText, addErrorText] = useState("");
 
     function handleContinue(value) {
         addUserInfo(value);
@@ -25,18 +26,31 @@ const SignUp = () => {
         modalSignIn(false)(dispatch);
     }
 
-    async function handleAddressInput(address){
+    async function handleAddressInput(address) {
 
-        userInfo["address"]  = address;
+        userInfo["address"] = address;
         console.log(address);
         changeLoad(true);
-        // try{
-        //     const result = await signInHandler(userInfo);
-            getProfileInitialData()(dispatch);
-            modalSignIn(false)(dispatch);
-        // }catch(e){
+        try {
+            const result = await signInHandler(userInfo);
+            console.log(result.data);
+            if (result.data.status === 204) {
 
-        // }
+                addErrorText(result.data.message);
+            }else{
+                console.log("success");
+                console.log(result.data);
+                window.localStorage.setItem("access-token", result.data.accessToken);
+                getProfileInitialData()(dispatch);
+                modalSignIn(false)(dispatch);
+            }
+
+
+
+
+        } catch (e) {
+
+        }
         changeLoad(false);
     }
 
@@ -52,6 +66,15 @@ const SignUp = () => {
                     <button onClick={handleModal} className="btn fw-bold ">
                         <Cancel />
                     </button>
+                </Col>
+
+            </Row>
+            <Row>
+
+                <Col md={4} lg={6} className="bg-primary">
+                </Col>
+                <Col md={8} lg={{ span: 5, offset: 1 }}>
+                    {errorText}
                 </Col>
 
             </Row>
@@ -80,8 +103,8 @@ const SignUp = () => {
                                     (value) => handleContinue(value)}
                             />
                             : <AddressInput
-                            load={load}
-                            handleAddressInput={(data)=>handleAddressInput(data)}
+                                load={load}
+                                handleAddressInput={(data) => handleAddressInput(data)}
                                 handleGoBack={() => setActiveWindow(0)}
                             />
                     }

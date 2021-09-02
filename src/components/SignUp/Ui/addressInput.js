@@ -1,6 +1,19 @@
 import LeftArrow from "../../../images/SVGs/arrowLeft"
 import AddressInputGeneric from "../../../presentational/AddressInput/addressInput";
 
+// address_second_line:{
+//     type: String,
+//      required: true
+//  },
+//  city:{
+//      type:    String,
+//      required: true
+//  },
+//  state:{
+//      type:    String,
+//      required: true
+//  },
+//  postal:
 
 const AddressInput = ({ handleGoBack, handleAddressInput, load }) => {
 
@@ -8,10 +21,10 @@ const AddressInput = ({ handleGoBack, handleAddressInput, load }) => {
     function handleFormSubmit(value) {
         console.log(value);
         handleAddressInput({
-            addFirstLine : value.firstLineOfAddress,
-            addSecondLine : value.secondLineOfAddress,
+            address_first_line : value.firstLineOfAddress,
+            address_second_line : value.secondLineOfAddress,
             city:value.cityOfAddress,
-            postalCode:value. postal,
+            postal:value. postal,
             state:value.stateOfAddress
         });
     }

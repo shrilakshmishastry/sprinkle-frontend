@@ -1,19 +1,29 @@
 import axios from "axios";
 const api = {
-    "root": " http://localhost:3600",
+    "root": " http://localhost:5000",
     "profile": "/user-info",
     "top-products": "/top-products",
-    "get-item": "/products-list",
+    "get-item": "/products",
     "login" : "/login",
     "signup" :"/signup",
     "add-address" : "/address",
-    "place-an-order" : "/place-oredr",
-    "add-address" : "/add-address",
+    "place-an-order" : "/order-summary",
     "order-details" : "/order-summary",
-    "remove-order" : "/remove-order",
-    "update-profile":"/update-profile"
+    "remove-order" : "/order-summary",
+    "update-profile":"/user-info"
 };
 
+export function createRequest(){
+    const accessToken = window.localStorage.getItem("access-token");
+    const instance = axios.create();
+    console.log(accessToken);
+    if(accessToken){
+        instance.defaults.headers.common['Authorization'] = accessToken;
+    }
+
+    return instance;
+}
+
 export {
-    api
+    api,
 };

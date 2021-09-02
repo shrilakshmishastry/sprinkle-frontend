@@ -19,9 +19,16 @@ const UserInfoInput = () => {
         handleErrorMsg(false);
         try {
 
-            // const result = await loginHandler(values.email,values.password);
-            getProfileInitialData()(dispatch);
+            const result = await loginHandler(values.email,values.password);
+            console.log(result);
+            if(result.data.status === 204){
+                handleErrorMsg(true);
+            }else{
+                window.localStorage.setItem("access-token", result.data.accessToken);
+             getProfileInitialData()(dispatch);
             modalLogin(false)(dispatch);
+            }
+
         } catch (e) {
             handleErrorMsg(true);
 

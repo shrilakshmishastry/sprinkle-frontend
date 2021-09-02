@@ -33,7 +33,7 @@ const UserProfile = () => {
         let data = {
             name: values.name,
             email: values.email,
-            phoneNumber: values.phoneNumber,
+            phone_number: values.phoneNumber,
             address: userInfo.address
         }
 
@@ -72,7 +72,7 @@ const UserProfile = () => {
                                 <Formik
                                     initialValues={{
                                         email: userInfo.email,
-                                        phoneNumber: userInfo.phoneNumber,
+                                        phoneNumber: userInfo.phone_number,
                                         name: userInfo.name,
                                     }}
                                     validationSchema={profileEditSchema}

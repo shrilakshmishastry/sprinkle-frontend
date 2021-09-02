@@ -14,6 +14,7 @@ const PopularProducts = () => {
         modalDetailView(true,refer)(dispatch);
     }
 
+
     if (!popularProducts.length > 0) {
         return (
             <div className="text-center mt-3 pt-lg-5 pb-5 light-variant">
@@ -54,7 +55,7 @@ const PopularProducts = () => {
                             popularProducts && popularProducts.length > 0 &&
                             popularProducts.map((item) => {
                                 return (
-                                    <CardOfProducts item={item} key={item.id.toString()}
+                                    <CardOfProducts item={item} key={item._id.toString()}
                                     handler={(item)=>detailViewRedirector(item)}
                                     />
 

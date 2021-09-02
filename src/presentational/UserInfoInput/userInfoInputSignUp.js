@@ -2,7 +2,6 @@ import { Formik } from "formik";
 import { signUpSchema } from "../../config/configvalidation/signUpSchema";
 import { SignUp } from "../../Data/Signup/content";
 
-
 const UserInfoInputSignUp = ({
     handler
 }) => {

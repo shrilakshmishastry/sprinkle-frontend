@@ -14,7 +14,7 @@ import DropDownGenerator from './UI/dropDownGenerator';
 const NavBarSprinkle = () => {
     const location = useLocation().pathname;
     const info = useSelector(state => state.userReducer.userInfo);
-    const name = info.name;
+    const name = info !== undefined ?  info.name :"";
     const dispatch = useDispatch();
 
 
@@ -33,6 +33,7 @@ const NavBarSprinkle = () => {
     }, [location]);
 
     function handleLogout() {
+        window.localStorage.clear();
         removeProfileData(name)(dispatch);
     }
 

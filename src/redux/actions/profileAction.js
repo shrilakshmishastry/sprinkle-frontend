@@ -10,20 +10,43 @@ import { cartActionTypeCreator, GET_PROFILE_ACTION } from "../action-type";
 export const  getProfileInitialData = () => {
 
     const {add} = cartActionTypeCreator(GET_PROFILE_ACTION);
+    console.log("hello");
     return async function(dispatch){
         try{
             const result = await getProfileData();
+            console.log(result);
+            if(result.status === 204){
+                dispatch({
+                    type:add,
+                    payload: emptyUserData
+                });
+            }else{
+                console.log("success");
+                dispatch({
+                    type:add,
+                    payload: result.data.info
+                });
+            }
 
-            dispatch({
-                type:add,
-                payload: result.data
-            });
         }catch(e){
+            console.log(e);
             //ask what I should do?
         }
     }
 
 }
+
+
+
+export const  signUpAction = () => {
+
+    const {add} = cartActionTypeCreator(GET_PROFILE_ACTION);
+    return function(dispatch){
+
+    }
+
+}
+
 
 
 
@@ -68,13 +91,13 @@ export const addNewAddress = (address) =>{
 export const updateProfileAction = (userInfo) =>{
     const {update} = cartActionTypeCreator(GET_PROFILE_ACTION);
 
-    return function(dispatch){
+    return async function(dispatch){
         try{
-            // const result = await updateProfile(userInfo);
+            const result = await updateProfile(userInfo);
             dispatch(
                 {
                     type: update,
-                    payload: userInfo,
+                    payload: result.data.info,
                 }
             );
 

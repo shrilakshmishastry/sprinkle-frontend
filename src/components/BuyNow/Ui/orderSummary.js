@@ -40,8 +40,8 @@ const ProductsDetail = ({
 
     async function placeAnOrderHandler() {
         let val = 0;
-        for (let i = 0; i < items.length; i++) {
-            val = val + items[i].price * qty[i];
+        for (let i = 0; i < info.length; i++) {
+            val = val + info[i].price * qty[i];
         }
 
         for(let i=0;i<info.length;i++){

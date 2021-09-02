@@ -1,10 +1,10 @@
-import { api } from "../../../config/api";
-import axios from 'axios';
+import { api, createRequest } from "../../../config/api";
+
 
 async function getProfileData() {
     let url = `${api.root}${api.profile}`;
     try {
-        const result = await axios.get(url);
+        const result = await createRequest().get(url);
         return result;
     }
     catch (e) {
