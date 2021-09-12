@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap";
 const AddressListGenerate = (
     {
         uniqueKey, selectedAddress, value, handler
-    }) => {
+    }) => { 
     return (
         <Row key={uniqueKey} className="">
             <Col md="1" xs={2} >
@@ -22,13 +22,13 @@ const AddressListGenerate = (
                 <label className="d-flex flex-row" >
                     <div>
                         <p className="mb-0">
-                            {value.addFirstLine},
+                            {value.address_first_line},
                         </p>
                         <p className="mb-0">
-                            {value.addSecondLine},
+                            {value.address_second_line},
                         </p>
                         <p className="mb-0">
-                            {value.city}-{value.postalCode}
+                            {value.city}-{value.postal}
                         </p>
 
                     </div>

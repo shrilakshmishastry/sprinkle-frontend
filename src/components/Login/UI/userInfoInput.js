@@ -17,23 +17,16 @@ const UserInfoInput = () => {
 
     async function handleFormSubmit(values) {
         handleErrorMsg(false);
-        try {
 
-            const result = await loginHandler(values.email,values.password);
-            console.log(result);
-            if(result.data.status === 204){
+
+            const result = await loginHandler(values.email, values.password);
+
+            if (result === "success") {
+                getProfileInitialData()(dispatch);
+                modalLogin(false)(dispatch);
+            } else {
                 handleErrorMsg(true);
-            }else{
-                window.localStorage.setItem("access-token", result.data.accessToken);
-             getProfileInitialData()(dispatch);
-            modalLogin(false)(dispatch);
             }
-
-        } catch (e) {
-            handleErrorMsg(true);
-
-        }
-
     }
 
     function handleSignInBtn() {
@@ -98,7 +91,7 @@ const UserInfoInput = () => {
                                     )
                                 })
                             }
-                             <div className="d-grid">
+                            <div className="d-grid">
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}

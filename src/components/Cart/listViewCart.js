@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Card } from "react-bootstrap";
-import { useHistory, useLocation } from "react-router-dom";
+import { Card, Container } from "react-bootstrap";
+
 
 const ListViewCart = ({ qty, items, addressSelected }) => {
     const [total, changeTotal] = useState(0);
@@ -18,14 +18,14 @@ const ListViewCart = ({ qty, items, addressSelected }) => {
 
     if (userInfo === "") {
         return (
-            <div className="mt-5">
+            <Container className="mt-5">
                 <h5 className="primary-text-color">
                     Sprinkle
                 </h5>
                 <p>
                     We give the world most purified water!!
                 </p>
-            </div>
+            </Container>
         );
     }
 
@@ -42,10 +42,10 @@ const ListViewCart = ({ qty, items, addressSelected }) => {
 
                         return (
                             <div
-                                key={val.id}
+                                key={val._id}
                                 className="d-flex flex-row justify-content-between">
                                 <p>
-                                    {val.qty} pack of  {val.pack_of} bottles
+                                    {val.name}
                                 </p>
                                 <p>
                                     ₹{val.price * qty[index]}

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Formik } from 'formik';
 import { Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { updateProfileAction } from '../../redux/actions/profileAction';
+import { getProfileInitialData, updateProfileAction } from '../../redux/actions/profileAction';
 import { profileEditSchema } from '../../config/configvalidation/profileEditSchema';
 import { profileContent } from '../../Data/UserProfile/emptyUserData';
 import classNames from "classnames";
@@ -13,10 +13,11 @@ const UserProfile = () => {
     const dispatch = useDispatch();
     let history = useHistory();
     let userInfo = useSelector(state => state.userReducer.userInfo);
+    const [error, addError] = useState("");
 
     // const [address,changeAddress] = useState(userInfo.address);
 
-    if (userInfo.email === "") {
+    if (userInfo && userInfo.email === "") {
         history.replace("/");
     }
 
@@ -28,8 +29,12 @@ const UserProfile = () => {
         [`${readOnlyStyle}`]: readOnlyMode
     });
 
-    function handleDone(values) {
-        console.log(values);
+    function getError(data, reset) {
+        addError(data);
+        reset();
+    }
+
+    async function handleDone(values, reset) {
         let data = {
             name: values.name,
             email: values.email,
@@ -37,12 +42,13 @@ const UserProfile = () => {
             address: userInfo.address
         }
 
-        updateProfileAction(data)(dispatch);
+        await updateProfileAction(data,
+            (data) => getError(data, reset)
+        )(dispatch);
         changeMode(true);
 
     }
 
-    console.log("hey shri");
     return (
         <Container className="mt-5 mb-5">
             <Row className="justify-content-center">
@@ -67,6 +73,9 @@ const UserProfile = () => {
 
                             </div>
                         </ListGroup.Item>
+                        <ListGroup.Item>
+                            <p className="text-danger">{error}</p>
+                        </ListGroup.Item>
                         <ListGroup.Item className="">
                             <Row className="">
                                 <Formik
@@ -76,9 +85,9 @@ const UserProfile = () => {
                                         name: userInfo.name,
                                     }}
                                     validationSchema={profileEditSchema}
-                                    onSubmit={(values, { setSubmitting }) => {
+                                    onSubmit={(values, { setSubmitting, resetForm }) => {
                                         setSubmitting(true);
-                                        handleDone(values);
+                                        handleDone(values, resetForm);
                                         setSubmitting(false);
                                     }}
                                 >

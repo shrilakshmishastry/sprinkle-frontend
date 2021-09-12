@@ -3,9 +3,11 @@ import { useHistory, useLocation } from "react-router-dom";
 import waterBottel from '../../../images/waterbottel.png';
 import Loader from 'react-loader-spinner';
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import { btnStyle } from "../../../config/BtnConfig/btnStyle";
+import placeAnOrder from "../../../Data/ApiCalls/PlaceAnOrder/placeAnOrder";
+import { clearCart } from "../../../redux/actions/addCartAction";
 
 const ProductsDetail = ({
     handlePositiveBtn,
@@ -14,15 +16,16 @@ const ProductsDetail = ({
     qty,
     active,
     addressSelected,
+    errorHandler
 
 }
 ) => {
-    console.log(qty);
+    const from  = useLocation().state.from;
     let info = useLocation().state.items;
     let user = useSelector(state=>state.userReducer.userInfo);
     const [show, setShow] = useState(false);
     const history = useHistory();
-
+    const dispatch = useDispatch();
     const disabledBtn =  btnStyle.disabledBtn;
     const activeBtn = btnStyle.activeBtn;
 
@@ -50,20 +53,22 @@ const ProductsDetail = ({
 
         let queryObj = {
             items: info,
-            addressToDelivey : addressSelected,
+            shipping_address : addressSelected,
             userInfo  : user,
-            total:val
+            price:val,
+            from: from
         };
-        console.log("place an order");
-        console.log(queryObj);
-        // try{
-        //    const result = await placeAnOrder(queryObj);
-        // }catch(e){
-        //     console.log(e);
-        // }
 
-        setShow(true);
-        history.replace("/order-success");
+        const result = await placeAnOrder(queryObj);
+        if(result === "success"){
+            setShow(true);
+            if(from==='cart'){
+                clearCart()(dispatch);
+            }
+            history.replace("/order-success");
+         }else{
+            errorHandler(result);
+         }
 
 
     }
@@ -90,9 +95,8 @@ const ProductsDetail = ({
                 <div className="accordion-body ">
                     {
                         info.map((val, index) => {
-                            console.log(val);
                             return (
-                                <Row key={val.id} >
+                                <Row key={val._id} >
                                     <Col md={5} lg={4} className="">
                                         <img alt="water bottel" src={waterBottel} className="img-fluid" />
                                         <Row className=" pt-3 text-center  ">
@@ -117,14 +121,13 @@ const ProductsDetail = ({
                                     </Col>
                                     <Col md={7} lg={{ span: 7, offset: 1 }} className="ps-lg-5 mt-4">
                                         <h6 className="mb-lg-0" >
-                                            Pack of {val.qty} bottles,
-                                            consists of {val.pack_of} bottles
+                                           {val.name}
                                         </h6>
                                         <p className="mt-3 h6 text-primary">
                                             ₹{val.price}  per pack
                                         </p>
                                         <p className="small">
-                                            Per bottel  ₹ {val.per_bottel_price}
+                                           {val.tag}
                                         </p>
                                         <p className="primary-text-color">
                                             Total ₹ {val.price * qty[index]}

@@ -1,10 +1,10 @@
-import { api } from "../../../config/api";
-import axios from "axios";
+import { api, createRequest } from "../../../config/api";
+
 
 async function getProducts() {
     let url = `${api.root}${api["get-item"]}`;
     try{
-        const result = axios.get(url);
+        const result = await createRequest().get(url);
         return result;
     }catch(e){
         return e;

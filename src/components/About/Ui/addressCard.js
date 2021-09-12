@@ -6,25 +6,25 @@ const AddressCard = ({
     city,
     postal,
     icon,
-    id
-}) =>{
-    return(
+    id,
+}) => {
+    return (
         <Col className="text-center "
-         key={id} xs={6} md={3} lg={3}>
-        <p className="primary-text-color mb-0">
-        {icon}
-        </p>
+            key={id} xs={6} md={3} lg={3}>
+            <p className="primary-text-color mb-0">
+                {icon}
+            </p>
 
-        <p className="mb-0 text-secondary small">
-            {firstLine}
-        </p>
-        <p className="text-secondary small">
-            {secondLine}
-        </p>
-        <p className="">
-            {city} - {postal}
-        </p>
-    </Col>
+            <p className="mb-0 text-secondary small">
+                {firstLine}
+            </p>
+            <p className="text-secondary small">
+                {secondLine}
+            </p>
+            <p className="">
+                {city} - {postal}
+            </p>
+        </Col>
     );
 }
 export default AddressCard;

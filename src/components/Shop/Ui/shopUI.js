@@ -6,11 +6,12 @@ import SadEmoji from "../../../images/SVGs/sadEmoji";
 import CardOfProducts from "../../../presentational/Card";
 import { getProductsShop } from "../../../redux/actions/getProductsShopAction";
 import { modalDetailView } from "../../../redux/actions/modalLogin";
+import '../../../App.css';
 
 const ShopUi = () =>{
     const dispatch = useDispatch();
     const products = useSelector(state=>state.productsReducer.productsList);
-    const history = useHistory();
+
 
     useEffect(()=>{
         getProductsShop()(dispatch);
@@ -18,13 +19,11 @@ const ShopUi = () =>{
 
     function detailViewRedirector(refer) {
         modalDetailView(true,refer)(dispatch);
-        // history.push("/item-details", {
-        //     refer
-        // });
+
     }
     if (!products.length > 0) {
         return (
-            <div className="text-center mt-3 pt-lg-5 pb-5 light-variant">
+            <Container className="text-center mt-3 pt-lg-5 pb-5 light-variant">
                 <Row className=" pt-5">
                     <h3 className="text-center primary-text-color" >
                         Popular Products
@@ -34,7 +33,7 @@ const ShopUi = () =>{
                     <SadEmoji/>
                     No Items Found
                 </p>
-            </div>
+            </Container                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     >
         );
     }
 
@@ -56,9 +55,9 @@ const ShopUi = () =>{
                     <Row className="justify-content-center">
                         {
                             products && products.length > 0 &&
-                            products.map((item) => {
+                             products.map((item) => {
                                 return (
-                                   <CardOfProducts item={item} key={item.id.toString()}
+                                   <CardOfProducts item={item} key={item._id.toString()}
                                    handler={(item)=>detailViewRedirector(item)}
                                    />
 

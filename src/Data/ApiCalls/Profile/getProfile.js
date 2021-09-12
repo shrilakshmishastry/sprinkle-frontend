@@ -8,7 +8,8 @@ async function getProfileData() {
         return result;
     }
     catch (e) {
-        return e;
+        ;
+        return "Error";
     }
 
 }

@@ -19,6 +19,7 @@ const DetailedView = () => {
     const [clicked, setClicked] = React.useState();
     const [show, setShow] = React.useState(false);
 
+    // in order to check whether item is in  cart
     let item = useSelector(state => state.checkoutReducer);
     let items = item.productsAtCart;
     const [itemPresent, changeItemPresent] = useState(false);
@@ -38,22 +39,21 @@ const DetailedView = () => {
     });
 
 
+
     useEffect(() => {
         let present;
         for (let i = 0; i < items.length; i++) {
-            if (items[i].id === state.id) {
+            if (items[i].sku === state.sku) {
                 present = true;
                 break;
             }
         }
-        console.log(present);
         changeItemPresent(present);
     }, [item]);
 
 
 
     function handleAddCart() {
-        console.log("pressesd cart");
         setClicked(0);
         setShow(true);
         addToCart(state)(dispatch);
@@ -64,7 +64,6 @@ const DetailedView = () => {
     }
 
     function handleBuyNow() {
-        console.log("buy now")
         setClicked(1);
         modalDetailView(false, {})(dispatch);
         history.push({
@@ -72,6 +71,7 @@ const DetailedView = () => {
             state: {
                 items: [state],
                 qty: [1],
+                from:"detailedView"
             }
         });
     }
@@ -86,9 +86,7 @@ const DetailedView = () => {
     }
 
 
-    // if (stateInfo.state === undefined) {
-    //     history.replace("/");
-    // }
+
 
     return (
         <Container className="pb-5 pt-3">

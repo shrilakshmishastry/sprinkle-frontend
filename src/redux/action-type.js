@@ -8,6 +8,7 @@ export const MODAL_DETAIL_VIEW = 'MODAL_DETAIL_VIEW';
 
 export function cartActionTypeCreator(type) {
     return {
+        initial: type+"initial",
         add : type + "add",
         remove : type + "remove",
         update: type + "update",

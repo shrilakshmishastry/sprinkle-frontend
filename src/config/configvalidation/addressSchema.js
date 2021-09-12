@@ -15,6 +15,6 @@ export const addressSchema = yup.object().shape({
     firstLineOfAddress : yup.string().min(2).required(),
     secondLineOfAddress: yup.string().min(2).required(),
     cityOfAddress: yup.string().min(4).required(),
-    postal: yup.number().min(56).required(),
+    postal: yup.number().required(),
     stateOfAddress : yup.string().min(4).required()
 });

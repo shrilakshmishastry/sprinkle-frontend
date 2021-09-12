@@ -19,7 +19,6 @@ const AddressInput = ({ handleGoBack, handleAddressInput, load }) => {
 
 
     function handleFormSubmit(value) {
-        console.log(value);
         handleAddressInput({
             address_first_line : value.firstLineOfAddress,
             address_second_line : value.secondLineOfAddress,

@@ -4,7 +4,6 @@ const UserInfoInput = ({ handleContinue }) => {
 
 
     async function handleFormSubmit(values) {
-        console.log(values);
         handleContinue(values);
     }
 

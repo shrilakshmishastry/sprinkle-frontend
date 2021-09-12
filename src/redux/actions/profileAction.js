@@ -1,6 +1,4 @@
 // import { removeProfile } from "../../config/api";
-import { loginHandler } from "../../Data/ApiCalls/Login/login";
-import { addAddress } from "../../Data/ApiCalls/Profile/addAddress";
 import { getProfileData } from "../../Data/ApiCalls/Profile/getProfile";
 import { updateProfile } from "../../Data/ApiCalls/Profile/updateProfile";
 import { emptyUserData } from "../../Data/UserProfile/emptyUserData";
@@ -10,28 +8,25 @@ import { cartActionTypeCreator, GET_PROFILE_ACTION } from "../action-type";
 export const  getProfileInitialData = () => {
 
     const {add} = cartActionTypeCreator(GET_PROFILE_ACTION);
-    console.log("hello");
+
+
     return async function(dispatch){
-        try{
+
             const result = await getProfileData();
-            console.log(result);
-            if(result.status === 204){
+
+            if(result === "Error"){
                 dispatch({
                     type:add,
                     payload: emptyUserData
                 });
             }else{
-                console.log("success");
+
                 dispatch({
                     type:add,
                     payload: result.data.info
                 });
             }
 
-        }catch(e){
-            console.log(e);
-            //ask what I should do?
-        }
     }
 
 }
@@ -52,7 +47,6 @@ export const  signUpAction = () => {
 
 export const removeProfileData = (data) =>{
     const {remove} = cartActionTypeCreator(GET_PROFILE_ACTION);
-    console.log(data);
     return async function (dispatch) {
         try{
             // removeProfile(data);
@@ -67,43 +61,33 @@ export const removeProfileData = (data) =>{
 
 }
 
-export const addNewAddress = (address) =>{
+
+export const updateProfileAction = (userInfo,callBack) =>{
     const {update} = cartActionTypeCreator(GET_PROFILE_ACTION);
 
     return async function(dispatch){
-        try{
-            // const result = await addAddress();
 
-            dispatch(
-                {
-                    type: update,
-                    payload: address,
-                }
-            );
-
-        }catch(e){
-            //what to do here?
-            console.error(e);
-        }
-    }
-}
-
-export const updateProfileAction = (userInfo) =>{
-    const {update} = cartActionTypeCreator(GET_PROFILE_ACTION);
-
-    return async function(dispatch){
-        try{
             const result = await updateProfile(userInfo);
-            dispatch(
+
+            if(result && result.status === 200){
+                 window.localStorage.clear();
+                const data = result.data;
+
+                window.localStorage.setItem('access-token',data["access-token"]);
+                dispatch(
                 {
                     type: update,
-                    payload: result.data.info,
+                    payload: data.info,
                 }
             );
 
-        }catch(e){
-            //what to do here?
-            console.error(e);
-        }
+            }if(result.response
+                && result.response.status === 500
+                && result.response.data
+                && result.response.data.message
+                ){
+                callBack(result.response.data.message)
+            }
+
     }
 }

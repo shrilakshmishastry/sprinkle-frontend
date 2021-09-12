@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { buyNowContent } from "../../../../Data/BuyNow/content";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewAddress } from "../../../../redux/actions/profileAction";
+import { updateProfileAction } from "../../../../redux/actions/profileAction";
 import classNames from "classnames";
 import Cancel from '../../../../images/SVGs/cancel';
 import AddressInputGeneric from "../../../../presentational/AddressInput/addressInput";
@@ -22,23 +20,25 @@ const NewAddressAdd = ({ show, hideHandler }) => {
 
 
     function handleFormSubmit(values) {
+
         const address = {
-            "addFirstLine": values.firstLineOfAddress,
-            "addSecondLine": values.secondLineOfAddress,
-            "city": values.cityOfAddress,
-            "state": values.stateOfAddress,
-            "postalCode": values.postal
+            address_first_line: values.firstLineOfAddress,
+            address_second_line: values.secondLineOfAddress,
+            city: values.cityOfAddress,
+            state: values.stateOfAddress,
+            postal: values.postal
         };
         const newAddress = [...userInfo.address,address];
+
         const data = {
             name: userInfo.name,
             email: userInfo.email,
-            phoneNumber: userInfo.phoneNumber,
+            phone_number: userInfo.phoneNumber,
             address: newAddress
         };
-        addNewAddress(data)(dispatch);
+       updateProfileAction(data)(dispatch);
         hideHandler();
-
+ 
     }
 
 

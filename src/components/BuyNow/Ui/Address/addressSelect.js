@@ -12,6 +12,7 @@ const AddressSelect = ({ active, changeActive }) => {
 
 
     useEffect(() => {
+        changeActive(userInfo.address[0]);
         setSelectedAddress(userInfo.address[0]);
     }, [userInfo]);
 

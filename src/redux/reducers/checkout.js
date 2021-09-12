@@ -7,9 +7,19 @@ const initialState ={
 
 export default function CheckOut(state = initialState,action){
 
-    const {add,remove,update} = cartActionTypeCreator(CART_ACTION);
+    const {initial,add,remove,update} = cartActionTypeCreator(CART_ACTION);
 
     switch(action.type){
+        case(initial):{
+
+            const newState = {
+                productsAtCart:action.payload.item,
+                qty:action.payload.qty
+            };
+
+            return  newState;
+
+        }
         case(add):{
 
             const newState = {...state,
@@ -28,12 +38,11 @@ export default function CheckOut(state = initialState,action){
             return  newState;
         }
         case(update) : {
-
-            let qty  = state.productsAtCart.map((val,index)=>
-                val.id === action.payload.item.id ? action.payload.qty : state.qty[index]
-            )
-
-            const newState = {...state,qty:qty};
+            const newState = {
+                ...state,
+                productsAtCart: action.payload.item,
+                qty: action.payload.qty
+            };
         return newState;
         }
         default: {

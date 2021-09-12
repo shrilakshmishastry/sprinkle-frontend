@@ -22,13 +22,12 @@ const Cart = () => {
 
     let item = useSelector(state => state.checkoutReducer);
     let items = item.productsAtCart;
-    useEffect(() => {
+    useEffect(async () =>  {
 
         handleQtyChange(item.qty);
-    }, [items]);
+    }, [item]);
 
     function handleNegativeBtn(index) {
-        console.log(qty[index]);
         if (qty[index] > 1) {
             handleQtyChange(qty.map((val, ind) =>
                 index === ind ? val - 1 : val
@@ -47,16 +46,16 @@ const Cart = () => {
     function handleRemove(index) {
         // console.log(index);
         if (items.length === 1) {
-            items.splice(index, 1)
-            qty.splice(index, 1);
+            // items.splice(index, 1)
+            // qty.splice(index, 1);
 
 
-            removeFromCart(items, qty)(dispatch);
-            history.goBack();
+            removeFromCart(items[index], qty[index])(dispatch);
+            history.push("/products");
         } else {
-            items.splice(index, 1)
-            qty.splice(index, 1);
-            removeFromCart(items, qty)(dispatch);
+            // items.splice(index, 1)
+            // qty.splice(index, 1);
+            removeFromCart(items[index], qty[index])(dispatch);
         }
     }
 
@@ -64,7 +63,8 @@ const Cart = () => {
         setShow(true);
         history.push("/place-order", {
             items: items,
-            qty: qty
+            qty: qty,
+            from:"cart",
         });
     }
 
@@ -113,9 +113,8 @@ const Cart = () => {
                         </ListGroup.Item>
                         {
                             items.map((val, index) => {
-
                                 return (
-                                    <ListGroup.Item key={val.id}>
+                                    <ListGroup.Item key={val._id}>
                                         <Row  >
                                             <Col md={5} lg={4} className="">
                                                 <img alt="water bottel" src={waterBottel} className="img-fluid" />
@@ -128,7 +127,7 @@ const Cart = () => {
 
                                                     </Col>
                                                     <Col md={4} xs={4} >
-                                                        <p className="pt-2">{qty[index]}</p>
+                                                        <p className="pt-2">{qty && qty[index]}</p>
                                                     </Col>
                                                     <Col md={4} xs={4} >
                                                         <button className={val.stock || show ? disabledBtn : activeBtn}
@@ -141,14 +140,13 @@ const Cart = () => {
                                             </Col>
                                             <Col md={7} lg={{ span: 7, offset: 1 }} className="ps-lg-5 mt-4">
                                                 <h6 className="mb-lg-0" >
-                                                    Pack of {val.qty} bottles,
-                                                    consists of {val.pack_of} bottles
+                                                   {val.name}
                                                 </h6>
                                                 <p className="mt-3 h6 text-primary">
                                                     ₹{val.price}  per pack
                                                 </p>
-                                                <p className="small">
-                                                    Per bottel  ₹ {val.per_bottel_price}
+                                                <p className="small warning-text-color">
+                                                    {val.tag}
                                                 </p>
                                                 <p className="primary-text-color">
                                                     Total ₹ {val.price * qty[index]}
@@ -165,7 +163,7 @@ const Cart = () => {
 
                                             </Col>
                                         </Row>
-                                    </ListGroup.Item>
+                                     </ListGroup.Item>
                                 )
                             })
                         }

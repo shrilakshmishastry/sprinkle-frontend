@@ -62,7 +62,7 @@ return(
                                         <div className="text-danger">
                                             {/* {Object.keys(errors[value.name])} */}
                                             <span className="me-3">{errors[value.name].key}</span>
-                                            <span>minmum {errors[value.name].values.min} character required</span>
+                                            <span>minmum {errors && errors[value.name].values.min} character required</span>
                                         </div>
                                         : null
                                     }

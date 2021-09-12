@@ -5,14 +5,16 @@ import CardOfContact from "./cardOfContact";
 const ContactItemRender = ({
     title,
     description,
+    bgColor,
     item,
-    contactOrAddress
+    contactOrAddress,
+    titleTextColor
 }) => {
     return (
-        <div className="secondary-color" >
+        <div className={bgColor} >
             <Row className="justify-content-center">
                 <Col className="ps-md-5 pt-5 text-center " xs={12} md={3} lg={3}>
-                    <h4 className="mb-5 primary-text-color">
+                    <h4 className={`mb-5 ${titleTextColor}`}>
                         {title}
                     </h4>
                     {/* <p className="text-secondary">
@@ -31,6 +33,7 @@ const ContactItemRender = ({
                                     icon={
                                         value.icon
                                     }
+                                    textColor={titleTextColor}
                                     key={value.id}
                                     id={value.id}
                                     firstLine={value.place}
@@ -40,12 +43,12 @@ const ContactItemRender = ({
                         })
                         :
                         item.map((value) => {
-                            console.log(value.address);
                             return (
                                 <AddressCard
                                     icon={
                                         value.icon
                                     }
+
                                     key={value.id}
                                     id={value.id}
                                     firstLine={value.address.firstLine}

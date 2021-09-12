@@ -3,7 +3,7 @@ import waterBottel from '../../images/waterbottel.png';
 
 const CardOfProducts = ({ item,handler }) => {
 
-    return (
+    return ( 
         <Col key={item._id.toString()} lg={3} md={4} xs={6}
             className="mt-5 pe-lg-3 ps-lg-3 ">
             <Card onClick={() => handler(item)}

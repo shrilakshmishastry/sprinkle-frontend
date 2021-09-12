@@ -29,28 +29,24 @@ const SignUp = () => {
     async function handleAddressInput(address) {
 
         userInfo["address"] = address;
-        console.log(address);
+
         changeLoad(true);
-        try {
-            const result = await signInHandler(userInfo);
-            console.log(result.data);
-            if (result.data.status === 204) {
 
-                addErrorText(result.data.message);
-            }else{
-                console.log("success");
-                console.log(result.data);
-                window.localStorage.setItem("access-token", result.data.accessToken);
-                getProfileInitialData()(dispatch);
-                modalSignIn(false)(dispatch);
-            }
+        const result = await signInHandler(userInfo);
 
+        if (result==="success") {
+            getProfileInitialData()(dispatch);
+            modalSignIn(false)(dispatch);
 
+        } else {
 
-
-        } catch (e) {
-
+            addErrorText(result.message);
         }
+
+
+
+
+
         changeLoad(false);
     }
 
@@ -74,7 +70,9 @@ const SignUp = () => {
                 <Col md={4} lg={6} className="bg-primary">
                 </Col>
                 <Col md={8} lg={{ span: 5, offset: 1 }}>
+                    <p className="text-danger">
                     {errorText}
+                    </p>
                 </Col>
 
             </Row>
