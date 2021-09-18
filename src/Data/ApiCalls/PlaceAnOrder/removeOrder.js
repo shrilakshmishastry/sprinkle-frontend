@@ -7,7 +7,6 @@ async function removeOrder(data) {
         const result = await axios.post(url,{
             data:data
         });
-        console.log(result);
         return result;
     }catch(e){
         return e;

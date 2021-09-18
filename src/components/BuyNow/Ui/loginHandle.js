@@ -1,12 +1,14 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import { useDispatch, useSelector } from "react-redux";
+import { inputStyle } from '../../../config/BtnConfig/inputStyle';
+import { loginHandler } from '../../../Data/ApiCalls/Login/login';
+import { modalSignIn } from '../../../redux/actions/modalLogin';
 import { getProfileInitialData } from '../../../redux/actions/profileAction';
 // import { loginHandler } from '../../../config/api';
 
-const LoginHandle = ({active}) => {
+const LoginHandle = ({active,errorHandler}) => {
     const user = useSelector(state => state.userReducer.userInfo.email);
-    const inputStyle = "mt-4 d-block border-0 border-bottom border-secondary";
     const emailPattren = "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}";
     const passwordPattren = "[a-zA-Z0-9.-_]{4,}";
 
@@ -15,21 +17,23 @@ const LoginHandle = ({active}) => {
     const [load,changeLoad] = React.useState(false);
     const dispatch = useDispatch();
 
-    function handleLogin(target) {
+  async  function handleLogin(target) {
         target.preventDefault();
         changeLoad(true);
-        // try{
-        //     // const result = loginHandler(email,password);
-        // }catch(e){
+        const result = await loginHandler(email, password);
 
-        // }
+        if (result === "success") {
+            getProfileInitialData()(dispatch);
+        } else {
+            errorHandler("Email or Password invalid");
+        }
 
-        getProfileInitialData()(dispatch);
+
        changeLoad(false);
     }
 
     function handleSignUpBtn(){
-        console.log("signup");
+        modalSignIn(true)(dispatch);
     }
 
     return (
@@ -42,11 +46,11 @@ const LoginHandle = ({active}) => {
                             data-bs-toggle="collapse" data-bs-target="#panelStayOpen-collapseOne"
                             aria-expanded="true" aria-controls="panelStayOpen-collpaseOne"
                         >
-                          1  LOGIN
+                           LOGIN
                         </button>
                         : <div className="ps-4 pt-3 pb-3">
                             <p className="h6 primary-text-color  fw-normal">
-                             1   LOGIN
+                              LOGIN
                             </p>
                         </div>
                 }
@@ -70,7 +74,7 @@ const LoginHandle = ({active}) => {
                             pattern={emailPattren}
                             placeholder="Enter Email"
                             value={email}
-                            className={inputStyle}
+                            className={inputStyle.inputStyleLogin}
                             onChange={(value) => {
                                 addEmail(value.target.value)
                             }}
@@ -86,7 +90,7 @@ const LoginHandle = ({active}) => {
                             pattern={passwordPattren}
                             placeholder="Enter Password"
                             value={password}
-                            className={inputStyle}
+                            className={inputStyle.inputStyleLogin}
                             onChange={(value) => {
                                 addPassword(value.target.value)
                             }}

@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import RightArrow from '../../../Data/SVGs/rightArrow';
+import RightArrow from '../../../images/SVGs/rightArrow';
 import WaterGlass from '../../../images/namedBottel.png';
 
 const OurBottelYourName = () => {

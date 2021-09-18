@@ -3,9 +3,12 @@ export const MODAL_LOGIN_ACTION = "MODAL_LOGIN";
 export const MODAL_SIGNIN_ACTION = "MODAL_SOGNIN_ACTION"
 export const GET_TOP_PRODUCT_LIST_ACTION ="GET_TOP_PRODUCT";
 export const CART_ACTION = "CART_ACTION";
+export const PRODUCT_ACTION = "PRODUCT_ACTION";
+export const MODAL_DETAIL_VIEW = 'MODAL_DETAIL_VIEW';
 
 export function cartActionTypeCreator(type) {
     return {
+        initial: type+"initial",
         add : type + "add",
         remove : type + "remove",
         update: type + "update",

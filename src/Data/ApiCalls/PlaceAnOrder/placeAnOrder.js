@@ -1,16 +1,16 @@
-import axios from "axios";
-import { api } from "../../../config/api";
+import { api, createRequest } from "../../../config/api";
 
 async function placeAnOrder(data) {
     const url = `${api.root}${api["place-an-order"]}`;
     try{
-        const result = await axios.post(url,{
+        const result = await createRequest().post(url,{
             data:data
         });
-        console.log(result);
-        return result;
+        return result.data;
     }catch(e){
-        return e;
+
+        console.log(e.response.data.e.message);
+        return e.response.data.e.message;
     }
 
 }

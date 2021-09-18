@@ -1,7 +1,12 @@
-import { modalLoginType, MODAL_LOGIN_ACTION, MODAL_SIGNIN_ACTION } from "../action-type";
+import { modalLoginType, MODAL_DETAIL_VIEW, MODAL_LOGIN_ACTION, MODAL_SIGNIN_ACTION } from "../action-type";
 
 const initialState = {
     show : false
+};
+
+const initialStateDetailedView = {
+    show: false,
+    content : {}
 };
 
 const modalLogin = (state = initialState,action) =>{
@@ -32,7 +37,25 @@ const modalSignin = (state = initialState,action) =>{
     }
 }
 
+const modalDetailView = (state =  initialStateDetailedView,action) =>{
+    const {show} = modalLoginType(MODAL_DETAIL_VIEW);
+    switch(action.type){
+        case(show):{
+            return {
+                show : action.show,
+                content : action.content
+            }
+        }
+        default:{
+            return state;
+        }
+    }
+}
+
+
+
 export {
     modalLogin,
-    modalSignin
+    modalSignin,
+    modalDetailView
 };

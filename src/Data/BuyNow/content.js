@@ -1,10 +1,29 @@
 export const buyNowContent = {
-    newAddress : [
-        "Enter Address First Line",
-        "Enter Address Second Line",
-        "Enter City Name ",
-        "Enter Postal Code",
-        "Enter State Name ",
+    newAddress : [{
+        label:"Enter Address First Line" ,
+        type: "text",
+        name: "firstLineOfAddress"
+    },
+    {
+        label:"Enter Address Second Line",
+        type: "text",
+        name: "secondLineOfAddress"
+    },
+    {
+        label:"Enter City Name ",
+        type: "text",
+        name: "cityOfAddress"
+    },
+    {
+        label:"Enter Postal Code",
+        type: "number",
+        name: "postal"
+    },
+    {
+        label:"Enter State Name ",
+        type: "text",
+        name: "stateOfAddress"
+    },
     ],
 
 };

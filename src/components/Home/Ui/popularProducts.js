@@ -1,18 +1,19 @@
 import { Row, Col, Card } from "react-bootstrap"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import SadEmoji from "../../../Data/SVGs/sadEmoji";
-import waterBottel from '../../../images/waterbottel.png';
+import SadEmoji from "../../../images/SVGs/sadEmoji";
+import CardOfProducts from "../../../presentational/Card";
+import { modalDetailView } from "../../../redux/actions/modalLogin";
 
 const PopularProducts = () => {
     let popularProducts = useSelector(state => state.homeReducer.productsInHomePage);
     const history = useHistory();
+    const dispatch = useDispatch();
 
     function detailViewRedirector(refer) {
-        history.push("/item-details", {
-            refer
-        });
+        modalDetailView(true,refer)(dispatch);
     }
+
 
     if (!popularProducts.length > 0) {
         return (
@@ -54,23 +55,11 @@ const PopularProducts = () => {
                             popularProducts && popularProducts.length > 0 &&
                             popularProducts.map((item) => {
                                 return (
-                                    <Col key={item.id.toString()} lg={3} md={4} xs={6}
-                                        className="mt-5 pe-lg-3 ps-lg-3 ">
-                                        <Card onClick={() => detailViewRedirector(item)} className="pt-3 secondary-color border-0 shadow-sm rounded">
-                                            <Card.Img src={waterBottel} className="img-fluid" alt={item.qty} />
-                                            <Card.Footer className=" bg-white ">
-                                                <span className="d-flex flex-row justify-content-between">
-                                                    <p className="mb-0" >{item.qty}</p>
-                                                    <p className="mb-0 fw-bold warning-text-color " >₹ {item.price}</p>
-                                                </span>
+                                    <CardOfProducts item={item} key={item._id.toString()}
+                                    handler={(item)=>detailViewRedirector(item)}
+                                    />
 
-                                                <p className="small mb-0 text-center ">Pack of {item.pack_of} bottels</p>
-
-                                            </Card.Footer>
-                                        </Card>
-                                    </Col>
-
-                                );
+                                 );
                             })
                         }
                     </Row>

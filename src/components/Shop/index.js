@@ -1,9 +1,9 @@
 import React from 'react';
+import ShopUi from './Ui/shopUI';
+
 const Shop = () =>{
     return (
-        <div>
-            <p>Shop here</p>
-        </div>
+      <ShopUi/>
     );
 };
 export default Shop;

@@ -3,7 +3,11 @@ import { useHistory, useLocation } from "react-router-dom";
 import waterBottel from '../../../images/waterbottel.png';
 import Loader from 'react-loader-spinner';
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import classNames from "classnames";
+import { btnStyle } from "../../../config/BtnConfig/btnStyle";
+import placeAnOrder from "../../../Data/ApiCalls/PlaceAnOrder/placeAnOrder";
+import { clearCart } from "../../../redux/actions/addCartAction";
 
 const ProductsDetail = ({
     handlePositiveBtn,
@@ -12,42 +16,62 @@ const ProductsDetail = ({
     qty,
     active,
     addressSelected,
+    errorHandler
 
 }
 ) => {
+    const from  = useLocation().state.from;
     let info = useLocation().state.items;
     let user = useSelector(state=>state.userReducer.userInfo);
     const [show, setShow] = useState(false);
     const history = useHistory();
-    console.log(info)
+    const dispatch = useDispatch();
+    const disabledBtn =  btnStyle.disabledBtn;
+    const activeBtn = btnStyle.activeBtn;
+
+// I didn't get how to apply here
+    // const btnPositiveStyle = classNames({
+    //     [`${activeBtn}`] : info.stock !== qty[index] || show,
+    //     [`${disabledBtn}`] : info.stock === qty[index]|| show
+    // });
+
+    // const btnNegativeStyle = classNames({
+    //     [`${activeBtn}`] : qty[index] > 1 || show,
+    //     [`${disabledBtn}`] : qty[index] <= 1 || show
+    // });
+
+
     async function placeAnOrderHandler() {
+        let val = 0;
+        for (let i = 0; i < info.length; i++) {
+            val = val + info[i].price * qty[i];
+        }
+
         for(let i=0;i<info.length;i++){
             info[i]["ordered-quantity"] = qty[i];
         }
 
         let queryObj = {
             items: info,
-            addressToDelivey : addressSelected,
-            userInfo  : user
+            shipping_address : addressSelected,
+            userInfo  : user,
+            price:val,
+            from: from
         };
-        console.log("place an order");
-        console.log(queryObj);
-        // try{
-        //    const result = await placeAnOrder(queryObj);
-        // }catch(e){
-        //     console.log(e);
-        // }
 
-        setShow(true);
-        history.replace("/order-success");
+        const result = await placeAnOrder(queryObj);
+        if(result === "success"){
+            setShow(true);
+            if(from==='cart'){
+                clearCart()(dispatch);
+            }
+            history.replace("/order-success");
+         }else{
+            errorHandler(result);
+         }
 
 
     }
-
-
-
-    const disabledBtn = " ps-lg-4 pe-lg-4 ps-4 pe-4 pe-md-3 ps-md-2 disabled bg-secondary btn  text-white";
-    const activeBtn = "ps-lg-4 pe-lg-4 ps-4 pe-4 pe-md-3 ps-md-2 btn btn-primary";
 
 
 
@@ -72,7 +96,7 @@ const ProductsDetail = ({
                     {
                         info.map((val, index) => {
                             return (
-                                <Row key={val.id} >
+                                <Row key={val._id} >
                                     <Col md={5} lg={4} className="">
                                         <img alt="water bottel" src={waterBottel} className="img-fluid" />
                                         <Row className=" pt-3 text-center  ">
@@ -87,7 +111,7 @@ const ProductsDetail = ({
                                                 <p className="pt-2">{qty[index]}</p>
                                             </Col>
                                             <Col md={4} xs={4} >
-                                                <button className={info.stock === qty[index]  || show? disabledBtn : activeBtn}
+                                                <button className={info.stock   || show? disabledBtn : activeBtn}
                                                     onClick={() => handlePositiveBtn(index)}>
                                                     +
                                                 </button>
@@ -97,14 +121,13 @@ const ProductsDetail = ({
                                     </Col>
                                     <Col md={7} lg={{ span: 7, offset: 1 }} className="ps-lg-5 mt-4">
                                         <h6 className="mb-lg-0" >
-                                            Pack of {val.qty} bottles,
-                                            consists of {val.pack_of} bottles
+                                           {val.name}
                                         </h6>
                                         <p className="mt-3 h6 text-primary">
                                             ₹{val.price}  per pack
                                         </p>
                                         <p className="small">
-                                            Per bottel  ₹ {val.per_bottel_price}
+                                           {val.tag}
                                         </p>
                                         <p className="primary-text-color">
                                             Total ₹ {val.price * qty[index]}

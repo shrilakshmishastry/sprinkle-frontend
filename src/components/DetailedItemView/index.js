@@ -1,36 +1,53 @@
-import { useLocation } from "react-router";
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Container, Alert } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import waterBottel from '../../images/waterbottel.png';
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/actions/addCartAction";
-import { Redirect, useHistory } from "react-router-dom";
-import CarryVehicle from "../../Data/SVGs/carryVehicle";
+import { useHistory } from "react-router-dom";
 import Loader from 'react-loader-spinner';
 import { useSelector } from "react-redux";
+import Description from "./Ui/description";
+import classNames from 'classnames';
+import Cancel from '../../images/SVGs/cancel';
+import { modalDetailView } from '../../redux/actions/modalLogin';
 
 
 const DetailedView = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const stateInfo = useLocation();
-    const state = stateInfo === undefined ? "" : stateInfo.state.refer;
+    const state = useSelector(state => state.modalDetailViewReducer.content);
     const [clicked, setClicked] = React.useState();
     const [show, setShow] = React.useState(false);
 
+    // in order to check whether item is in  cart
     let item = useSelector(state => state.checkoutReducer);
     let items = item.productsAtCart;
     const [itemPresent, changeItemPresent] = useState(false);
 
+    const inActiveBtn = "btn  btn-secondary disabled";
+    const activeBuyNowBtn = "btn primary-color text-white";
+    const activeAddToCartBtn = "btn warning text-white";
+
+    const addToCartBtnStyle = classNames({
+        [activeAddToCartBtn]: !show,
+        [inActiveBtn]: show
+    });
+
+    const buyNowBtnStyle = classNames({
+        [activeBuyNowBtn]: !show,
+        [inActiveBtn]: show
+    });
+
+
+
     useEffect(() => {
         let present;
-        for(let i=0;i<items.length;i++){
-            if(items[i].id===state.id){
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].sku === state.sku) {
                 present = true;
                 break;
             }
         }
-        console.log(present);
         changeItemPresent(present);
     }, [item]);
 
@@ -39,131 +56,115 @@ const DetailedView = () => {
     function handleAddCart() {
         setClicked(0);
         setShow(true);
-        addToCart(stateInfo.state.refer)(dispatch);
+        addToCart(state)(dispatch);
         setShow(false);
-        history.push("/cart");
+        modalDetailView(false, {})(dispatch);
+        history.replace("/cart");
 
     }
 
     function handleBuyNow() {
-
         setClicked(1);
-        history.push( {
+        modalDetailView(false, {})(dispatch);
+        history.push({
             pathname: "/place-order",
-            state:{
+            state: {
                 items: [state],
-                qty:[1],
+                qty: [1],
+                from:"detailedView"
             }
         });
     }
 
+    function handleModal() {
+        modalDetailView(false, {})(dispatch);
+    }
 
-
-
-    function description(display) {
-        const style = display + " " + "rounded ms-lg-5 ps-lg-3 pe-lg-3 mt-3 mt-lg-5 pt-5 pb-5";
-        return (
-            <Col md={6} lg={4} className={style}>
-
-                <h5 className="mb-lg-0" >
-                    Pack of {state.qty} bottles,
-                    consists of {state.pack_of} bottles
-                </h5>
-                <p className="mt-3 h6 text-primary">
-                    ₹{state.price}  per pack
-                </p>
-                <p className="small">
-                    Per bottel  ₹ {state.per_bottel_price}
-                </p>
-
-
-                {
-                    stateInfo.state.refer.tag === "out of stock" ?
-                        <p className="text-danger  small">
-                            Currently unavialable
-                        </p>
-                        :
-                        <p className="text-secondary  small">
-                            <CarryVehicle />
-                            Expect delivery within a day.
-                        </p>
-                }
-
-            </Col>
-        );
+    function handleAddedToCart(){
+        modalDetailView(false, {})(dispatch);
+        history.push("/cart")
     }
 
 
 
-    if (stateInfo.state === undefined) {
-        return <Redirect to="/" />
-    }
+
     return (
-        <Container className="mt-5 mb-5">
+        <Container className="pb-5 pt-3">
+            <Row >
+                <Col md={4} lg={6} className="">
+                </Col>
+                <Col md={6} lg={{ span: 4, offset: 1 }}>
 
-            <Row className="border pb-5 justify-content-center ">
-                {
-                    description("d-block d-sm-none")
-                }
+                </Col>
+                <Col md={2} lg={1} className="text-end ">
+                    <button onClick={handleModal} className="btn fw-bold ">
+                        <Cancel />
+                    </button>
+                </Col>
 
-                <Col md={6} lg={4} className="mt-lg-4">
+            </Row>
+
+            <Row className="border ms-lg-3 me-lg-3 justify-content-center ">
+
+                <Description state={state} display={"d-block d-sm-none"} />
+
+                <Col md={6} lg={4} className="mt-lg-4 pt-lg-5">
+
                     <img alt="water bottel" src={waterBottel} className="img-fluid" />
-                    <Row className=" mt-3">
-                        <Col xs={6} className="d-grid" md={6} >
-                            {
-                                itemPresent ?
-                                    <button
-                                        className={
-                                            show ? "btn btn-secondary disabled"
-                                                : "btn warning text-white"
-                                        }
-                                        onClick={() => history.push("/cart")}>
 
+
+                    <div className="d-flex flex-row justify-content-between">
+                        {
+                            itemPresent ?
+                                <button
+                                    className={ addToCartBtnStyle}
+                                    onClick={handleAddedToCart}>
+                                        <small>
                                         Added To cart
-                                    </button>
-                                    : <button
-                                        className={
-                                            show ? "btn btn-secondary disabled"
-                                                : "btn warning text-white"
-                                        }
-                                        onClick={handleAddCart}>
-                                        {
-                                            show && clicked === 0 ? <Loader type="Oval" color="#ffffff"
-                                                height={25} width={80}
-                                                className=" text-center" />
-                                                :
-                                                <p className="mb-0">
-                                                    Add To cart
-                                                </p>
-                                        }
-                                    </button>
+                                        </small>
+
+                                </button>
+                                : <button
+                                    className={addToCartBtnStyle}
+                                    onClick={handleAddCart}>
+                                    {
+                                        show && clicked === 0 ?
+                                            <div>
+                                                <Loader type="Oval" color="#ffffff"
+                                                    height={25} width={80}
+                                                    className=" text-center" />
+                                                Going to cart
+                                            </div>
+
+                                            :
+                                            <p className="mb-0">
+                                                Add To cart
+                                            </p>
+                                    }
+                                </button>
+                        }
+                        <button
+                            className={buyNowBtnStyle}
+                            onClick={handleBuyNow}>
+                            {
+                                show && clicked === 1 ? <Loader type="Oval" color="#ffffff"
+                                    height={25} width={80}
+                                    className=" text-center" />
+                                    :
+                                    <p className="mb-0">
+                                        Buy Now
+                                    </p>
                             }
 
+                        </button>
 
-                        </Col>
-                        <Col xs={6} md={6} className="d-grid" >
-                            <button
-                                className={show ? "btn btn-secondary disabled"
-                                    : "btn primary-color text-white"
-                                }
-                                onClick={handleBuyNow}>
-                                {
-                                    show && clicked === 1 ? <Loader type="Oval" color="#ffffff"
-                                        height={25} width={80}
-                                        className=" text-center" />
-                                        :
-                                        <p className="mb-0">
-                                            Buy Now
-                                        </p>
-                                }
+                    </div>
 
-                            </button>
-                        </Col>
-                    </Row>
+
+
                 </Col>
-                {
-                    description("d-none d-sm-block")
-                }
+
+                <Description state={state} display={"d-none d-sm-block"} />
             </Row>
 
         </Container>

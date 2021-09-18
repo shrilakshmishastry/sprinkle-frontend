@@ -1,11 +1,20 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
+import { useHistory, useLocation } from "react-router-dom";
+import placeAnOrder from "../../../Data/ApiCalls/PlaceAnOrder/placeAnOrder";
+import { clearCart } from "../../../redux/actions/addCartAction";
 
-const ItemList = ({ qty ,items}) => {
+const ItemList = ({ qty, items ,addressSelected, errorHandler }) => {
 
     const [total, changeTotal] = useState(0);
+    const from = useLocation().state.from;
     const userInfo = useSelector(state => state.userReducer.userInfo.email);
+    let info = useLocation().state.items;
+    const user = useSelector(state => state.userReducer.userInfo);
+    const history = useHistory();
+    const dispatch = useDispatch();
+
 
     useEffect(() => {
         let val = 0;
@@ -16,20 +25,57 @@ const ItemList = ({ qty ,items}) => {
         changeTotal(val);
     }, [qty]);
 
+    async function handlePlaceAnOrderBtn() {
+        for(let i=0;i<info.length;i++){
+            info[i]["ordered-quantity"] = qty[i];
+        }
+
+        let queryObj = {
+            items: info,
+            shipping_address : addressSelected,
+            userInfo  : user,
+            price: total,
+            from:from
+        };
+        const result = await placeAnOrder(queryObj);
+        if(result === "success"){
+            if(from==='cart'){
+                clearCart()(dispatch);
+            }
+            history.replace("/order-success");
+         }else{
+            errorHandler(result);
+         }
+
+
+    }
+
     if (userInfo === "") {
         return (
-            <div>
-                hello
+            <div className="mt-5">
+                <h5 className="primary-text-color">
+                    Sprinkle
+                </h5>
+                <p>
+                    We give the world most purified water!!
+                </p>
             </div>
         );
     }
 
     return (
         <Card>
-            <Card.Header>
-                <h6 className=" text-secondary ">
+
+            <Card.Header className="d-flex flex-row justify-content-between">
+                <h6 className=" text-secondary pt-2">
                     PRICE DETAILS
                 </h6>
+                <button onClick={handlePlaceAnOrderBtn}
+                 className="btn p-0 primary-text-color ">
+                    <small>
+                    PLACE ORDER
+                    </small>
+                </button>
             </Card.Header>
             <Card.Body>
                 {
@@ -37,7 +83,7 @@ const ItemList = ({ qty ,items}) => {
 
                         return (
                             <div
-                                key={val.id}
+                                key={val._id}
                                 className="d-flex flex-row justify-content-between">
                                 <p>
                                     {val.qty} pack of  {val.pack_of} bottles

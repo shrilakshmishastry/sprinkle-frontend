@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import RightArrow from '../../../Data/SVGs/rightArrow';
+import RightArrow from '../../../images/SVGs/rightArrow';
 import WaterGlass from '../../../images/waterbottel1.png';
 import './../../../App.css';
 

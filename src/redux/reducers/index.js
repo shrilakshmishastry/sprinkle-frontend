@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import CheckOut from './checkout';
 import HomePage from './homePage';
-import { modalLogin, modalSignin } from './modalLogin';
+import { modalDetailView, modalLogin, modalSignin } from './modalLogin';
 import Products from './product';
 import User from './user';
 
@@ -12,5 +12,6 @@ const rootReducer = combineReducers({
     checkoutReducer : CheckOut,
     modalLoginReducer: modalLogin,
     modalSignInReducer: modalSignin,
+    modalDetailViewReducer: modalDetailView
 });
 export default rootReducer;

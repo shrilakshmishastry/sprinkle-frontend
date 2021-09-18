@@ -7,7 +7,6 @@ import Cart from '../../components/Cart';
 import SignUp from "../../components/SignUp";
 import PageNotFound from "../../components/PageNotFound";
 import UserProfile from '../../components/UserProfile';
-import DetailedView from '../../components/DetailedItemView';
 import BuyNow from '../../components/BuyNow';
 import OrderSuccess from '../../presentational/OrderSuccess';
 import OrderHistory from '../../components/OrderHistory';
@@ -18,7 +17,6 @@ const Routers = () => {
             <Route path="/order-history" component={OrderHistory} exact />
             <Route path="/order-success" component={OrderSuccess} exact />
             <Route path="/place-order" component={BuyNow} exact />
-            <Route path="/item-details" component={DetailedView} exact />
             <Route path="/user-profile" component={UserProfile} exact />
             <Route path="/signup" component={SignUp} exact />
             <Route path="/cart" component={Cart} exact />
